@@ -1,8 +1,11 @@
-import React from 'react'
 
-const App = () => {
+import AppRoute from "./AppRoute";
+
+export default function App() {
   return (
-    <div>App</div>
+   <>
+   <AppRoute/>
+   </>
   )
 }
 
