@@ -1,12 +1,10 @@
 
-import AppRoute from "./AppRoute";
+import AppRoute from "./routes/AppRoute";
 
 export default function App() {
   return (
-   <>
-   <AppRoute/>
-   </>
+    <>
+      <AppRoute />
+    </>
   )
 }
-
-export default App
