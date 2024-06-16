@@ -6,7 +6,7 @@ import MENUHUM from "/Menu.png"
 export default function Test() {
 
     return (
-        <div className="flex flex-col pb-20 mx-auto w-full bg-white min-h-screen flex-1 max-w-[480px] rounded-[35px] max-sm:max-w-[478px]">
+        <div className="flex flex-col pb-20 mx-auto w-full bg-white min-h-screen flex-1 max-w-[480px] rounded-[35px] ">
 
             <div className="flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center text-white bg-gradient-to-r from-cyan-500 to-blue-500">
                 <img
