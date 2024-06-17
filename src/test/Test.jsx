@@ -48,7 +48,7 @@ export default function Test() {
 
                 {/*  */}
                 <div className="w-full pt-10 ">
-                    <div className="text-xs leading-5 text-center text-black mx-auto max-w-[286px]">
+                    <div className="text-xs leading-5 py-2 text-center text-black mx-auto max-w-[286px]">
                         לאחר לחיצה על <span className="font-bold text-black">הוסף דיווח</span>{" "}
                         תינתן אפשרות של סיום דיווח
                     </div>
