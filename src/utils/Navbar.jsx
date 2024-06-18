@@ -14,7 +14,7 @@ import { CgMenuRightAlt } from 'react-icons/cg'
 const Navbar = () => {
     const menu = [
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
-        { route: "/#", title: "כניסת", icon: <HiUserCircle className='text-3xl text-black' /> },
+        { route: "/#", title: "כניסת מפקד", icon: <HiUserCircle className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
         { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
@@ -45,7 +45,7 @@ const Navbar = () => {
                         <IoClose />
                     </div>
                     {menu.map((item, index) => (
-                        <div onClick={() => navigate(`${item.route}`)} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        <div onClick={() => { navigate(`${item.route}`), handleClose() }} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             {item.title} {item.icon}
                         </div>
                     ))}

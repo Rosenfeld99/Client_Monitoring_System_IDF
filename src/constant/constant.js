@@ -1,1 +1,1 @@
-export const appName = "App name"
+export const appName = "שם אפליקציה"
