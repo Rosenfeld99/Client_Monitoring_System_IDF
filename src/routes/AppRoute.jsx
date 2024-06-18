@@ -4,26 +4,30 @@ import SignUp from '../pages/signup/SignUp'
 import Home from '../pages/home/Home'
 import Login from '../pages/login/Login'
 import Test from '../test/Test'
+import ReportStart from '../pages/doc/ReportStart'
+import ReportEnd from '../pages/doc/ReportEnd'
+import HistoryLastDay from '../pages/history/HistoryLastDay'
+import ReportEdit from '../pages/doc/ReportEdit'
 
 function AppRoute() {
   return (
-    <>
-
+    <div className='max-w-[680px] mx-auto'>
       <Routes>
-        <Route index element={<Test />} />
+        <Route index element={<ReportStart />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/startReport' element={<Home />} />
-        <Route path='/endReport' element={<Home />} />
-        <Route path='/todayReportsList' element={<Home />} />
+        <Route path='/startReport' element={<ReportStart />} />
+        <Route path='/endReport' element={<ReportEnd />} />
+        <Route path='/ReportEdit/:reportId' element={<ReportEdit />} />
+        <Route path='/todayReportsList' element={<HistoryLastDay />} />
         <Route path='/editReports' element={<Home />} />
         <Route path='/*' element={<h2>Not found 404</h2>} />
 
       </Routes>
 
 
-    </>
+    </div>
   )
 }
 
