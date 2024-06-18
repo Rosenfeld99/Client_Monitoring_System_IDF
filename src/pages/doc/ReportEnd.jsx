@@ -11,7 +11,7 @@ const ReportEnd = () => {
 
             <Navbar />
             <div className="flex gap-3 self-center px-5 mt-8 text-xs leading-5 text-center text-black">
-                <IoCheckmarkCircleOutline className='text-xl'/>
+                <IoCheckmarkCircleOutline className='text-xl' />
                 <div className="grow my-auto">
                     הגש את הדיווח שלך :)
                     <span className="font-semibold text-black">מטווחים</span> בשעה{" "}
@@ -48,7 +48,7 @@ const ReportEnd = () => {
                         לא ניתן ליצור דיווחים נוספים לפני השלמת דיווח הנוכחי
                     </div>
                     {/*  */}
-                    <ButtonAction title="סיום דיווח" />
+                    <ButtonAction title="סיום דיווח" route={'/startReport'} />
                 </div>
             </div>
         </div>
