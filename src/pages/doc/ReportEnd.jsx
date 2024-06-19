@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import CHECKMARK from "/CheckMark.png"
 import Navbar from '../../utils/Navbar'
 import ButtonAction from '../../utils/ButtonAction'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
+import FloatingLabelInput from '../../utils/floatingLabelInput/FloatingLabelInput'
 
 const ReportEnd = () => {
+    const [valueWWd, setValueWWd] = useState('')
+    const [valueWMI, setValueWMI] = useState('')
+
+    const handleEndReport = () =>{
+        
+    }
+
     return (
         <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full bg-white min-h-screen flex-1  ">
 
@@ -34,12 +41,9 @@ const ReportEnd = () => {
                 </div>
                 {/*  */}
                 <div className="w-full">
-                    <div className="justify-center px-4 py-2 bg-white rounded-lg w-full border border-solid border-neutral-200 text-ellipsis">
-                        איפה אני נמצא?
-                    </div>
-                    <div className="justify-center px-4 py-2 mt-5 bg-white rounded-lg w-full border border-solid border-neutral-200 text-ellipsis">
-                        מה אני עושה?
-                    </div>
+                    <FloatingLabelInput label={"איפה אני נמצא"} placeholder={"איפה אני נמצא"} setState={setValueWMI} state={valueWMI} />
+
+                    <FloatingLabelInput label={"מה אני עושה?"} placeholder={"מה אני עושה?"} setState={setValueWWd} state={valueWWd} />
                 </div>
 
                 {/*  */}
