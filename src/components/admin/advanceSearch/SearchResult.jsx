@@ -1,10 +1,14 @@
 import React from 'react'
 import Navbar from '../../../utils/Navbar'
 import UsersDisplay from '../solidersReports/UsersDisplay'
+import TransitionPage from '../../../animation/TransitionPage'
+import { BsCalendarDate } from 'react-icons/bs'
+import { LiaPlaceOfWorshipSolid } from 'react-icons/lia'
+import { MdOutlinePeopleAlt } from 'react-icons/md'
 
 function SearchResult() {
     return (
-        <  >
+        <TransitionPage  >
             <div dir='rtl'>
                 <Navbar />
             </div>
@@ -15,23 +19,33 @@ function SearchResult() {
                         לפי
                     </p>
                     <div className='ml-auto'>
+                        <div className='items-center flex'>
 
-                        <p>
                             :תאריך
-                        </p>
-                        <p>
+                            <BsCalendarDate className='ml-2' />
+
+                        </div>
+                        <div className='items-center flex'>
+
                             :מקומות
-                        </p>
-                        <p>
+                            <LiaPlaceOfWorshipSolid />
+
+                        </div>
+                        <div className='items-center flex'>
+
+
                             :אנשים
-                        </p>
+                            <MdOutlinePeopleAlt className='ml-2' />
+                        </div>
                     </div>
                 </div>
+                <div className='mx-1'>
 
-                <UsersDisplay />
+                    <UsersDisplay />
+                </div>
 
             </div>
-        </>
+        </TransitionPage>
     )
 }
 
