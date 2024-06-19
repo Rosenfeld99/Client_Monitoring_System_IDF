@@ -10,6 +10,8 @@ import HistoryLastDay from '../pages/history/HistoryLastDay'
 import ReportEdit from '../pages/doc/ReportEdit'
 import SearchResult from '../components/admin/advanceSearch/SearchResult'
 import SplashPage from '../pages/splash/SplashPage'
+import LastReports from '../components/admin/solidersReports/SolidersReports'
+import AdvanceSearch from '../components/admin/advanceSearch/AdvanceSearch'
 
 
 
@@ -41,6 +43,7 @@ function AppRoute() {
           <Route path='/editReports' element={<Home />} />
           <Route path='/lastReports' element={<LastReports />} />
           <Route path='/searchResult' element={<SearchResult />} />
+          <Route path='/advanceSearch' element={<AdvanceSearch />} />
 
           <Route path='/*' element={<h2>Not found 404</h2>} />
         </Routes>
