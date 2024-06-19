@@ -77,20 +77,49 @@
     animation-fill-mode: both;
   }
   
-  @keyframes bounceOutRight {
-    20% {
-      opacity: 1;
-      transform: translateX(20px);
-    }
-    100% {
+  @keyframes bounceInLeft {
+    0% {
       opacity: 0;
-      transform: translateX(2000px);
+      transform: translateX(-2000px);
+    }
+    /* 60% {
+      opacity: 1;
+      transform: translateX(30px);
+    }
+    80% {
+      transform: translateX(-10px);
+    } */
+    100% {
+      transform: translateX(0);
     }
   }
   
-  .animate__bounceOutRight {
-    animation-name: bounceOutRight;
-    animation-duration: 1.3s;
+  .animate__bounceInLeft {
+    animation-name: bounceInLeft;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+  
+  @keyframes bounceInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(2000px);
+    }
+    /* 60% {
+      opacity: 1;
+      transform: translateX(-30px);
+    }
+    80% {
+      transform: translateX(10px);
+    } */
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  .animate__bounceInRight {
+    animation-name: bounceInRight;
+    animation-duration: 0.5s;
     animation-fill-mode: both;
   }
   

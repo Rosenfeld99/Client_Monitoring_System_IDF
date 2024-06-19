@@ -45,7 +45,7 @@ const Navbar = () => {
                         <IoClose />
                     </div>
                     {menu.map((item, index) => (
-                        <div onClick={() => navigate(`${item.route}`)} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        <div onClick={() => { navigate(`${item.route}`), handleClose() }} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             {item.title} {item.icon}
                         </div>
                     ))}
