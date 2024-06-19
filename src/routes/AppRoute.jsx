@@ -4,12 +4,13 @@ import SignUp from '../pages/signup/SignUp'
 import Home from '../pages/home/Home'
 import Login from '../pages/login/Login'
 import Test from '../test/Test'
-import LastReports from '../components/admin/lastReports/LastReports'
+import LastReports from '../components/admin/solidersReports/SolidersReports'
 import AdvanceSearch from '../components/admin/advanceSearch/AdvanceSearch'
 import ReportStart from '../pages/doc/ReportStart'
 import ReportEnd from '../pages/doc/ReportEnd'
 import HistoryLastDay from '../pages/history/HistoryLastDay'
 import ReportEdit from '../pages/doc/ReportEdit'
+import SearchResult from '../components/admin/advanceSearch/SearchResult'
 
 function AppRoute() {
   return (
@@ -26,6 +27,7 @@ function AppRoute() {
         <Route path='/editReports' element={<Home />} />
         <Route path='/advanceSearch' element={<AdvanceSearch />} />
         <Route path='/lastReports' element={<LastReports />} />
+        <Route path='/searchResult' element={<SearchResult />} />
         <Route path='/*' element={<h2>Not found 404</h2>} />
 
       </Routes>

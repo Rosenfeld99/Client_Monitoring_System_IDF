@@ -5,7 +5,6 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
 
-
 function AdvanceSearch() {
     const animatedComponents = makeAnimated();
 
@@ -16,7 +15,12 @@ function AdvanceSearch() {
     })
 
     const handleInputs = (e, key) => {
-        setInputs({ ...inputs, [key]: e.target.value })
+        if (key === "place") {
+            setInputs({ ...inputs, [key]: e })
+        }
+        else {
+            setInputs({ ...inputs, [key]: e.map((user) => user.value) })
+        }
     }
 
 
@@ -28,10 +32,12 @@ function AdvanceSearch() {
     const optionsUsers = [{ isFixed: true, label: "אלי", value: "אלי" },
     { isFixed: true, label: "משה", value: "משה" }
     ]
-    console.log(inputs);
     return (
         <div>
-            <Navbar />
+            <div dir='rtl'>
+
+                <Navbar />
+            </div>
 
             <div className='min-h-[85vh] items-center flex'>
                 <div className='w-[100vw] px-5 '>
@@ -43,7 +49,7 @@ function AdvanceSearch() {
                     <div dir='rtl' className='min-h-52 w-full flex flex-col justify-evenly items-center '>
                         <div className='flex border p-1 w-full'>
                             {inputs.date ? inputs.date : "חיפוש לפי תאריכים"}
-                            <input onChange={(e) => handleInputs(e, "date")} type="date" className='w-[20px] mr-auto ' placeholder='חיפוש לפי תאריכים' />
+                            <input onChange={(e) => setInputs({ ...inputs, "date": e.target.value })} type="date" className='w-[20px] mr-auto ' placeholder='חיפוש לפי תאריכים' />
                         </div>
 
                         <Select
