@@ -6,9 +6,9 @@ import BACKPAPER from "/backPaper.png"
 import { useNavigate } from 'react-router-dom'
 import "../../App.css"
 import TransitionPage from '../../animation/TransitionPage'
+import { user } from '../../db/reportsList'
 
 const HistoryLastDay = ({ }) => {
-    const reportsList = ["מטווחים", "מד'ס", "אוכל", "הכשרה X"]
     const [chooseOption, setChooseOption] = useState(null)
     const navigation = useNavigate()
 
@@ -32,12 +32,12 @@ const HistoryLastDay = ({ }) => {
                 />
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
-                    {reportsList.map((item, index) => (
+                    {user?.lastDayReports?.map((item, index) => (
                         <div key={index} onClick={() => setChooseOption(index)}
                             className={` bg-white  p-2 rounded-lg text-md w-full 
                         ${chooseOption === index ? "font-bold border-2 border-[#0996E5] text-black flex items-center justify-between"
                                     : "border-2 border-gray-200 font-normal text-gray-500"}`}>
-                            {item} {chooseOption === index && <BiSolidEdit onClick={() => navigation(`/ReportEdit/${'reportId'}`)} className='text-2xl text-[#0996E5]' />}
+                            {item?.content} {chooseOption === index && <BiSolidEdit onClick={() => navigation(`/ReportEdit/${'reportId'}`)} className='text-2xl text-[#0996E5]' />}
                         </div>
                     ))}
                 </div>

@@ -22,7 +22,7 @@ function AppRoute() {
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Adjust the duration as needed
+    }, 2000); // Adjust the duration as needed
   }, []);
 
   const location = useLocation();

@@ -30,12 +30,8 @@ function AdvanceSearch() {
     ]
     return (
         <TransitionPage>
-            <div>
-                <div dir='rtl'>
-
-                    <Navbar />
-                </div>
-
+            <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full bg-white min-h-screen flex-1  ">
+                <Navbar />
                 <div className='min-h-[85vh] items-center flex'>
                     <div className='w-[100vw] px-5 '>
                         <div className='flex flex-col items-center w-full justify-center'>
