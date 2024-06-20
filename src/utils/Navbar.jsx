@@ -14,7 +14,7 @@ import { CgMenuRightAlt } from 'react-icons/cg'
 const Navbar = () => {
     const menu = [
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
-        { route: "/#", title: "כניסת מפקד", icon: <HiUserCircle className='text-3xl text-black' /> },
+        { route: "/lastReports", title: " כניסת מפקד", icon: <HiUserCircle className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
         { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]

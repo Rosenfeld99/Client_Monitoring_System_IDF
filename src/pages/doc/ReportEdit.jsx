@@ -43,16 +43,9 @@ const ReportEdit = () => {
           </div>
           {/*  */}
           <div className="w-full">
-            {/* <div className=" relative">
-              {value != "" && <label className=' absolute -top-2.5 right-2 bg-white px-2 text-gray-400'>איפה אני נמצא?</label>}
-              <input onChange={(e) => setValue(e.target.value)} className="justify-center px-4 py-2 bg-white rounded-lg w-full border border-solid border-neutral-200 text-ellipsis" type="text" placeholder='איפה אני נמצא?' />
-            </div> */}
             <FloatingLabelInput label={"איפה אני נמצא"} placeholder={"איפה אני נמצא"} setState={setValueWMI} state={valueWMI}/>
 
             <FloatingLabelInput label={"מה אני עושה?"} placeholder={"מה אני עושה?"} setState={setValueWWd} state={valueWWd}/>
-            {/* <div className="justify-center px-4 py-2 mt-5 bg-white rounded-lg w-full border border-solid border-neutral-200 text-ellipsis">
-              מה אני עושה?
-            </div> */}
           </div>
 
           {/*  */}
