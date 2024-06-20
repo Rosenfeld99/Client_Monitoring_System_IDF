@@ -11,7 +11,6 @@ const ReportEnd = () => {
     const [valueWMI, setValueWMI] = useState('')
 
     const handleEndReport = () => {
-
     }
 
     return (
