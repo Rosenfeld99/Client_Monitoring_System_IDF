@@ -12,27 +12,25 @@ function LastReports() {
   const [chosenCategory, setChosenCategory] = useState("last-report")
   return (
     <TransitionPage>
-      <div>
-        <div dir='rtl'>
+      <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full bg-white min-h-screen flex-1  ">
 
-          <Navbar />
-        </div>
-        <div className='min-h-[85vh] flex items-center'>
+        <Navbar />
+        <div className='h-full flex-1 flex items-center'>
           <div className='w-[100vw] px-5 mt-5'>
             <div className='flex justify-center pb-4 items-center'>
               <span className='font-bold' >מיין משתמשים</span>
             </div>
-            <div className='flex'>
+            <div className='flex flex-row-reverse'>
               <div className='border-gray-300 rounded-lg border flex w-[90%] items-center'>
-                <input dir='rtl' placeholder='  חיפוש משתמשים   ' className='ml-1 p-1 outline-none  w-[90%]' type="text" />
+                <input placeholder='  חיפוש משתמשים   ' className='ml-1 p-1 outline-none  w-[90%]' type="text" />
                 <span ><img className='max-w-4' src={searchIcon} alt="" /></span>
               </div>
-              <Link className=' ml-1  flex' to={"/advanceSearch"}>
+              <Link className=' ml-1 flex rounded-lg overflow-hidden' to={"/advanceSearch"}>
                 <button className='ml-auto px-2 bg-[#E6E6E6]'><img className='max-w-4' src={filter} alt="" /></button>
               </Link>
             </div>
 
-            <div className='flex w-full justify-evenly items-center p-1 rounded-lg mt-4 bg-[#E6E6E6] '>
+            <div className='flex w-full justify-evenly items-center p-1 flex-1 rounded-lg mt-4 bg-[#E6E6E6] '>
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "last-report" && "bg-white"} px-4 p-1 rounded-lg `} id='last-report'
               >דיווחו לאחרונה</div>
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "not-report" && "bg-white"} px-4 p-1 rounded-lg `} id='not-report'>לא דיווחו</div>

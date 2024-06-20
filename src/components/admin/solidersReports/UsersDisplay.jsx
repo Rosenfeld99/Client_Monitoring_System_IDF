@@ -19,7 +19,7 @@ const DisplayUser = () => {
 
 function UsersDisplay() {
     return (
-        <div className='w-full'> <div className=' grid grid-cols-12 gap-3 px-1 mt-5  '>
+        <div className='w-full h-full flex flex-col flex-1'> <div className=' grid grid-cols-12 gap-3 px-1 mt-5  '>
             <div className="flex w-full col-span-2 items-center justify-center font-semibold">עושה</div>
             <div className="flex w-full  col-span-3 items-center justify-center font-semibold">נמצא</div>
             <div className="flex w-full col-span-4 items-center justify-center font-semibold">דיווח אחרון</div>
