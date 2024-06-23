@@ -12,6 +12,7 @@ import SearchResult from '../components/admin/advanceSearch/SearchResult'
 import SplashPage from '../pages/splash/SplashPage'
 import LastReports from '../components/admin/solidersReports/SolidersReports'
 import AdvanceSearch from '../components/admin/advanceSearch/AdvanceSearch'
+import ChooseOption from '../pages/doc/ChooseOption'
 
 
 
@@ -37,6 +38,7 @@ function AppRoute() {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/home' element={<Home />} />
           <Route path='/startReport' element={<ReportStart />} />
+          <Route path='/startReport/:value' element={<ChooseOption />} />
           <Route path='/endReport' element={<ReportEnd />} />
           <Route path='/ReportEdit/:reportId' element={<ReportEdit />} />
           <Route path='/todayReportsList' element={<HistoryLastDay />} />
