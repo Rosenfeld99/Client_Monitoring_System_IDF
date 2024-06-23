@@ -33,7 +33,7 @@ const Navbar = () => {
 
     return (
         <React.Fragment>
-            <div className=" flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center text-white bg-gradient-to-r from-cyan-500 to-blue-500">
+            <div className=" flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md shadow-[#0000003d]">
                 <FaArrowLeft onClick={() => navigate(-1)} />
                 <div className="flex-auto self-stretch my-auto">{appName}</div>
                 <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} />
