@@ -19,7 +19,7 @@ const ReportStart = ({ }) => {
 
     return (
         <TransitionPage>
-            <div dir='rtl' className=" flex flex-col overflow-hidden pb-20 mx-auto w-full bg-white min-h-screen flex-1">
+            <div dir='rtl' className=" flex flex-col overflow-hidden relative pb-20 mx-auto w-full bg-white min-h-screen flex-1">
 
                 <Navbar />
                 <div className="flex gap-3 self-center px-5 mt-10 leading-5 text-center text-black">
@@ -30,11 +30,13 @@ const ReportStart = ({ }) => {
                         <span className="font-bold text-black">8:00</span>{" "}
                     </div>
                 </div>
-                <img
-                    loading="lazy"
-                    srcSet={BACKPAPER}
-                    className="mt-20 max-w-[800px] max-h-[800px] object-cover w-full absolute top-[33vw] stroke-neutral-200 "
-                />
+                <div className=" mx-auto">
+                    <img
+                        loading="lazy"
+                        srcSet={BACKPAPER}
+                        className="mt-20 md:mt-[6vw] sm:mr-[8vw] max-w-[550px] max-h-[800px] object-cover w-[100vw] absolute right-0 stroke-neutral-200 "
+                    />
+                </div>
                 <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full text-zinc-500">
                     <div className="flex flex-col text-center leading-[150%] pb-20">
                         <div className="self-center text-lg font-bold text-black">
