@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import ButtonAction from '../../../utils/ButtonAction';
 
 
 const DisplayUser = ({ setUsersSelected }) => {
@@ -38,12 +39,13 @@ function UsersDisplay() {
                     </div>
                 )}
             </div>
-            {usersSelected[0] && <div className='flex  mt-5 justify-center'>
-                <Link to={"/startReport"}>
-                    <button className=' p-3 rounded-lg bg-[#E6E6E6]'>עריכה</button>
-                </Link>
-            </div>}
-        </div>
+            {usersSelected[0] &&
+                <Link Link to={"/startReport"}>
+                    <div className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                        <ButtonAction title="שלח דיווח" route={`/endReport`} />
+                    </div>
+                </Link>}
+        </div >
     )
 }
 

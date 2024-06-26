@@ -32,7 +32,7 @@ function LastReports() {
 
             <div className='flex w-full justify-evenly items-center p-1 flex-1 rounded-lg mt-4 bg-[#E6E6E6] '>
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "class-of-soldiers" && "bg-white"} w-1/2 text-center p-1 rounded-lg `} id='class-of-soldiers'>דיווח מחלקתי</div>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-white"} w-1/2  text-center p-1 rounded-lg `} id='soldiers'>עריכת מדגם</div>
+              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-white"} w-1/2  text-center p-1 rounded-lg `} id='soldiers'>דיווח מדגם</div>
             </div>
             {chosenCategory === "soldiers" ? <UsersDisplay /> : <SoldiersClassReport />}
           </div>
