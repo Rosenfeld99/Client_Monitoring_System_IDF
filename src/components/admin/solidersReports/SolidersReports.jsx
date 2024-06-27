@@ -22,8 +22,8 @@ function LastReports() {
             </div>
             <div className='flex flex-row-reverse'>
               <div className='border-gray-300 pr-3 rounded-lg border flex w-[90%] '>
-                <input placeholder='  חיפוש משתמשים   ' className='ml-1 p-1 outline-none  w-[90%]' type="text" />
                 <span className='flex items-center' ><img className='max-w-4' src={searchIcon} alt="" /></span>
+                <input placeholder='  חיפוש משתמשים   ' className='ml-1 p-1 outline-none  w-[90%]' type="text" />
               </div>
               <Link className=' ml-1 flex rounded-lg overflow-hidden' to={"/advanceSearch"}>
                 <button className='ml-auto px-2 bg-[#E6E6E6]'><img className='max-w-4' src={filter} alt="" /></button>
