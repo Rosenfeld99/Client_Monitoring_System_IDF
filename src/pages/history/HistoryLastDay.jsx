@@ -7,10 +7,27 @@ import { useNavigate } from 'react-router-dom'
 import "../../App.css"
 import TransitionPage from '../../animation/TransitionPage'
 import { user } from '../../db/reportsList'
+import useUser from '../../hooks/useUser'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
     const navigation = useNavigate()
+    const { activeIsEdit } = useUser()
+
+    const handleNavigation = () => {
+        if (chooseOption !== null) {
+            const params = new URLSearchParams({
+                s: chooseOption?.content,
+                location: chooseOption?.location,
+                startTime: chooseOption?.startTime,
+                endTime: chooseOption?.endTime
+            }).toString();
+            navigation(`/ReportEdit/reportId?${params}`);
+            activeIsEdit()
+        }
+    }
+
+    // console.log(chooseOption);
 
     return (
         <TransitionPage>
@@ -33,11 +50,19 @@ const HistoryLastDay = ({ }) => {
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
                     {user?.lastDayReports?.map((item, index) => (
-                        <div key={index} onClick={() => setChooseOption(index)}
+                        // adding start and last time
+                        <div key={index} onClick={() => setChooseOption(item)}
                             className={` bg-white  p-2 rounded-lg text-md w-full 
-                        ${chooseOption === index ? "font-bold border-2 border-[#0996E5] text-black flex items-center justify-between"
+                        ${chooseOption === index ? "font-bold border-2 border-[#0996E5] bg-slate-100 text-black flex items-center justify-between"
                                     : "border-2 border-gray-200 font-normal text-gray-500"}`}>
-                            {item?.content} {chooseOption === index && <BiSolidEdit onClick={() => navigation(`/ReportEdit/${'reportId'}`)} className='text-2xl text-[#0996E5]' />}
+                            <div className=" flex items-center w-full gap-5 justify-between">
+                                <div >{item?.content}</div>
+                                <div className=" flex items-center text-sm text-gray-500 gap-2">
+                                    <div >{item?.startTime}</div>{"-"}
+                                    <div >{item?.endTime}</div>
+                                    {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
