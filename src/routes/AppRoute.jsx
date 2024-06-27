@@ -42,7 +42,6 @@ function AppRoute() {
           <Route path='/endReport' element={<ReportEnd />} />
           <Route path='/ReportEdit/:reportId' element={<ReportEdit />} />
           <Route path='/todayReportsList' element={<HistoryLastDay />} />
-          <Route path='/editReports' element={<Home />} />
           <Route path='/lastReports' element={<LastReports />} />
           <Route path='/searchResult' element={<SearchResult />} />
           <Route path='/advanceSearch' element={<AdvanceSearch />} />
