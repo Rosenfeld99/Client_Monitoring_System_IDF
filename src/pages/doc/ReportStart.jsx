@@ -3,10 +3,8 @@ import BACKPAPER from "/backPaper.png"
 import Navbar from '../../utils/Navbar'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
-import { LiaHomeSolid, LiaMapMarkedAltSolid } from 'react-icons/lia'
-import { GiWatchtower } from 'react-icons/gi'
-import { CiCircleMore } from 'react-icons/ci'
 import { useNavigate } from 'react-router-dom'
+import { SYSTEMSTRACT } from '../../db/systemStract'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
@@ -17,12 +15,7 @@ const ReportStart = ({ }) => {
     }
 
     // <GiTowerFlag />
-    const LIST_OPTION = [
-        { name: "בית", value: "home", icon: <LiaHomeSolid /> },
-        { name: "בסיס", value: "base", icon: <GiWatchtower /> },
-        { name: "שטח", value: "area", icon: <LiaMapMarkedAltSolid /> },
-        { name: "שונות", value: "others", icon: <CiCircleMore /> },
-    ]
+
 
     return (
         <TransitionPage>
@@ -54,7 +47,7 @@ const ReportStart = ({ }) => {
 
                     {/* List option */}
                     <div className=" grid grid-cols-2 gap-x-24 gap-y-20">
-                        {LIST_OPTION?.map((item, index) => (
+                        {SYSTEMSTRACT?.map((item, index) => (
                             <button onClick={() => navigation(`/startReport/${item?.value}`)} key={index} className=" flex flex-col items-center justify-center gap-2">
                                 <div className="bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md shadow-[#0000003d] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
                                 <div className="text-lg font-bold">{item?.name}</div>
