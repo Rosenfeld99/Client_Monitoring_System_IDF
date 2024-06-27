@@ -4,11 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { FaArrowRight } from 'react-icons/fa'
 import ButtonAction from '../../utils/ButtonAction'
 import { getSingleSystemStract } from '../../db/systemStract'
+import { useState } from 'react'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { pathname } = useLocation()
-    console.log(pathname?.split('/')[2]);
+    // console.log(pathname?.split('/')[2]);
+    const [currentSelect,setCurrentSelect] = useState(null)
 
     const handleStartReport = () => {
 
@@ -23,7 +25,7 @@ const ReportStart = ({ }) => {
         return (
             <div className=" flex flex-col items-center w-full justify-center mt-60 ">
                 {current.listOption?.map((item, index) => (
-                    <button key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2">
+                    <button onClick={()=> setCurrentSelect(true)} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2">
                         <div className="text-lg font-bold flex items-start justify-start w-full p-4 px-6">{item?.name}</div>
                     </button>
                 ))}
@@ -59,7 +61,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct/>
 
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction title="שלח דיווח" route={`/endReport`} />
+                    <ButtonAction disabledBtn={!currentSelect} title="שלח דיווח" route={`/endReport`} />
                 </div>
             </div>
         </TransitionPage>
