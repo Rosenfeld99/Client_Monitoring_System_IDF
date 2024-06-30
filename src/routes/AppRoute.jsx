@@ -28,7 +28,7 @@ function AppRoute() {
 
   const location = useLocation();
   return (
-    <div className='max-w-[680px] mx-auto'>
+    <div className='max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content'>
       {isLoading ? (
         <SplashPage />
       ) : (
@@ -42,7 +42,6 @@ function AppRoute() {
           <Route path='/endReport' element={<ReportEnd />} />
           <Route path='/ReportEdit/:reportId' element={<ReportEdit />} />
           <Route path='/todayReportsList' element={<HistoryLastDay />} />
-          <Route path='/editReports' element={<Home />} />
           <Route path='/lastReports' element={<LastReports />} />
           <Route path='/searchResult' element={<SearchResult />} />
           <Route path='/advanceSearch' element={<AdvanceSearch />} />

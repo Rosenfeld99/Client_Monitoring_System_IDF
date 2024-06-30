@@ -7,14 +7,31 @@ import { useNavigate } from 'react-router-dom'
 import "../../App.css"
 import TransitionPage from '../../animation/TransitionPage'
 import { user } from '../../db/reportsList'
+import useUser from '../../hooks/useUser'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
     const navigation = useNavigate()
+    const { activeIsEdit } = useUser()
+
+    const handleNavigation = () => {
+        if (chooseOption !== null) {
+            const params = new URLSearchParams({
+                s: chooseOption?.content,
+                location: chooseOption?.location,
+                startTime: chooseOption?.startTime,
+                endTime: chooseOption?.endTime
+            }).toString();
+            navigation(`/ReportEdit/reportId?${params}`);
+            activeIsEdit()
+        }
+    }
+
+    // console.log(chooseOption);
 
     return (
         <TransitionPage>
-            <div dir='rtl' className=" flex flex-col pb-20 mx-auto w-full relative bg-white min-h-screen flex-1 ">
+            <div dir='rtl' className=" flex flex-col pb-20 mx-auto w-full relative min-h-screen flex-1 ">
                 <Navbar />
                 {/* title */}
                 <div className=" flex-row-reverse gap-3 flex items-center justify-center py-10">
@@ -28,16 +45,24 @@ const HistoryLastDay = ({ }) => {
                 <img
                     loading="lazy"
                     srcSet={BACKPAPER}
-                    className=" mt-20 w-full max-w-[700px] max-h-[700px] z-10 absolute top-20 aspect-[0.72] stroke-[5px] stroke-neutral-200 stroke-opacity-40"
+                    className=" mt-20 w-full opacity-15 max-w-[700px] max-h-[700px] z-10 absolute top-20 aspect-[0.72] stroke-[5px] stroke-neutral-200 stroke-opacity-40"
                 />
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
                     {user?.lastDayReports?.map((item, index) => (
-                        <div key={index} onClick={() => setChooseOption(index)}
-                            className={` bg-white  p-2 rounded-lg text-md w-full 
-                        ${chooseOption === index ? "font-bold border-2 border-[#0996E5] text-black flex items-center justify-between"
-                                    : "border-2 border-gray-200 font-normal text-gray-500"}`}>
-                            {item?.content} {chooseOption === index && <BiSolidEdit onClick={() => navigation(`/ReportEdit/${'reportId'}`)} className='text-2xl text-[#0996E5]' />}
+                        // adding start and last time
+                        <div key={index} onClick={() => setChooseOption(item)}
+                            className={`p-2 rounded-lg text-md w-full 
+                        ${chooseOption?.id === item?.id ? "font-bold dark:text-light_primary border-2 border-[#0996E5] bg-slate-100 dark:bg-[#121212] text-light_primary_content flex items-center justify-between"
+                                    : "border-2 border-gray-200 dark:border-dark_accent_content font-normal text-gray-500"}`}>
+                            <div className=" flex items-center w-full gap-5 justify-between">
+                                <div >{item?.content}</div>
+                                <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
+                                    <div >{item?.startTime}</div>{"-"}
+                                    <div >{item?.endTime}</div>
+                                    {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

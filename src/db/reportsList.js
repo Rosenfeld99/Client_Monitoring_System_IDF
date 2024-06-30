@@ -58,7 +58,7 @@ export const reportListUsers = {
       username: "נהוראי עטיה",
       password: "password6789",
       pic: "/assets/anonymous-avatar-icon-25.jpg",
-      role: "admin",
+      role: "manager",
       subSolders: ["soldier1", "soldier2"],
       userId: "0987654",
       commandId: "cmd001",
