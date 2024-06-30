@@ -3,9 +3,9 @@ import Navbar from '../../../utils/Navbar'
 import filter from "/filter.png"
 import searchIcon from "/searchIcon.png"
 import { Link } from 'react-router-dom'
-import UsersDisplay from './UsersDisplay'
 import TransitionPage from '../../../animation/TransitionPage'
 import SoldiersClassReport from './SoldiersClassReport'
+import SolidersSample from './SolidersSample'
 
 
 function LastReports() {
@@ -34,7 +34,7 @@ function LastReports() {
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "class-of-soldiers" && "bg-white"} w-1/2 text-center p-1 rounded-lg `} id='class-of-soldiers'>דיווח מחלקתי</div>
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-white"} w-1/2  text-center p-1 rounded-lg `} id='soldiers'>דיווח מדגם</div>
             </div>
-            {chosenCategory === "soldiers" ? <UsersDisplay /> : <SoldiersClassReport />}
+            {chosenCategory === "soldiers" ? <SolidersSample /> : <SoldiersClassReport />}
           </div>
         </div>
 

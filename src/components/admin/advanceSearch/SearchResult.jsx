@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Navbar from '../../../utils/Navbar'
 import UsersDisplay from '../solidersReports/UsersDisplay'
 import TransitionPage from '../../../animation/TransitionPage'
 import { BsCalendarDate } from 'react-icons/bs'
 import { LiaPlaceOfWorshipSolid } from 'react-icons/lia'
 import { MdOutlinePeopleAlt } from 'react-icons/md'
+import { UserContextProvider } from '../../../context/UserContext'
 
 function SearchResult() {
+    const { advanceSearchResults, setAdvanceSearchResults } = UserContextProvider()
+
     return (
         <TransitionPage  >
             <div dir='rtl'>
