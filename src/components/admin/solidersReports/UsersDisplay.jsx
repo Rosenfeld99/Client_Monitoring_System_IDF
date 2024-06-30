@@ -8,13 +8,13 @@ const DisplayUser = ({ setUsersSelected }) => {
 
     return (<>
         {/* TODO: save the users selected on click */}
-        <div onClick={() => { !chooseReport ? setUsersSelected(["has users"]) : setUsersSelected([]); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-[#e9f6fd] border-[1px]  border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
+        <div onClick={() => { !chooseReport ? setUsersSelected(["has users"]) : setUsersSelected([]); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
             <div className="flex w-full h-full overflow-y-auto col-span-2 items-center justify-center ">עושה</div>
             <div className="flex w-full h-full overflow-y-auto  col-span-3 items-center justify-center ">חדר  hh jjj nn jjj אוכל</div>
             <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">דיווח אחרון</div>
             <div className="flex w-full h-full overflow-y-auto col-span-3 items-center  justify-center ">משתמש</div>
         </div>
-        <div className='divide-solid divide-y border  ' ></div>
+        <div className='divide-solid divide-y border-b-2 border-[#ebebeb] dark:border-[#686868]  ' ></div>
     </>)
 }
 
@@ -31,7 +31,7 @@ function UsersDisplay() {
                 <div className="flex w-full col-span-4 items-center justify-center font-semibold">דיווח אחרון</div>
                 <div className="flex w-full col-span-3 items-center  justify-center font-semibold">משתמש</div>
             </div>
-            <div className='divide-solid divide-y border  ' ></div>
+            <div className='divide-solid divide-y border-b-2 border-[#ebebeb] dark:border-[#686868]  ' ></div>
             <div className='  h-[45vh] overflow-y-auto'>
                 {new Array(15).fill(0).map((_, i) =>
                     <div key={i}>

@@ -10,7 +10,7 @@ import useUser from '../../hooks/useUser'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
-  const { isEdit, } = useUser()
+  const { isEdit, activeIsEdit } = useUser()
 
 
   const handleStartReport = () => {
@@ -26,9 +26,11 @@ const ReportEdit = ({ }) => {
     searchParams.get('location')
     searchParams.get('startTime')
     searchParams.get('endTime')
-  }, [searchParams])
+    activeIsEdit()
+  }, [searchParams, isEdit])
 
-  console.log(searchParams.get('s'));
+  // console.log(searchParams.get('s'));
+  console.log(isEdit);
 
 
   const counterOfEdit = 2
@@ -48,31 +50,31 @@ const ReportEdit = ({ }) => {
 
   return (
     <TransitionPage>
-      <div dir='rtl' className=" flex flex-col overflow-hidden pb-20 mx-auto w-full bg-white min-h-screen flex-1">
+      <div dir='rtl' className=" flex flex-col overflow-hidden pb-20 mx-auto w-full min-h-screen flex-1">
 
         <Navbar />
-        <div className="flex gap-2 self-center px-5 mt-10 leading-5 text-center text-black">
+        <div className="flex gap-2 self-center px-5 mt-10 leading-5 text-center text-light_neutral dark:text-dark_accent_content">
           <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
           <div className="grow my-auto text-md">
             עריכת דיווח {" "}
-            <span className="font-semibold text-black">{searchParams.get('s')}/{searchParams.get('location')}</span>{" "}
+            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{searchParams.get('location')}</span>{" "}
             <div className=" flex items-center justify-center gap-2">
-              {"משעה "}<span className="font-semibold text-black">{searchParams.get('startTime')}</span>
-              {"עד "}<span className="font-semibold text-black">{searchParams.get('endTime')}</span>
+              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{searchParams.get('startTime')}</span>
+              {"עד "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{searchParams.get('endTime')}</span>
             </div>
           </div>
         </div>
         <img
           loading="lazy"
           srcSet={BACKPAPER}
-          className="mt-20 max-w-[800px] max-h-[800px] object-cover w-full absolute top-[33vw] stroke-neutral-200 "
+          className="mt-20 max-w-[800px] opacity-15 max-h-[800px] object-cover w-full absolute top-[33vw]  "
         />
-        <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full text-zinc-500">
+        <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
           <div className="flex flex-col text-center leading-[150%] pb-20">
-            <div className="self-center text-lg font-bold text-black">
+            <div className="self-center text-lg font-bold text-light_primary_content dark:text-dark_primary_content">
               עריכת דיווח
             </div>
-            <div className="w-full text-sm text-zinc-500">
+            <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
               נותרו עוד <span className={` font-bold ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`}>{counterOfEdit}</span> מתוך 3 אפשריות לערוך
             </div>
           </div>
@@ -81,7 +83,7 @@ const ReportEdit = ({ }) => {
           <div className=" grid grid-cols-2 gap-x-24 gap-y-20">
             {SYSTEMSTRACT?.map((item, index) => (
               <button onClick={() => { isEdit ? handleNavigation(item) : navigation(`/startReport/${item?.value}`) }} key={index} className=" flex flex-col items-center justify-center gap-2">
-                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 shadow-md shadow-[#0000003d] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
+                <div className="gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] dark:shadow-[#000000] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
                 <div className="text-lg font-bold">{item?.name}</div>
               </button>
             ))}
