@@ -45,6 +45,7 @@ function ReportDate() {
                     </div>
                 </div>
 
+                {/* checking for if is auto start the manager to end repo */}
                 <div className=" backdrop-blur-sm right-0 w-full p-5 px-9 z-50 fixed bottom-0 ">
                     <ButtonAction title="דיווח מדגם" />
                 </div>
