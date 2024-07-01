@@ -4,10 +4,18 @@ export const ContextStore = createContext()
 export const ContextStoreProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
-
+  const [advanceSearchResults, setAdvanceSearchResults] = useState([])
+  const [searchInputs, setSearchInputs] = useState({
+    date: "",
+    place: [],
+    missions: [],
+    users: []
+  })
   const contextValue = {
     currentUser, setCurrentUser,
-    isEdit, setIsEdit
+    isEdit, setIsEdit,
+    advanceSearchResults, setAdvanceSearchResults,
+    searchInputs, setSearchInputs
   }
 
   return (

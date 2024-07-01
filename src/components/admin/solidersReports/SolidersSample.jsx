@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import UsersDisplay from './UsersDisplay'
 import { reportListUsers } from '../../../db/reportsList';
 
-function SolidersSample() {
+function SolidersSample({ setChosenCategory, usersSelected, setUsersSelected }) {
     const [userArray, setUserArray] = useState(
         reportListUsers.users.map((userDisplay, i) => {
             const dateKeys = Object?.keys(userDisplay.reports[0].dates);
@@ -12,7 +12,7 @@ function SolidersSample() {
 
     )
     return (
-        <div><UsersDisplay arrayUserDisplay={userArray} /></div>
+        <div dir='rtl'><UsersDisplay usersSelected={usersSelected} setUsersSelected={setUsersSelected} arrayUserDisplay={userArray} setChosenCategory={setChosenCategory} /></div>
     )
 }
 

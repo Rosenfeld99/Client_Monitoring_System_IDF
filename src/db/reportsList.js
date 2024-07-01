@@ -41,11 +41,11 @@ export const reportListUsers = {
                 location: "בסיס",
               },
             ],
-            "26/06/2024": [
+            " 26/06/2024": [
               {
                 id: "4",
-                startTime: "12:00",
-                endTime: "14:00",
+                startTime: "18:00",
+                endTime: "19:00",
                 content: "הכשרה Y",
                 location: "בסיס",
               },
@@ -95,7 +95,7 @@ export const reportListUsers = {
                 location: "בסיס",
               },
             ],
-            "26/06/2024": [
+            " 26/06/2024": [
               {
                 id: "4",
                 startTime: "18:00",
@@ -111,59 +111,87 @@ export const reportListUsers = {
   ],
 };
 
-export const user = [
-  {
-    username: "אליהו מאיר",
-    password: "password123",
-    pic: "/assets/anonymous-avatar-icon-25.jpg",
-    role: "admin",
-    subSolders: ["soldier1", "soldier2"],
-    userId: "123456",
-    commandId: "cmd001",
-    reports: [
-      {
-        dates: {
-          "25/06/2024": [
-            {
-              id: "1",
-              startTime: "12:00",
-              endTime: "13:00",
-              content: "תפילה",
-              location: "בסיס",
-            },
-            {
-              id: "2",
-              startTime: "14:00",
-              endTime: "15:00",
-              content: "ספורט",
-              location: "בסיס",
-            },
-            {
-              id: "3",
-              startTime: "16:00",
-              endTime: "17:00",
-              content: "הכשרה X",
-              location: "בסיס",
-            },
-            {
-              id: "4",
-              startTime: "18:00",
-              endTime: "19:00",
-              content: "הכשרה Y",
-              location: "בסיס",
-            },
-          ],
-          "26/06/2024": [
-            {
-              id: "4",
-              startTime: "18:00",
-              endTime: "19:00",
-              content: "הכשרה Y",
-              location: "בסיס",
-            },
-          ],
-        },
+export const user = {
+  username: "אליהו מאיר",
+  password: "password123",
+  pic: "/assets/anonymous-avatar-icon-25.jpg",
+  role: "admin",
+  subSolders: ["soldier1", "soldier2"],
+  userId: "123456",
+  commandId: "cmd001",
+  reports: [
+    {
+      dates: {
+        "25/06/2024": [
+          {
+            id: "1",
+            startTime: "12:00",
+            endTime: "13:00",
+            content: "תפילה",
+            location: "בסיס",
+          },
+          {
+            id: "2",
+            startTime: "14:00",
+            endTime: "15:00",
+            content: "ספורט",
+            location: "בסיס",
+          },
+          {
+            id: "3",
+            startTime: "16:00",
+            endTime: "17:00",
+            content: "הכשרה X",
+            location: "בסיס",
+          },
+          {
+            id: "4",
+            startTime: "18:00",
+            endTime: "19:00",
+            content: "הכשרה Y",
+            location: "בסיס",
+          },
+        ],
+        "26/06/2024": [
+          {
+            id: "4",
+            startTime: "18:00",
+            endTime: "19:00",
+            content: "הכשרה Y",
+            location: "בסיס",
+          },
+        ],
       },
-    ],
-  },
-];
+    },
+  ],
+  lastDayReports: [
+    {
+      id: "1",
+      startTime: "12:00",
+      endTime: "13:00",
+      content: "תפילה",
+      location: "בסיס",
+    },
+    {
+      id: "2",
+      startTime: "14:00",
+      endTime: "15:00",
+      content: "ספורט",
+      location: "בסיס",
+    },
+    {
+      id: "3",
+      startTime: "16:00",
+      endTime: "17:00",
+      content: "הכשרה X",
+      location: "בסיס",
+    },
+    {
+      id: "4",
+      startTime: "18:00",
+      endTime: "19:00",
+      content: "הכשרה Y",
+      location: "בסיס",
+    },
+  ],
+};

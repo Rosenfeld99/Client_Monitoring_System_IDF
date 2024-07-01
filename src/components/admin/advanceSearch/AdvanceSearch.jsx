@@ -1,26 +1,36 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../../../utils/Navbar'
 import ButtonAction from '../../../utils/ButtonAction'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import TransitionPage from '../../../animation/TransitionPage';
 import { reportListUsers } from '../../../db/reportsList';
-import { UserContextProvider } from '../../../context/UserContext';
+
+import useUser from '../../../hooks/useUser';
+import { useNavigate } from 'react-router-dom';
+import { ContextStore } from '../../../context/ContextStore';
+
 
 
 function AdvanceSearch() {
     const animatedComponents = makeAnimated();
-    const { advanceSearchResults, setAdvanceSearchResults } = UserContextProvider()
+    const { advanceSearchResults, setAdvanceSearchResults } = useUser();
+    const { searchInputs, setSearchInputs } = useContext(ContextStore);
 
-    const [inputs, setInputs] = useState({
-        date: "",
-        place: [],
-        missions: [],
-        users: []
-    })
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        setAdvanceSearchResults([])
+
+    }, [])
+
+
+
+
 
     const handleInputs = (e, key) => {
-        setInputs({ ...inputs, [key]: e.map((user) => user.value) })
+        setSearchInputs({ ...searchInputs, [key]: e.map((user) => user.value) })
     }
 
 
@@ -32,29 +42,33 @@ function AdvanceSearch() {
     const optionsMissions = [{ isFixed: true, label: "מטבח", value: "מטבח" },
     { isFixed: true, label: "תפילה", value: "תפילה" }
     ]
-    const optionsUsers = [{ isFixed: true, label: "אליהו מאיר", value: "אליהו מאיר" },
-    { isFixed: true, label: "נהוראי עטיה", value: "נהוראי עטיה" }
-    ]
-
+    const optionsUsers = reportListUsers.users.map((user) => { return { isFixed: true, label: user.username, value: user.username } })
 
     const handleSearch = () => {
-        const usersFillter = reportListUsers.users.filter((user) => inputs.users.includes(user.username))
+        if (!checkInputs()) {
+            return
+        }
+        const usersFillter = reportListUsers.users.filter((user) => searchInputs.users.includes(user.username))
 
 
         const results = [];
-        const chosenDate = inputs?.date.split("-").reverse().join("/");
+        const chosenDate = searchInputs?.date.split("-").reverse().join("/");
         for (let index = 0; index < usersFillter.length; index++) {
             // filter with the palace and the missions
-            const reports = usersFillter[index]?.reports[0]?.dates[chosenDate]?.filter((report) => inputs.place.includes(report.location) && inputs.missions.includes(report.content))
-            if (reports[0]) {
-                results.push({ date: chosenDate, name: user.username, lastsReports: reports })
+            const reports = usersFillter[index]?.reports[0]?.dates[chosenDate]?.filter((report) => searchInputs.place.includes(report.location) && searchInputs.missions.includes(report.content))
+
+            console.log(reports);
+            if (reports?.length > 0) {
+                results.push({ date: chosenDate, name: usersFillter[index].username, lastsReports: reports })
             }
 
         }
         setAdvanceSearchResults(results)
+        navigate("/searchResult")
+
     }
     const checkInputs = () => {
-        if (!inputs.date || !inputs.missions[0] || !inputs.place[0] || !inputs.users[0]) {
+        if (!searchInputs.date || !searchInputs.missions[0] || !searchInputs.place[0] || !searchInputs.users[0]) {
             alert("מלא את כל הנתונים")
             return false
         }
@@ -74,8 +88,8 @@ function AdvanceSearch() {
                         </div>
                         <div dir='rtl' className='min-h-52 w-full flex flex-col justify-evenly items-center '>
                             <div className='flex border p-1 w-full'>
-                                {inputs.date ? inputs?.date?.split('-').reverse().join('-') : "חיפוש לפי תאריכים"}
-                                <input onChange={(e) => setInputs({ ...inputs, "date": e.target.value })} type="date" className='w-[20px] mr-auto ' required={true} placeholder='חיפוש לפי תאריכים' />
+                                {searchInputs.date ? searchInputs?.date?.split('-').reverse().join('-') : "חיפוש לפי תאריכים"}
+                                <input onChange={(e) => setSearchInputs({ ...searchInputs, "date": e.target.value })} type="date" className='w-[20px] mr-auto ' required={true} placeholder='חיפוש לפי תאריכים' />
                             </div>
 
                             <Select
@@ -85,6 +99,7 @@ function AdvanceSearch() {
                                 components={animatedComponents}
                                 isMulti
                                 closeMenuOnSelect={false}
+                                blurInputOnSelect={false}
                                 placeholder="חיפוש לפי מקומות"
                                 options={optionsPlaces}
                                 onChange={(e) => handleInputs(e, "place")}
@@ -98,6 +113,7 @@ function AdvanceSearch() {
                                 components={animatedComponents}
                                 isMulti
                                 closeMenuOnSelect={false}
+                                blurInputOnSelect={false}
                                 placeholder="חיפוש לפי משימות"
                                 options={optionsMissions}
                                 onChange={(e) => handleInputs(e, "missions")}
@@ -109,6 +125,7 @@ function AdvanceSearch() {
                                 isMulti
                                 className=' w-full '
                                 closeMenuOnSelect={false}
+                                blurInputOnSelect={false}
                                 name="color"
                                 placeholder="חיפוש לפי משתמשים"
                                 options={optionsUsers}
@@ -119,7 +136,7 @@ function AdvanceSearch() {
                         </div>
                         <div className='divide-solid divide-y border m-4 ' ></div>
                         <div onClick={handleSearch}>
-                            <ButtonAction route={checkInputs && "/searchResult"} title={"חיפוש"} />
+                            <ButtonAction title={"חיפוש"} />
                         </div>
                     </div>
                 </div>

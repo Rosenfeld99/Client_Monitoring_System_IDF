@@ -12,6 +12,8 @@ import SolidersSample from './SolidersSample'
 
 function LastReports() {
   const [chosenCategory, setChosenCategory] = useState("class-of-soldiers")
+  const [usersSelected, setUsersSelected] = useState([])
+
   return (
     <TransitionPage>
       <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full min-h-screen flex-1  ">
@@ -36,7 +38,8 @@ function LastReports() {
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2 text-center p-1 rounded-lg `} id='class-of-soldiers'>דיווח מחלקתי</div>
               <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center p-1 rounded-lg `} id='soldiers'>דיווח מדגם</div>
             </div>
-            {chosenCategory === "soldiers" ? <SolidersSample /> : <SoldiersClassReport />}
+            {console.log(chosenCategory)}
+            {chosenCategory === "soldiers" ? <SolidersSample usersSelected={usersSelected} setUsersSelected={setUsersSelected} setChosenCategory={setChosenCategory} /> : <SoldiersClassReport />}
           </div>
         </div>
 

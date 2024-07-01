@@ -6,9 +6,9 @@ function SoldiersClassReport() {
     const navigation = useNavigate()
 
     return (
-        <div className=' mt-7 w-full h-full flex flex-col flex-1'>
-
-            <div className='mt-[26px]  h-[45vh] overflow-y-auto'>
+        <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
+            <div className=' border-b-2  border-transparent ' ></div>
+            <div className='  h-[45vh] overflow-y-auto mt-6 px-1 '>
                 <div className="  grid grid-cols-2 gap-x-20 gap-y-7">
                     {SYSTEMSTRACT?.map((item, index) => (
                         <button onClick={() => navigation(`/startReport/${item?.value}`)} key={index} className=" flex flex-col items-center justify-center gap-2">
@@ -17,8 +17,13 @@ function SoldiersClassReport() {
                         </button>
                     ))}
                 </div>
+
+
+
             </div>
-        </div>
+
+        </div >
+
     )
 }
 
