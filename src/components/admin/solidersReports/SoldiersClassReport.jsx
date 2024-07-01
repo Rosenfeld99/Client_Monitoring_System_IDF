@@ -11,7 +11,7 @@ function SoldiersClassReport() {
             <div className='  h-[45vh] overflow-y-auto mt-6 px-1 '>
                 <div className="  grid grid-cols-2 gap-x-20 gap-y-7">
                     {SYSTEMSTRACT?.map((item, index) => (
-                        <button onClick={() => navigation(`/startReport/${item?.value}`)} key={index} className=" flex flex-col items-center justify-center gap-2">
+                        <button onClick={() => navigation(`/startReport/${item?.value}?report=grup`)} key={index} className=" flex flex-col items-center justify-center gap-2">
                             <div className="gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
                             <div className="text-lg font-bold">{item?.name}</div>
                         </button>
