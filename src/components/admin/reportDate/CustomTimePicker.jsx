@@ -66,7 +66,7 @@ const CustomTimePicker = ({ title, btnInnerTime }) => {
                     >
                         {title}
                     </button>
-                    {btnInnerTime == "אוטומטי" ? <FaHourglassEnd className=' text-dark_accent_content opacity-5 absolute text-sm mx-auto w-full my-auto h-full top-0 right-0 rotate-12 z-20' /> : <FaHourglassStart className=' text-dark_accent_content opacity-5 absolute text-sm mx-auto w-full my-auto h-full top-0 right-0 rotate-12 z-20' />}
+                    {btnInnerTime == "אוטומטי" ? <FaHourglassEnd className='text-light_accent_content dark:text-dark_accent_content opacity-5 absolute text-sm mx-auto w-full my-auto h-full top-0 right-0 rotate-12 z-20' /> : <FaHourglassStart className='text-light_accent_content dark:text-dark_accent_content opacity-5 absolute text-sm mx-auto w-full my-auto h-full top-0 right-0 rotate-12 z-20' />}
                     <div className=" absolute bottom-3 text-xl flex items-center font-semibold">
                         {minutes && hours && minutes} {minutes && hours && <span className="p-1">:</span>} {minutes && hours && hours}
                         {title == "שעת סיום" && searchParams.get('endTime') && !hours && !minutes && <span className="p-1">{searchParams.get('endTime')}</span>}
