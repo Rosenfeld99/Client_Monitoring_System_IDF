@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import Navbar from '../../utils/Navbar'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { GiWatchtower } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../../components/Menu/Navbar'
 
 const ReportEnd = () => {
     const navigation = useNavigate()

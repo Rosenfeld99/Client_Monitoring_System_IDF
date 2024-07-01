@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { appName } from '../constant/constant'
 import { IoClose, IoDocumentTextOutline } from 'react-icons/io5'
 import { HiOutlineMenu, HiUserCircle } from 'react-icons/hi'
 import { RiHistoryFill } from 'react-icons/ri'
 import { MdOutlineLogout } from 'react-icons/md'
-import '.././App.css'
 import { useNavigate } from 'react-router-dom'
 import { FaArrowLeft } from 'react-icons/fa'
 import { LuMoonStar } from 'react-icons/lu'
-import useTheme from '../hooks/useTheme'
+import useTheme from '../../hooks/useTheme'
 import { FiSun } from 'react-icons/fi'
+import '../../App.css'
+import { appName } from '../../constant/constant'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);

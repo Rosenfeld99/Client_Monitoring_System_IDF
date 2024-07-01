@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import Navbar from '../../utils/Navbar'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { useNavigate } from 'react-router-dom'
 import { SYSTEMSTRACT } from '../../db/systemStract'
 import useUser from '../../hooks/useUser'
+import Navbar from '../../components/Menu/Navbar'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()

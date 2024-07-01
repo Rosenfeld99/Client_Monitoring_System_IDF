@@ -1,10 +1,10 @@
 import React from 'react'
-import Navbar from '../../../utils/Navbar'
 import UsersDisplay from '../solidersReports/UsersDisplay'
 import TransitionPage from '../../../animation/TransitionPage'
 import { BsCalendarDate } from 'react-icons/bs'
 import { LiaPlaceOfWorshipSolid } from 'react-icons/lia'
 import { MdOutlinePeopleAlt } from 'react-icons/md'
+import Navbar from '../../Menu/Navbar'
 
 function SearchResult() {
     return (
