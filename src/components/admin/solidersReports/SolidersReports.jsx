@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import Navbar from '../../../utils/Navbar'
-import filter from "/filter.png"
-import searchIcon from "/searchIcon.png"
 import { Link } from 'react-router-dom'
 import UsersDisplay from './UsersDisplay'
 import TransitionPage from '../../../animation/TransitionPage'
 import SoldiersClassReport from './SoldiersClassReport'
 import { LuSearch } from 'react-icons/lu'
 import { LiaFilterSolid } from 'react-icons/lia'
+import Navbar from '../../Menu/Navbar'
 
 
 function LastReports() {

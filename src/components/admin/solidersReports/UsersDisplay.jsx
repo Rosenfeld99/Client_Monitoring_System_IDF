@@ -40,7 +40,7 @@ function UsersDisplay() {
                 )}
             </div>
             {usersSelected[0] &&
-                <Link Link to={"/startReport"}>
+                <Link Link to={"/manageDate"}>
                     <div className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
                         <ButtonAction title="דיווח מדגם" />
                     </div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Navbar from '../../../utils/Navbar'
 import ButtonAction from '../../../utils/ButtonAction'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import TransitionPage from '../../../animation/TransitionPage';
+import Navbar from '../../Menu/Navbar';
 
 
 function AdvanceSearch() {
