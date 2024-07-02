@@ -3,6 +3,7 @@
     transform: translateY(-100%);
     visibility: visible;
   }
+
   100% {
     transform: translateY(0);
   }
@@ -13,6 +14,7 @@
     transform: translateY(-1500%);
     visibility: visible;
   }
+
   100% {
     transform: translateY(0);
   }
@@ -34,6 +36,7 @@
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-100%);
     visibility: hidden;
@@ -50,6 +53,7 @@
   0% {
     transform: translateY(-1500);
   }
+
   100% {
     transform: translateY(0%);
     visibility: hidden;
@@ -66,6 +70,7 @@
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -83,4 +88,8 @@
 
 .gradient-bg-dark {
   @apply bg-gradient-to-r dark:from-dark_accent dark:to-dark_secoundary;
+}
+
+summary {
+  list-style: none;
 }

@@ -6,19 +6,26 @@ import InfoTooltip from '../../InfoTooltip/InfoTooltip';
 
 
 const CustomTimePicker = ({ title, btnInnerTime }) => {
-    const [hours, setHours] = useState('');
-    const [minutes, setMinutes] = useState('');
+    const [searchParams] = useSearchParams()
+    const [hours, setHours] = useState(title == "שעת התחלה" ? searchParams?.get('startTime')?.substring(0, 2) : searchParams?.get('endTime') == "אוטומטי" ? "" : searchParams?.get('endTime')?.substring(0, 2) || '');
+    const [minutes, setMinutes] = useState(title == "שעת התחלה" ? searchParams?.get('startTime')?.substring(2) : searchParams?.get('endTime') == "אוטומטי" ? "" : searchParams?.get('endTime')?.substring(2) || '');
     const [isFlipped, setIsFlipped] = useState(false);
     const minutesRef = useRef(null);
     const navigation = useNavigate()
-    const [searchParams] = useSearchParams()
 
 
 
     const handleHourChange = (e) => {
+        // TODO: adding regular expretion for valition number without (- .. )
         const value = e.target.value;
         if (value >= 0 && value < 24) {
             setHours(value);
+            const params = new URLSearchParams({
+                startTime: title == "שעת התחלה" ? value + minutes : searchParams.get('startTime'),
+                endTime: title == "שעת התחלה" ? searchParams.get('endTime') : value + minutes,
+            }).toString();
+            navigation(`/manageDate?${params}`);
+
             if (value.length === 2) {
                 minutesRef.current.focus();
             }
@@ -29,6 +36,11 @@ const CustomTimePicker = ({ title, btnInnerTime }) => {
         const value = e.target.value;
         if (value >= 0 && value < 60) {
             setMinutes(value);
+            const params = new URLSearchParams({
+                startTime: title == "שעת התחלה" ? hours + value : searchParams.get('startTime'),
+                endTime: title == "שעת התחלה" ? searchParams.get('endTime') : hours + value,
+            }).toString();
+            navigation(`/manageDate?${params}`);
         }
     };
 
@@ -36,6 +48,11 @@ const CustomTimePicker = ({ title, btnInnerTime }) => {
         const now = new Date();
         setHours(now.getHours().toString().padStart(2, '0'));
         setMinutes(now.getMinutes().toString().padStart(2, '0'));
+        const params = new URLSearchParams({
+            startTime: now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(2, '0'),
+            endTime: searchParams.get('endTime')
+        }).toString();
+        navigation(`/manageDate?${params}`);
         setIsFlipped(false);
     };
 
@@ -49,7 +66,7 @@ const CustomTimePicker = ({ title, btnInnerTime }) => {
         const params = new URLSearchParams({
             //     s: searchParams.get('s'),
             //     location: searchParams.get('location'),
-            //     startTime: searchParams.get('startTime'),
+            startTime: searchParams.get('startTime'),
             endTime: "אוטומטי"
         }).toString();
         navigation(`/manageDate?${params}`);
@@ -69,7 +86,7 @@ const CustomTimePicker = ({ title, btnInnerTime }) => {
                     {btnInnerTime == "אוטומטי" ? <FaHourglassEnd className='text-light_accent_content dark:text-dark_accent_content opacity-5 absolute text-sm mx-auto w-full my-auto h-full top-0 right-0 rotate-12 z-20' /> : <FaHourglassStart className='text-light_accent_content dark:text-dark_accent_content opacity-5 absolute text-sm mx-auto w-full my-auto h-full top-0 right-0 rotate-12 z-20' />}
                     <div className=" absolute bottom-3 text-xl flex items-center font-semibold">
                         {minutes && hours && minutes} {minutes && hours && <span className="p-1">:</span>} {minutes && hours && hours}
-                        {title == "שעת סיום" && searchParams.get('endTime') && !hours && !minutes && <span className="p-1">{searchParams.get('endTime')}</span>}
+                        {title == "שעת סיום" && searchParams.get('endTime') && searchParams.get('endTime') != "null" && !hours && !minutes && <span className="p-1">{searchParams.get('endTime')}</span>}
                     </div>
                 </div>
                 <div className="back relative">
@@ -106,7 +123,7 @@ const CustomTimePicker = ({ title, btnInnerTime }) => {
                         </div>
                         <div className="my-4">
                             <p>
-                                זמן שנבחר: {hours.padStart(2, '0')}:{minutes.padStart(2, '0')}
+                                זמן שנבחר: {hours?.padStart(2, '0')}:{minutes?.padStart(2, '0')}
                             </p>
                         </div>
                         <div className="flex items-center justify-center gap-2 w-full -mt-2">

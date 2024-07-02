@@ -54,7 +54,7 @@ const CustomDatePicker = () => {
         setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
     };
 
-    console.log(selectedDate);
+    // console.log(selectedDate);
     return (
         <div dir='rtl' className="flex justify-center items-center border rounded-lg w-80">
             <div className="p-4 ">

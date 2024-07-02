@@ -1,5 +1,6 @@
+import Navbar from "../components/Menu/Navbar";
 import ButtonAction from "../utils/ButtonAction";
-import Navbar from "../utils/Navbar";
+
 import BACKPAPER from "/backPaper.png"
 import CHECKMARK from "/CheckMark.png"
 
