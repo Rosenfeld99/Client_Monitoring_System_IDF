@@ -2,10 +2,11 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SYSTEMSTRACT } from '../../../db/systemStract'
 
-function SoldiersClassReport({ usersSelected }) {
+function ChooseLocatin({ usersSelected }) {
     const navigation = useNavigate()
     const usersName = usersSelected?.map((user) => user?.name)
-    console.log(usersName);
+
+
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className=' border-b-2  border-transparent ' ></div>
@@ -28,4 +29,4 @@ function SoldiersClassReport({ usersSelected }) {
     )
 }
 
-export default SoldiersClassReport
+export default ChooseLocatin

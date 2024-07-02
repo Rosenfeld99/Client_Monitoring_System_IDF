@@ -28,7 +28,7 @@ const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
 
 
 
-function UsersDisplay({ arrayUserDisplay, setChosenCategory, usersSelected, setUsersSelected }) {
+function UsersDisplay({ arrayUserDisplay, setSendReport, usersSelected, setUsersSelected }) {
     const { advanceSearchResults } = useUser()
     // check who use this component to result search or just show users
     const usersToDisplays = arrayUserDisplay || advanceSearchResults;
@@ -66,7 +66,7 @@ function UsersDisplay({ arrayUserDisplay, setChosenCategory, usersSelected, setU
             </div>
             {isSampleSoliders && usersSelected[0] &&
                 <Link >
-                    <div onClick={() => setChosenCategory("class-of-soldiers")} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                    <div onClick={() => setSendReport(true)} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
                         <ButtonAction title="דיווח מדגם" />
                     </div>
                 </Link>}
