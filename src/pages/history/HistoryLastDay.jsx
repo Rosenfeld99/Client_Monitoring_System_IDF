@@ -49,6 +49,7 @@ const HistoryLastDay = ({ }) => {
                 />
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
+                    {console.log(user.lastDayReports)}
                     {user?.lastDayReports?.map((item, index) => (
                         // adding start and last time
                         <div key={index} onClick={() => setChooseOption(item)}

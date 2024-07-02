@@ -3,7 +3,7 @@ import TransitionPage from '../../../animation/TransitionPage'
 import { LuClipboardEdit } from "react-icons/lu";
 import CustomDatePicker from './CustomDatePicker';
 import CustomTimePicker from './CustomTimePicker';
-import Navbar from '../../Menu/Navbar';
+import Navbar from '../../Menu/Navbar'
 import ButtonAction from '../../../utils/ButtonAction';
 import { useSearchParams } from 'react-router-dom';
 

@@ -11,7 +11,7 @@ export const reportListUsers = {
       reports: [
         {
           dates: {
-            "2024-06-25": [
+            "25/06/2024": [
               {
                 id: "1",
                 startTime: "12:00",
@@ -41,7 +41,7 @@ export const reportListUsers = {
                 location: "בסיס",
               },
             ],
-            "2024-06-26": [
+            " 26/06/2024": [
               {
                 id: "4",
                 startTime: "18:00",
@@ -65,7 +65,7 @@ export const reportListUsers = {
       reports: [
         {
           dates: {
-            "2024-06-25": [
+            "25/06/2024": [
               {
                 id: "1",
                 startTime: "12:00",
@@ -95,7 +95,7 @@ export const reportListUsers = {
                 location: "בסיס",
               },
             ],
-            "2024-06-26": [
+            " 26/06/2024": [
               {
                 id: "4",
                 startTime: "18:00",
@@ -122,7 +122,7 @@ export const user = {
   reports: [
     {
       dates: {
-        "2024-06-25": [
+        "25/06/2024": [
           {
             id: "1",
             startTime: "12:00",
@@ -152,7 +152,7 @@ export const user = {
             location: "בסיס",
           },
         ],
-        "2024-06-26": [
+        "26/06/2024": [
           {
             id: "4",
             startTime: "18:00",

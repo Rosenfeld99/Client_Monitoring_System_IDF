@@ -1,0 +1,21 @@
+/* customStyles.css */
+
+.select__control {
+    background-color: black;
+    /* Remove default background */
+}
+
+.select__menu {
+    background-color: black;
+    /* Remove default background */
+}
+
+.select__option--is-focused {
+    background-color: black;
+    /* Remove default background */
+}
+
+.select__option--is-selected {
+    background-color: black;
+    /* Remove default background */
+}
