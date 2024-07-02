@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import Navbar from '../../utils/Navbar'
+
 import ButtonAction from '../../utils/ButtonAction'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import FloatingLabelInput from '../../utils/floatingLabelInput/FloatingLabelInput'
+import Navbar from '../components/Menu/Navbar'
 
 const ReportEdit = () => {
   const [valueWWd, setValueWWd] = useState('')
   const [valueWMI, setValueWMI] = useState('')
-  
-  const handleEditReport = () =>{
-        
+
+  const handleEditReport = () => {
+
   }
 
   return (
@@ -43,9 +44,9 @@ const ReportEdit = () => {
           </div>
           {/*  */}
           <div className="w-full">
-            <FloatingLabelInput label={"איפה אני נמצא"} placeholder={"איפה אני נמצא"} setState={setValueWMI} state={valueWMI}/>
+            <FloatingLabelInput label={"איפה אני נמצא"} placeholder={"איפה אני נמצא"} setState={setValueWMI} state={valueWMI} />
 
-            <FloatingLabelInput label={"מה אני עושה?"} placeholder={"מה אני עושה?"} setState={setValueWWd} state={valueWWd}/>
+            <FloatingLabelInput label={"מה אני עושה?"} placeholder={"מה אני עושה?"} setState={setValueWWd} state={valueWWd} />
           </div>
 
           {/*  */}

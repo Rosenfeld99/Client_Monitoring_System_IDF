@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Navbar from '../../../utils/Navbar'
+
 import UsersDisplay from '../solidersReports/UsersDisplay'
 import TransitionPage from '../../../animation/TransitionPage'
 import { BsCalendarDate, BsListTask } from 'react-icons/bs'
@@ -8,6 +8,7 @@ import { MdOutlinePeopleAlt } from 'react-icons/md'
 import { UserContextProvider } from '../../../context/UserContext'
 import useUser from '../../../hooks/useUser'
 import { ContextStore } from '../../../context/ContextStore'
+import Navbar from '../../Menu/Navbar'
 
 function SearchResult() {
     const { advanceSearchResults } = useUser()

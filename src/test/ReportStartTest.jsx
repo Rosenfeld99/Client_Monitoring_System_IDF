@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import Navbar from '../utils/Navbar'
+
 import ButtonAction from '../utils/ButtonAction'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../animation/TransitionPage'
 import FloatingLabelInput from '../utils/floatingLabelInput/FloatingLabelInput'
+import Navbar from '../components/Menu/Navbar'
 
 const ReportStart = ({ }) => {
     const [valueWWd, setValueWWd] = useState('')
     const [valueWMI, setValueWMI] = useState('')
 
-    const handleStartReport = () =>{
-        
+    const handleStartReport = () => {
+
     }
 
     return (
