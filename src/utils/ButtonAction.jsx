@@ -5,7 +5,7 @@ const ButtonAction = ({ title, route, disabledBtn }) => {
     const navigation = useNavigate()
 
     const handleClickBtn = () =>{
-        console.log(route);
+        // console.log(route);
         navigation(route)
     }
 
