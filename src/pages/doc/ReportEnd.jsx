@@ -9,14 +9,12 @@ import { getSingleSystemStract } from '../../db/systemStract'
 const ReportEnd = () => {
     const navigation = useNavigate()
     const [searchParams] = useSearchParams()
-    const [valueWWd, setValueWWd] = useState('')
-    const [valueWMI, setValueWMI] = useState('')
 
     const handleEndReport = () => {
     }
 
     const innerIcon = () => {
-        return getSingleSystemStract(searchParams.get('s')).icon
+        return getSingleSystemStract(searchParams.get('s'))?.icon
     }
 
 
