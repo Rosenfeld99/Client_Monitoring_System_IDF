@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import Navbar from '../../utils/Navbar'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { GiWatchtower } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../../components/Menu/Navbar'
 
 const ReportEnd = () => {
     const navigation = useNavigate()
@@ -31,7 +31,7 @@ const ReportEnd = () => {
                 <img
                     loading="lazy"
                     srcSet={BACKPAPER}
-                    className="mt-20 max-w-[800px] opacity-15 max-h-[800px] object-cover w-full absolute top-[33vw]  "
+                    className="mt-20 max-w-[800px] dark:opacity-15 max-h-[800px] object-cover w-full absolute top-[33vw]  "
                 />
                 <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                     <div className="flex flex-col text-center  pb-20">

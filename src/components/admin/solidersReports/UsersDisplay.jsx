@@ -65,10 +65,11 @@ function UsersDisplay({ arrayUserDisplay, setChosenCategory, usersSelected, setU
 
             </div>
             {isSampleSoliders && usersSelected[0] &&
-                <div onClick={() => setChosenCategory("class-of-soldiers")} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
-                    <ButtonAction title="שלח דיווח" />
-                </div>
-            }
+                <Link >
+                    <div onClick={() => setChosenCategory("class-of-soldiers")} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                        <ButtonAction title="דיווח מדגם" />
+                    </div>
+                </Link>}
         </div >
     )
 }

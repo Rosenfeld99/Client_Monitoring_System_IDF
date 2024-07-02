@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from '../../utils/Navbar'
 import { LiaFilterSolid } from 'react-icons/lia'
 import { BiSolidEdit } from 'react-icons/bi'
 import BACKPAPER from "/backPaper.png"
@@ -8,6 +7,7 @@ import "../../App.css"
 import TransitionPage from '../../animation/TransitionPage'
 import { user } from '../../db/reportsList'
 import useUser from '../../hooks/useUser'
+import Navbar from '../../components/Menu/Navbar'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)

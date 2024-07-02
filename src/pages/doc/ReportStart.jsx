@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import Navbar from '../../utils/Navbar'
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { useNavigate } from 'react-router-dom'
 import { SYSTEMSTRACT } from '../../db/systemStract'
 import useUser from '../../hooks/useUser'
+import Navbar from '../../components/Menu/Navbar'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
@@ -39,7 +39,7 @@ const ReportStart = ({ }) => {
                     <img
                         loading="lazy"
                         srcSet={BACKPAPER}
-                        className="mt-20 md:mt-[6vw] opacity-15 sm:mr-[8vw] max-w-[550px] max-h-[800px] object-cover w-[100vw] absolute right-0 stroke-neutral-200 "
+                        className="mt-20 md:mt-[6vw] dark:opacity-15 sm:mr-[8vw] max-w-[550px] max-h-[800px] object-cover w-[100vw] absolute right-0 stroke-neutral-200 "
                     />
                 </div>
                 <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">

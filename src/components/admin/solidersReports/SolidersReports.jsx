@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from '../../../utils/Navbar'
-import filter from "/filter.png"
-import searchIcon from "/searchIcon.png"
 import { Link } from 'react-router-dom'
 import TransitionPage from '../../../animation/TransitionPage'
 import SoldiersClassReport from './SoldiersClassReport'
@@ -10,6 +7,7 @@ import { LiaFilterSolid } from 'react-icons/lia'
 import SolidersSample from './SolidersSample'
 import { reportListUsers } from '../../../db/reportsList'
 import CommandLastReports from './CommandLastReports'
+import Navbar from '../../Menu/Navbar'
 
 
 function LastReports() {
