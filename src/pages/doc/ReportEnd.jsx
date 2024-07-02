@@ -2,18 +2,23 @@ import React, { useState } from 'react'
 import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
-import { GiWatchtower } from 'react-icons/gi'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Navbar from '../../components/Menu/Navbar'
+import { getSingleSystemStract } from '../../db/systemStract'
 
 const ReportEnd = () => {
     const navigation = useNavigate()
-
+    const [searchParams] = useSearchParams()
     const [valueWWd, setValueWWd] = useState('')
     const [valueWMI, setValueWMI] = useState('')
 
     const handleEndReport = () => {
     }
+
+    const innerIcon = () => {
+        return getSingleSystemStract(searchParams.get('s')).icon
+    }
+
 
     return (
         <TransitionPage>
@@ -43,10 +48,12 @@ const ReportEnd = () => {
                         </div>
                     </div>
                     <button onClick={() => navigation(`/startReport`)} className=" w-64 h-64 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
-                        <GiWatchtower className='w-20 h-20 text-white' />
+                        <div className='text-7xl text-white'>
+                            {innerIcon()}
+                        </div>
                         <div className='text-black'>
                             <div >סיום</div>
-                            <div >מטווחים</div>
+                            <div >{searchParams.get('location')}</div>
                         </div>
                     </button>
                 </div>

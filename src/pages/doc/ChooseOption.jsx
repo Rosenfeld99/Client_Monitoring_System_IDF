@@ -20,6 +20,7 @@ const ReportStart = ({ }) => {
 
     const [searchParams] = useSearchParams()
 
+    // console.log(pathname);
 
     useEffect(() => {
         if (searchParams.get('s') &&
@@ -43,7 +44,7 @@ const ReportStart = ({ }) => {
         return (
             <div className=" flex flex-col items-center w-full justify-center mt-60 ">
                 {current.listOption?.map((item, index) => (
-                    <button onClick={() => setCurrentSelect(item)} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
+                    <button onClick={() => {setCurrentSelect(item),navigation(`${pathname}?location=${item.name}`)}} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
                         <div className={`text-lg font-bold flex items-start justify-start w-full p-4 px-6 ${currentSelect == item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>{item?.name}</div>
                     </button>
                 ))}
@@ -79,7 +80,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : '/endReport'} />
+                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`} />
                 </div>
             </div>
         </TransitionPage>

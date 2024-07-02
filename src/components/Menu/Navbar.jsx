@@ -3,7 +3,7 @@ import { IoClose, IoDocumentTextOutline } from 'react-icons/io5'
 import { HiOutlineMenu, HiUserCircle } from 'react-icons/hi'
 import { RiHistoryFill } from 'react-icons/ri'
 import { MdOutlineLogout } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { FaArrowLeft } from 'react-icons/fa'
 import { LuMoonStar } from 'react-icons/lu'
 import useTheme from '../../hooks/useTheme'
@@ -15,6 +15,8 @@ const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
     const [theme, toggleTheme] = useTheme();
+    const { pathname } = useLocation()
+
     const navigate = useNavigate()
 
     const menu = [
@@ -36,7 +38,7 @@ const Navbar = () => {
     return (
         <React.Fragment>
             <div className=" flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] ">
-                <FaArrowLeft onClick={() => navigate(-1)} />
+                {pathname?.substring(1) != "endReport" ? <FaArrowLeft onClick={() => navigate(-1)} /> : <div className='w-8 h-8' />}
                 <div className="flex-auto self-stretch my-auto">{appName}</div>
                 <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} />
             </div>
