@@ -5,10 +5,13 @@ import CustomDatePicker from './CustomDatePicker';
 import CustomTimePicker from './CustomTimePicker';
 import Navbar from '../../Menu/Navbar';
 import ButtonAction from '../../../utils/ButtonAction';
+import { useSearchParams } from 'react-router-dom';
 
 function ReportDate() {
     const names = ["אבי אברמי", "יוסי קמון", "תומר שבקי", "ניב גלבוע"];
     const displayedNames = names?.slice(0, 3);
+    const [searchParams] = useSearchParams()
+
 
     return (
         <TransitionPage>
@@ -47,7 +50,7 @@ function ReportDate() {
 
                 {/* checking for if is auto start the manager to end repo */}
                 <div className=" backdrop-blur-sm right-0 w-full p-5 px-9 z-50 fixed bottom-0 ">
-                    <ButtonAction title="דיווח מדגם" />
+                    <ButtonAction title="דיווח מדגם" route={searchParams.get('endTime') == "אוטומטי" ? "/endReport" : "/startReport"} />
                 </div>
 
             </div>
