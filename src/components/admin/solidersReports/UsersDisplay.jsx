@@ -7,19 +7,18 @@ import useUser from '../../../hooks/useUser';
 
 const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
     const [chooseReport, setChooseReport] = useState(false)
-
+    console.log(userDisplay);
     return (<>
         {/* TODO: save the users selected on click */}
         {userDisplay?.lastsReports.map((requsts, i) =>
             <>
-                <div key={i} onClick={() => { !chooseReport && sampleUsers ? setUsersSelected(["has users"]) : setUsersSelected([]); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
+                <div key={i} onClick={() => { !chooseReport && sampleUsers ? setUsersSelected((prev) => [...prev, userDisplay]) : setUsersSelected((prev) => prev?.filter((user) => user?.id != userDisplay?.id)); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
                     <div className="flex w-full h-full overflow-y-auto col-span-3 items-center  justify-center ">{userDisplay?.name}</div>
                     <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">{userDisplay?.date}</div>
                     <div className="flex w-full h-full overflow-y-auto  col-span-2 items-center justify-center ">{requsts?.location}</div>
                     <div className="flex w-full h-full overflow-y-auto col-span-3 items-center justify-center ">{requsts?.content}</div>
                 </div>
                 <div className='divide-solid divide-y border-b-2 border-[#ebebeb] dark:border-[#686868]  ' ></div>
-
             </>
 
         )}

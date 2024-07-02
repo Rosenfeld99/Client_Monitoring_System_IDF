@@ -19,7 +19,7 @@ function SearchResult() {
             <div dir='rtl'>
                 <Navbar />
             </div>
-            <div className='min-h-[85vh]  flex-col flex justify-center items-center'>
+            <div className='min-h-[95vh]  flex-col flex justify-center items-center'>
                 <div className='w-full flex mr-1  flex-col items-center justify-center'>
                     <h1 className='font-bold text-xl'>תוצאות חיפוש מתקדם</h1>
                     <p>
@@ -27,7 +27,7 @@ function SearchResult() {
                     </p>
                     <div className='w-[90vw] items-end flex flex-col'>
                         <div className='mb-1 font-bold'>
-                            <span dir='rtl' className='font-normal mr-1'>{searchInputs?.date + " "}</span>
+                            <span className='font-normal mr-1'>{searchInputs?.date?.split("-").reverse().join("/") + " "}</span>
                             :תאריך
                             <BsCalendarDate className='ml-2 inline-block' />
                         </div>
