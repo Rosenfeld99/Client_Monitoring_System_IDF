@@ -10,6 +10,7 @@ import useTheme from '../../hooks/useTheme'
 import { FiSun } from 'react-icons/fi'
 import '../../App.css'
 import { appName } from '../../constant/constant'
+import { PiUserCircleCheckFill, PiUserCirclePlusFill, PiUsersThreeFill } from 'react-icons/pi'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -21,8 +22,9 @@ const Navbar = () => {
 
     const menu = [
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
-        { route: "/lastReports", title: " כניסת מפקד", icon: <HiUserCircle className='text-3xl text-black' /> },
+        { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
+        { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
         { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
 
