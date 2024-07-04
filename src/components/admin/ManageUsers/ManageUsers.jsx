@@ -6,6 +6,7 @@ import CustomSelect from '../../../utils/CustomSelect/CustomSelect'
 import FloatingLabelInput from '../../../utils/floatingLabelInput/FloatingLabelInput'
 import { FaWindowClose } from 'react-icons/fa'
 import ButtonAction from '../../../utils/ButtonAction'
+import { useToast } from '../../../utils/Toasttify/ToastManager'
 
 const ManageUsers = () => {
     const accessOption = [
@@ -48,7 +49,8 @@ const ManageUsers = () => {
                     setNewUser({ ...newUser, grupAccess: updateGrupAccess })
                     setSinglePassGrup("")
                 } else {
-                    alert(`ת"ז לא חוקית ...`)
+                    // alert(`ת"ז לא חוקית ...`)
+                    showToast('error', 'שגיאה! ת"ז לא חוקית')
                 }
                 break;
 
@@ -65,6 +67,8 @@ const ManageUsers = () => {
     const validRequest = () => {
         return newUser.password && newUser.password?.toString()?.length == 9 && newUser.accessOption && newUser.curseOption
     }
+
+    const showToast = useToast();
 
     console.log(newUser);
     return (

@@ -8,9 +8,8 @@ export const SYSTEMSTRACT = [
     value: "home",
     icon: <LiaHomeSolid />,
     listOption: [
-      { name: "ישן", value: "home" },
-      { name: "אוכל", value: "home" },
-      { name: "שמח :)", value: "home" },
+      { name: "למידה", value: "home" },
+      { name: "אחר", value: "home" },
     ],
   },
   {
@@ -36,17 +35,17 @@ export const SYSTEMSTRACT = [
       { name: "אוכל", value: "area" },
     ],
   },
-  {
-    name: "שונות",
-    value: "others",
-    icon: <CiCircleMore />,
-    listOption: [
-      { name: "מכשרה X", value: "others" },
-      { name: "הכשרה Y", value: "others" },
-      { name: "ישן", value: "others" },
-      { name: "אוכל", value: "others" },
-    ],
-  },
+  // {
+  //   name: "שונות",
+  //   value: "others",
+  //   icon: <CiCircleMore />,
+  //   listOption: [
+  //     { name: "מכשרה X", value: "others" },
+  //     { name: "הכשרה Y", value: "others" },
+  //     { name: "ישן", value: "others" },
+  //     { name: "אוכל", value: "others" },
+  //   ],
+  // },
 ];
 
 export const getSingleSystemStract = (nameValue) =>{

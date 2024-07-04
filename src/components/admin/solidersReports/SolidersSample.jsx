@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import UsersDisplay from './UsersDisplay'
 import { reportListUsers } from '../../../db/reportsList';
+import SoldiersClassReport from './SoldiersClassReport';
+import { useSearchParams } from 'react-router-dom';
 
 //usersToDisplay: are the users to display after serch input,
 //setChosenCategory: is to toggle to location choose screen,
 //usersSelected: are the users that the manger selected them,
 function SolidersSample({ usersToDisplay, setChosenCategory, usersSelected, setUsersSelected }) {
     const [userArray, setUserArray] = useState()
+    const [toggleSend, setToggleSend] = useState(false)
+
+    const [searchParams] = useSearchParams()
+
 
     useEffect(() => {
         const temp = usersToDisplay?.map((userDisplay, i) => {
@@ -18,7 +24,7 @@ function SolidersSample({ usersToDisplay, setChosenCategory, usersSelected, setU
     }, [usersToDisplay])
 
     return (
-        <div dir='rtl'><UsersDisplay usersSelected={usersSelected} setUsersSelected={setUsersSelected} arrayUserDisplay={userArray} setChosenCategory={setChosenCategory} /></div>
+        <div dir='rtl'> {toggleSend?<SoldiersClassReport />:<UsersDisplay usersSelected={usersSelected} setUsersSelected={setUsersSelected} setToggleSend={setToggleSend} arrayUserDisplay={userArray} />}</div>
     )
 }
 
