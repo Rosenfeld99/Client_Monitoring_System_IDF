@@ -48,7 +48,7 @@ const ManageUsers = () => {
                     setNewUser({ ...newUser, grupAccess: updateGrupAccess })
                     setSinglePassGrup("")
                 } else {
-                    alert("משתמש לא קיים במערכת ...")
+                    alert(`ת"ז לא חוקית ...`)
                 }
                 break;
 
