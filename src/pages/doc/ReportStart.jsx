@@ -55,7 +55,7 @@ const ReportStart = ({ }) => {
                     {/* List option */}
                     <div className=" grid grid-cols-2 gap-x-24 gap-y-20">
                         {SYSTEMSTRACT?.map((item, index) => (
-                            <button onClick={() => navigation(`/startReport/${item?.value}`)} key={index} className=" flex flex-col items-center justify-center gap-2">
+                            <button onClick={() => navigation(item?.value == "home" ? "/endReport?s=home" : `/startReport/${item?.value}`)} key={index} className=" flex flex-col items-center justify-center gap-2">
                                 <div className="gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] dark:shadow-[#000000] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
                                 <div className="text-lg font-bold">{item?.name}</div>
                             </button>

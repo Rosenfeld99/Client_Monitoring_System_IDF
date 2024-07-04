@@ -6,6 +6,7 @@ import ButtonAction from '../../utils/ButtonAction'
 import { getSingleSystemStract } from '../../db/systemStract'
 import { useEffect, useState } from 'react'
 import useUser from '../../hooks/useUser'
+import { getCurrentTime } from '../../utils/func/generateId'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
@@ -44,12 +45,19 @@ const ReportStart = ({ }) => {
         return (
             <div className=" flex flex-col items-center w-full justify-center mt-60 ">
                 {current.listOption?.map((item, index) => (
-                    <button onClick={() => {setCurrentSelect(item),navigation(`${pathname}?location=${item.name}`)}} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
+                    <button onClick={() => { setCurrentSelect(item), navigation(searchParams.get('report') == "grup" ? `${pathname}?location=${item.name}&report=${searchParams.get('report')}` : `${pathname}?location=${item.name}`) }} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
                         <div className={`text-lg font-bold flex items-start justify-start w-full p-4 px-6 ${currentSelect == item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>{item?.name}</div>
                     </button>
                 ))}
             </div>
         )
+    }
+
+
+    const routeingOnClick = () => {
+        if (searchParams.get('access') == "manager") {
+            // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
+        }
     }
 
     return (
@@ -68,7 +76,7 @@ const ReportStart = ({ }) => {
                         {innerIcon()}
                     </div>
                     <div dir='ltr' className="self-center text-lg font-bold text-black">
-                        {searchParams.get('report') == "grup" ? "דיווח מחלקתי" : isEdit ? "? 29/6 איפה הייתם ביום" : "איפה תהיו היום בשעה 11:00"}
+                        {searchParams.get('report') == "grup" ? "דיווח מחלקתי" : isEdit ? "? 29/6 איפה הייתם ביום" : `איפה תהיו היום בשעה ${getCurrentTime()}`}
                     </div>
                     <div className="w-full text-sm text-zinc-800">
                         {searchParams.get('report') == "grup" ? "הזנת משימה עבור מחלקה : )" : isEdit ? "אתם עורכים דיווח :)" : "הזן את המשימה הקרובה שלך :)"}
@@ -80,7 +88,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`} />
+                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : searchParams.get('report') == "grup" ? `/lastReports` : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`} />
                 </div>
             </div>
         </TransitionPage>

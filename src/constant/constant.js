@@ -1,1 +1,1 @@
-export const appName = "שם אפליקציה"
+export const appName = "גלים"
