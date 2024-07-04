@@ -14,19 +14,22 @@ import AdvanceSearch from '../components/admin/advanceSearch/AdvanceSearch'
 import ChooseOption from '../pages/doc/ChooseOption'
 import CustomDatePicker from '../components/admin/reportDate/CustomDatePicker'
 import ReportDate from '../components/admin/reportDate/ReportDate'
+import useUser from '../hooks/useUser'
 
 
 
 function AppRoute() {
   const [isLoading, setIsLoading] = useState(true);
+  const { getUser, currentUser } = useUser()
 
   useEffect(() => {
+    getUser("3")
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
       setIsLoading(false);
     }, 2000); // Adjust the duration as needed
   }, []);
-
+  console.log(currentUser);
   const location = useLocation();
   return (
     <div className='max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content'>

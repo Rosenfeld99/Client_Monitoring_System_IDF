@@ -1,26 +1,45 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { GiWatchtower } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Menu/Navbar'
+import useReports from '../../hooks/useReports'
+import useUser from '../../hooks/useUser'
+import { ContextStore } from '../../context/ContextStore'
 
 const ReportEnd = () => {
     const navigation = useNavigate()
 
     const [valueWWd, setValueWWd] = useState('')
     const [valueWMI, setValueWMI] = useState('')
+    const { currentUser } = useUser()
+    const { reportDeatile } = useContext(ContextStore);
+    const { endReport } = useReports();
 
     const handleEndReport = () => {
+        // i get object of dates with reports
+        const allkeys = Object.keys(reportDeatile?.dates);
+        // get today key in the obj
+        const todayIndex = allkeys[allkeys?.length - 1];
+        // oday index is the key in the obj and i take the report in the last
+        const reportId = reportDeatile.dates[todayIndex][reportDeatile?.dates[todayIndex].length - 1]
+
+        endReport({ userId: currentUser.userId, reportId, endTime: new Date() })
+
+
     }
+
+
 
     return (
         <TransitionPage>
             <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full  min-h-screen flex-1  ">
 
                 <Navbar />
-                <div className="flex gap-3 self-center px-5 mt-10 leading-5 text-center ">
+                <div className="flex gap-3 self-center px-5
+                mt-10 leading-5 text-center ">
                     <IoCheckmarkCircleOutline className='text-xl' />
                     <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
                         דיווח אחרון היום הייתם ב {" "}
@@ -42,7 +61,7 @@ const ReportEnd = () => {
                             הגש את הדיווח שלך :)
                         </div>
                     </div>
-                    <button onClick={() => navigation(`/startReport`)} className=" w-64 h-64 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
+                    <button onClick={handleEndReport} className=" w-64 h-64 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
                         <GiWatchtower className='w-20 h-20 text-white' />
                         <div className='text-black'>
                             <div >סיום</div>

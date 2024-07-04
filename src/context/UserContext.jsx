@@ -10,12 +10,11 @@ export const UserContextProvider = () => {
 
 export const UserContext = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
-  const [advanceSearchResults, setAdvanceSearchResults] = useState([])
 
 
   return (
     <createAppContext.Provider
-      value={{ currentUser, setCurrentUser, advanceSearchResults, setAdvanceSearchResults }}
+      value={{ currentUser, setCurrentUser }}
     >
       {children}
     </createAppContext.Provider>

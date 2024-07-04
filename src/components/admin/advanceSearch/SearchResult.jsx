@@ -5,15 +5,11 @@ import TransitionPage from '../../../animation/TransitionPage'
 import { BsCalendarDate, BsListTask } from 'react-icons/bs'
 import { LiaPlaceOfWorshipSolid } from 'react-icons/lia'
 import { MdOutlinePeopleAlt } from 'react-icons/md'
-import { UserContextProvider } from '../../../context/UserContext'
-import useUser from '../../../hooks/useUser'
 import { ContextStore } from '../../../context/ContextStore'
 import Navbar from '../../Menu/Navbar'
 
 function SearchResult() {
-    const { advanceSearchResults } = useUser()
     const { searchInputs } = useContext(ContextStore);
-    console.log(searchInputs);
 
     return (
         <TransitionPage  >

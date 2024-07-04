@@ -10,15 +10,21 @@ function SolidersSample({ usersToDisplay, usersSelected, setUsersSelected }) {
     const [userArray, setUserArray] = useState();
     const [sendReport, setSendReport] = useState(false);
 
-
+    console.log(usersToDisplay);
     useEffect(() => {
-        const temp = usersToDisplay?.map((userDisplay, i) => {
-            const dateKeys = Object?.keys(userDisplay.reports[0].dates);
-            const lastDayKey = dateKeys[dateKeys.length - 1];
-            return { id: i, date: lastDayKey, name: userDisplay.username, lastsReports: userDisplay.reports[0].dates[lastDayKey] }
-        })
-        setUserArray(temp)
-        setSendReport(false)
+        if (usersToDisplay) {
+
+            console.log(usersToDisplay);
+            const temp = usersToDisplay?.map((userDisplay, i) => {
+                // const dateKeys = Object?.keys(userDisplay?.reports[0]?.dates);
+                // const lastDayKey = dateKeys[dateKeys?.length - 1];
+                console.log(userDisplay?.reports[0]);
+                const lastReport = userDisplay?.reports[0]
+                return { id: lastReport?._id, date: lastReport?.endTime, name: lastReport?.userId, lastsReports: lastReport.location + "_" + lastReport.content }
+            })
+            setUserArray(temp)
+            setSendReport(false)
+        }
     }, [usersToDisplay])
 
     return (
