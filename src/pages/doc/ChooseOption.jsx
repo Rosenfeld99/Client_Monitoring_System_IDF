@@ -43,7 +43,7 @@ const ReportStart = ({ }) => {
     function InnerListOPtionByStarct() {
         const current = getSingleSystemStract(pathname?.split('/')[2])
         return (
-            <div className=" flex flex-col items-center w-full justify-center mt-60 ">
+            <div className=" flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
                     <button onClick={() => { setCurrentSelect(item), navigation(searchParams.get('report') == "grup" ? `${pathname}?location=${item.name}&report=${searchParams.get('report')}` : `${pathname}?location=${item.name}`) }} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
                         <div className={`text-lg font-bold flex items-start justify-start w-full p-4 px-6 ${currentSelect == item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>{item?.name}</div>

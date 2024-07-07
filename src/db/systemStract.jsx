@@ -1,15 +1,18 @@
 import { LiaHomeSolid, LiaMapMarkedAltSolid } from "react-icons/lia";
 import { GiWatchtower } from "react-icons/gi";
 import { CiCircleMore } from "react-icons/ci";
+import { FaRoute } from "react-icons/fa";
 
 export const SYSTEMSTRACT = [
   {
-    name: "בית",
+    name: "מחוץ לבסיס",
     value: "home",
-    icon: <LiaHomeSolid />,
+    icon: <FaRoute />,
     listOption: [
-      { name: "למידה", value: "home" },
-      { name: "אחר", value: "home" },
+      { name: "תרבות יום א / מופע חינוך", value: "home" },
+      { name: 'מטלות חוץ בסיס (שמירה / עבודות רס"ר / אחר)', value: "home" },
+      { name: "אישי (הפניה רפואית / חופשה / גימלים / אחר)", value: "home" },
+      { name: "בית (כולל נסיעה לבית)", value: "home" },
     ],
   },
   {
@@ -17,11 +20,14 @@ export const SYSTEMSTRACT = [
     value: "base",
     icon: <GiWatchtower />,
     listOption: [
-      { name: "מטווחים", value: "base" },
-      { name: "מכשרה X", value: "base" },
-      { name: "הכשרה Y", value: "base" },
-      { name: "ישן", value: "base" },
-      { name: "אוכל", value: "base" },
+      { name: "שינה", value: "base" },
+      { name: "(בוקר,זמן תפילה,נקנ''ש ,שעת סיום)התארגנות", value: "base" },
+      { name: "מסדרים", value: "base" },
+      { name: "אימון גופני(בחנים)", value: "base" },
+      { name: "הפסקת אוכל", value: "base" },
+      { name: "הפסקה", value: "base" },
+      { name: "שיעור בכיתה", value: "base" },
+      { name: "סימולטור", value: "base" },
     ],
   },
   {
@@ -29,10 +35,16 @@ export const SYSTEMSTRACT = [
     value: "area",
     icon: <LiaMapMarkedAltSolid />,
     listOption: [
-      { name: "מכשרה X", value: "area" },
-      { name: "הכשרה Y", value: "area" },
-      { name: "ישן", value: "area" },
-      { name: "אוכל", value: "area" },
+      { name: "נסיעות", value: "area" },
+      { name: "שינה בשטח", value: "area" },
+      { name: "מסדרים", value: "area" },
+      { name: "(בוקר,זמן תפילה,נקנ''ש ,שעת סיום)התארגנות", value: "area" },
+      { name: "אימון גופני", value: "area" },
+      { name: "הפסקת אוכל", value: "base" },
+      { name: "הפסקה", value: "base" },
+      { name: "מטווחים", value: "base" },
+      { name: "תרגיל", value: "base" },
+      { name: "מבחן", value: "base" },
     ],
   },
   // {
@@ -40,10 +52,10 @@ export const SYSTEMSTRACT = [
   //   value: "others",
   //   icon: <CiCircleMore />,
   //   listOption: [
-  //     { name: "מכשרה X", value: "others" },
-  //     { name: "הכשרה Y", value: "others" },
-  //     { name: "ישן", value: "others" },
-  //     { name: "אוכל", value: "others" },
+  //     { name: "מטלות חוץ בסיס(הגנ''ש,שמירה,אחר)", value: "others" },
+  //     { name: "מופע חינוך", value: "others" },
+  //     { name: "אישי(הפניה,חופשה,גימלים,אחר)", value: "others" },
+  //     { name: "יציאה הביתה", value: "others" },
   //   ],
   // },
 ];

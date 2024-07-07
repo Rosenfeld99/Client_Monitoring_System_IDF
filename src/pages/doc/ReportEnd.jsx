@@ -45,13 +45,14 @@ const ReportEnd = () => {
                             הגש את הדיווח שלך :)
                         </div>
                     </div>
-                    <button onClick={() => navigation(`/startReport`)} className=" w-64 h-64 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
+                    <div className="  mt-[6.5rem] w-[9.5rem] h-[9.5rem] bg-blue-500 rounded-full animate-ping flex flex-col items-center justify-center"></div>
+                    <button onClick={() => navigation(`/startReport`)} className=" absolute w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
                         <div className='text-7xl text-white'>
                             {innerIcon()}
                         </div>
                         <div className='text-black'>
                             <div >סיום</div>
-                            <div >{searchParams.get('location')}</div>
+                            <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31)}{searchParams.get('location')?.length > 31 && "..."}</div>
                         </div>
                     </button>
                 </div>
