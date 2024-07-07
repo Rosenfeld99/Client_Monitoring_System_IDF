@@ -1,12 +1,12 @@
 import axios from 'axios'
-import React from 'react'
+
 
 function useAdmin() {
 
-    const addUser = () => {
+    const addUser = ({ username, role, subSolders, userId, commandId, AdminUser }) => {
         try {
             axios.post(`http://localhost:5000/user/newUser`, {
-                pic, username, password, role, subSolders, userId, commandId, AdminUser
+                username, role, subSolders, userId, commandId, AdminUser
             })
                 .then(res => {
                     if (!res) {

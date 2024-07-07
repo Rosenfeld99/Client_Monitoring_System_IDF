@@ -6,8 +6,11 @@ import CustomSelect from '../../../utils/CustomSelect/CustomSelect'
 import FloatingLabelInput from '../../../utils/floatingLabelInput/FloatingLabelInput'
 import { FaWindowClose } from 'react-icons/fa'
 import ButtonAction from '../../../utils/ButtonAction'
+import useAdmin from '../../../hooks/useAdmin'
 
 const ManageUsers = () => {
+    const { addUser } = useAdmin()
+
     const accessOption = [
         { name: "ח", value: "חייל" },
         { name: "כ", value: "כיתה" },
@@ -27,6 +30,17 @@ const ManageUsers = () => {
         accessOption: null,
         grupAccess: []
     })
+    const handleAddNewUsers = () => {
+        // addUser(
+        //     username: newUser.,
+        //     role:,
+        //     subSolders:,
+        //     userId:,
+        //     commandId:,
+        //     AdminUser:
+        //     newUser)
+
+    }
 
     const updateSate = (newValue, keyToUpdate) => {
         switch (keyToUpdate) {
@@ -123,7 +137,7 @@ const ManageUsers = () => {
                             </div>
                         </React.Fragment>}
                 </div>
-                <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
+                <div onClick={handleAddNewUsers} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
                     <ButtonAction disabledBtn={!validRequest()} title={"הוספת משתמש"} route={'/startReport'} />
                 </div>
             </div>

@@ -44,7 +44,8 @@ const ReportStart = ({ }) => {
                 content: currentSelect?.name,
                 location: currentSelect?.value,
                 userId: currentUser?.userId,
-                reportId: urlParams?.reportId
+                reportId: urlParams?.reportId,
+                pathname
             }
             console.log(editObj);
             editReport(editObj)
@@ -55,7 +56,8 @@ const ReportStart = ({ }) => {
                 content: currentSelect?.name,
                 location: currentSelect?.value,
                 completed: false,
-                userId: currentUser?.userId
+                userId: currentUser?.userId,
+                pathname
             }
             newReport(newReportObj)
         }

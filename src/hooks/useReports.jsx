@@ -14,7 +14,7 @@ function useReports() {
 
 
 
-    const newReport = async ({ startTime, content, location, completed, userId }) => {
+    const newReport = async ({ startTime, content, location, pathname, completed, userId }) => {
 
         if (!startTime || !content || !location || !userId) {
             console.log(startTime, content, location, completed, userId);
@@ -36,7 +36,7 @@ function useReports() {
                         return
                     }
                     setReportDeatile(res?.data)
-                    navigate(isEdit ? '/startReport' : '/endReport')
+                    navigate(isEdit ? `/startReport` : `/endReport?s=${location}&location=${content}`)
                 })
                 .catch(err => console.log(err))
         } catch (error) {
@@ -66,7 +66,7 @@ function useReports() {
         }
     }
 
-    const editReport = async ({ userId, reportId, startTime, endTime, content, location }) => {
+    const editReport = async ({ pathname, userId, reportId, startTime, endTime, content, location }) => {
         console.log(userId, reportId, startTime, endTime, content, location);
         try {
             axios.post(`http://localhost:5000/report/updateReport`, {
@@ -79,7 +79,7 @@ function useReports() {
                     }
                     console.log(res);
                     alert("the request updated sucefully !")
-                    navigate("/startReport")
+                    navigate(`${pathname}/startReport?location=${content}`)
                 })
                 .catch(err => console.log(err))
         } catch (error) {
@@ -88,6 +88,7 @@ function useReports() {
     }
     const getHistoryReports = async ({ userId, mode }) => {
         try {
+            console.log(userId, mode);
             axios.get(`http://localhost:5000/report/getUserHistory`, {
                 params: { userId, mode }
             })

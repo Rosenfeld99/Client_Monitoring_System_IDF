@@ -29,7 +29,10 @@ const ReportEnd = () => {
 
     }
 
-
+    const innerIcon = () => {
+        return getSingleSystemStract(searchParams.get('s'))?.icon
+    }
+    console.log(searchParams);
 
     return (
         <TransitionPage>

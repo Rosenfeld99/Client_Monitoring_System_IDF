@@ -69,8 +69,8 @@ const HistoryLastDay = ({ }) => {
                             <div className=" flex items-center w-full gap-5 justify-between">
                                 <div >{item?.location}</div>
                                 <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
-                                    <div >{item?.startTime}</div>{"-"}
-                                    <div >{item?.endTime}</div>
+                                    <div >{new Date(item?.startTime).getHours()}</div>{"-"}
+                                    <div >{new Date(item?.endTime).getHours()}</div>
                                     {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
                                 </div>
                             </div>
