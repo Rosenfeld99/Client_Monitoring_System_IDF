@@ -7,6 +7,7 @@ export const SYSTEMSTRACT = [
   {
     name: "מחוץ לבסיס",
     value: "home",
+    color: "bg-[#4f81bc]",
     icon: <FaRoute />,
     listOption: [
       { name: "תרבות יום א / מופע חינוך", value: "home" },
@@ -18,6 +19,7 @@ export const SYSTEMSTRACT = [
   {
     name: "בסיס",
     value: "base",
+    color: "bg-[#c0504e]",
     icon: <GiWatchtower />,
     listOption: [
       { name: "שינה", value: "base" },
@@ -33,6 +35,7 @@ export const SYSTEMSTRACT = [
   {
     name: "שטח",
     value: "area",
+    color: "bg-[#9bbb58]",
     icon: <LiaMapMarkedAltSolid />,
     listOption: [
       { name: "נסיעות", value: "area" },
@@ -60,6 +63,6 @@ export const SYSTEMSTRACT = [
   // },
 ];
 
-export const getSingleSystemStract = (nameValue) =>{
-    return SYSTEMSTRACT?.find((item) => item?.value == nameValue)
+export const getSingleSystemStract = (nameValue) => {
+  return SYSTEMSTRACT?.find((item) => item?.value == nameValue)
 }

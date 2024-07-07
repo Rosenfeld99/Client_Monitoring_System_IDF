@@ -15,6 +15,7 @@ import ChooseOption from '../pages/doc/ChooseOption'
 import CustomDatePicker from '../components/admin/reportDate/CustomDatePicker'
 import ReportDate from '../components/admin/reportDate/ReportDate'
 import ManageUsers from '../components/admin/ManageUsers/ManageUsers'
+import AnalyticsStract from '../pages/analytics/AnalyticsStract'
 
 
 
@@ -54,6 +55,8 @@ function AppRoute() {
           <Route path='/advanceSearch' element={<AdvanceSearch />} />
           <Route path='/manageDate' element={<ReportDate />} />
           <Route path='/manageUsers' element={<ManageUsers />} />
+          <Route path='/analytics' element={<AnalyticsStract />} />
+          <Route path='/analytics/:item' element={<AnalyticsStract />} />
 
           <Route path='/*' element={<h2>Not found 404</h2>} />
         </Routes>
