@@ -64,6 +64,7 @@ const ReportStart = ({ }) => {
 
 
 
+    // console.log(pathname);
 
     useEffect(() => {
         if (searchParams.get('s') &&
@@ -94,7 +95,7 @@ const ReportStart = ({ }) => {
             </div>
         )
     }
-
+    //,navigation(`${pathname}?location=${item.name}`)}
     return (
         <TransitionPage>
 

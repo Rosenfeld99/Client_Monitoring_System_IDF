@@ -9,6 +9,7 @@ import { user } from '../../db/reportsList'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
 import useReports from '../../hooks/useReports'
+import { getCurrentDateFormaterHebrew } from '../../utils/func/generateId'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
@@ -47,7 +48,7 @@ const HistoryLastDay = ({ }) => {
                     <LiaFilterSolid className='w-10 h-10' />
                     <div className=' flex-col flex items-center justify-center'>
                         <div className=" text-xl font-semibold">היסטוריית דיווחים</div>
-                        <div className=" text-sm text-gray-400">יום אחרון</div>
+                        <div className=" text-sm text-gray-400">{getCurrentDateFormaterHebrew()}</div>
                     </div>
                 </div>
                 {/* back image */}
