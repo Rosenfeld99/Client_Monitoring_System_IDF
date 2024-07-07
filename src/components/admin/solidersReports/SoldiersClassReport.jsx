@@ -18,11 +18,7 @@ function SoldiersClassReport({ usersSelected }) {
                         </button>
                     ))}
                 </div>
-
-
-
             </div>
-
         </div >
 
     )
