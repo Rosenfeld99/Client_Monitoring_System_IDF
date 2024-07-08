@@ -40,13 +40,45 @@ const ReportStart = ({ }) => {
         return getSingleSystemStract(pathname?.split('/')[2]).icon
     }
 
+
+    const processText = (text) => {
+        // Regular expression to match text inside parentheses
+        const regex = /\(([^)]+)\)/g;
+        let result = [];
+        let lastIndex = 0;
+
+        text.replace(regex, (match, p1, offset) => {
+            // Push the text before the match
+            result.push(text.slice(lastIndex, offset));
+            // Push the matched text wrapped in a span
+            result.push(<span className="text-sm px-2 ">{`(${p1})`}</span>);
+            lastIndex = offset + match.length;
+        });
+
+        // Push the remaining text
+        result.push(text.slice(lastIndex));
+        return result;
+    };
+
     function InnerListOPtionByStarct() {
         const current = getSingleSystemStract(pathname?.split('/')[2])
         return (
-            <div className=" flex flex-col items-center w-full justify-center mt-60 pb-20">
+            <div dir='rtl' className="flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
-                    <button onClick={() => { setCurrentSelect(item), navigation(searchParams.get('report') == "grup" ? `${pathname}?location=${item.name}&report=${searchParams.get('report')}` : `${pathname}?location=${item.name}`) }} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
-                        <div className={`text-lg font-bold flex items-start justify-start w-full p-4 px-6 ${currentSelect == item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>{item?.name}</div>
+                    <button
+                        onClick={() => {
+                            setCurrentSelect(item);
+                            navigation(searchParams.get('report') === "grup"
+                                ? `${pathname}?location=${item.name}&report=${searchParams.get('report')}`
+                                : `${pathname}?location=${item.name}`
+                            );
+                        }}
+                        key={index}
+                        className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
+                    >
+                        <div className={`text-lg font-bold flex items-center justify-start w-full p-4 px-6 ${currentSelect === item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>
+                            {processText(item?.name)}
+                        </div>
                     </button>
                 ))}
             </div>

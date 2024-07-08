@@ -16,6 +16,7 @@ import CustomDatePicker from '../components/admin/reportDate/CustomDatePicker'
 import ReportDate from '../components/admin/reportDate/ReportDate'
 import ManageUsers from '../components/admin/ManageUsers/ManageUsers'
 import AnalyticsStract from '../pages/analytics/AnalyticsStract'
+import AnalyticsItem from '../pages/analytics/AnalyticsItem'
 
 
 
@@ -56,7 +57,8 @@ function AppRoute() {
           <Route path='/manageDate' element={<ReportDate />} />
           <Route path='/manageUsers' element={<ManageUsers />} />
           <Route path='/analytics' element={<AnalyticsStract />} />
-          <Route path='/analytics/:item' element={<AnalyticsStract />} />
+          <Route path='/analytics' element={<AnalyticsStract />} />
+          <Route path='/analytics/:item' element={<AnalyticsItem />} />
 
           <Route path='/*' element={<h2>Not found 404</h2>} />
         </Routes>
