@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import ButtonAction from '../../../utils/ButtonAction';
 import { ContextStore } from '../../../context/ContextStore';
+import useUser from '../../../hooks/useUser';
 
 
 const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
@@ -27,11 +28,24 @@ const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
 
 
 
-function UsersDisplay({ arrayUserDisplay, setSendReport, usersSelected, setUsersSelected }) {
-    const { advanceSearchResults } = useContext(ContextStore)
+function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsersSelected }) {
 
-    // check who use this component to result search or just show users
-    const usersToDisplays = arrayUserDisplay || advanceSearchResults;
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const handleSendReport = () => {
+
+        const newParams = new URLSearchParams(searchParams);
+
+        // Set the new parameter
+        newParams.set("users", "ffff");
+
+        // Update the URL search parameters
+        setSearchParams(newParams);
+        setToggleSend(true)
+    }
+
+
+    const usersToDisplays = arrayUserDisplay;
 
     //check if sample users table is display or results table
     const isSampleSoliders = arrayUserDisplay ? true : false;
@@ -48,7 +62,7 @@ function UsersDisplay({ arrayUserDisplay, setSendReport, usersSelected, setUsers
             <div className='  h-[45vh] overflow-y-auto'>
 
 
-                {usersToDisplays.map((userDisplay, i) => {
+                {usersToDisplays?.map((userDisplay, i) => {
                     return <div key={i}>
                         <DisplayUser userDisplay={userDisplay} setUsersSelected={setUsersSelected} sampleUsers={isSampleSoliders} />
                     </div>
@@ -57,7 +71,7 @@ function UsersDisplay({ arrayUserDisplay, setSendReport, usersSelected, setUsers
             </div>
             {isSampleSoliders && usersSelected[0] &&
                 <Link >
-                    <div onClick={() => setSendReport(true)} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                    <div onClick={handleSendReport} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
                         <ButtonAction title="דיווח מדגם" />
                     </div>
                 </Link>}

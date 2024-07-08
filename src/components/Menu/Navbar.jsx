@@ -42,7 +42,7 @@ const Navbar = () => {
             <div className=" flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] ">
                 {pathname?.substring(1) != "endReport" ? <FaArrowLeft onClick={() => navigate(-1)} /> : <div className='w-8 h-8' />}
                 <div className="flex-auto self-stretch my-auto">{appName}</div>
-                <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} />
+                {pathname?.substring(1) != "endReport" ? <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} /> : <div className='w-8 h-8' />}
             </div>
             {open && (
                 <div className={`flex overflow-hidden min-h-screen fixed max-w-[680px] w-full flex-col gap-8 items-start p-8 z-50 bg-[#00000089] ${isExiting && "animate__fadeOut"}`}>

@@ -7,9 +7,12 @@ import FloatingLabelInput from '../../../utils/floatingLabelInput/FloatingLabelI
 import { FaWindowClose } from 'react-icons/fa'
 import ButtonAction from '../../../utils/ButtonAction'
 import useAdmin from '../../../hooks/useAdmin'
+import { useToast } from '../../../utils/Toasttify/ToastManager'
+import useUser from '../../../hooks/useUser'
 
 const ManageUsers = () => {
     const { addUser } = useAdmin()
+    const { currentUser, } = useUser();
 
     const accessOption = [
         { name: "ח", value: "חייל" },
@@ -30,16 +33,16 @@ const ManageUsers = () => {
         accessOption: null,
         grupAccess: []
     })
+    // course, username, role, subSolders, userId, commandId, AdminUser
     const handleAddNewUsers = () => {
-        // addUser(
-        //     username: newUser.,
-        //     role:,
-        //     subSolders:,
-        //     userId:,
-        //     commandId:,
-        //     AdminUser:
-        //     newUser)
-
+        console.log(currentUser, newUser);
+        addUser({
+            role: newUser?.accessOption,
+            course: newUser?.curseOption,
+            subSolders: newUser?.grupAccess,
+            userId: newUser?.password,
+            adminUser: currentUser.userId,
+        })
     }
 
     const updateSate = (newValue, keyToUpdate) => {
@@ -62,7 +65,8 @@ const ManageUsers = () => {
                     setNewUser({ ...newUser, grupAccess: updateGrupAccess })
                     setSinglePassGrup("")
                 } else {
-                    alert(`ת"ז לא חוקית ...`)
+                    // alert(`ת"ז לא חוקית ...`)
+                    showToast('error', 'שגיאה! ת"ז לא חוקית')
                 }
                 break;
 
@@ -79,6 +83,8 @@ const ManageUsers = () => {
     const validRequest = () => {
         return newUser.password && newUser.password?.toString()?.length == 9 && newUser.accessOption && newUser.curseOption
     }
+
+    const showToast = useToast();
 
     console.log(newUser);
     return (
@@ -138,7 +144,7 @@ const ManageUsers = () => {
                         </React.Fragment>}
                 </div>
                 <div onClick={handleAddNewUsers} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!validRequest()} title={"הוספת משתמש"} route={'/startReport'} />
+                    <ButtonAction disabledBtn={!validRequest()} title={"הוספת משתמש"} />
                 </div>
             </div>
         </TransitionPage>

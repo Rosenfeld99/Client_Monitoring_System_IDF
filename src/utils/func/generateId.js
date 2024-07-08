@@ -12,3 +12,15 @@ export const getCurrentDateFormaterHebrew = () => {
   // Format the date as dd/mm/yyyy
   return `${day}/${month}/${year}`;
 };
+
+export const getCurrentTime = () => {
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+
+  // Ensure the hours and minutes are two digits
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+
+  return `${hours}:${minutes}`;
+};

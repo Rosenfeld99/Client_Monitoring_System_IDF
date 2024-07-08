@@ -14,17 +14,23 @@ function useReports() {
 
 
 
-    const newReport = async ({ startTime, content, location, pathname, completed, userId }) => {
+    const newReport = async ({ startTime, team, mode, username, course, endTime, content, location, completed, userId }) => {
+        //TODO change user course
 
+        console.log(userId, mode, course);
         if (!startTime || !content || !location || !userId) {
-            console.log(startTime, content, location, completed, userId);
-            console.log("startTime and content and location and userId must have");
+
             return
         }
         try {
 
             axios.post(`http://localhost:5000/report/newReport`, {
                 startTime,
+                team,
+                mode,
+                username,
+                course: course || "קמב",
+                endTime,
                 content,
                 location,
                 completed,
@@ -79,7 +85,7 @@ function useReports() {
                     }
                     console.log(res);
                     alert("the request updated sucefully !")
-                    navigate(`${pathname}/startReport?location=${content}`)
+                    navigate(`/startReport`)
                 })
                 .catch(err => console.log(err))
         } catch (error) {
@@ -87,8 +93,9 @@ function useReports() {
         }
     }
     const getHistoryReports = async ({ userId, mode }) => {
+        console.log(userId, mode);
         try {
-            console.log(userId, mode);
+
             axios.get(`http://localhost:5000/report/getUserHistory`, {
                 params: { userId, mode }
             })
@@ -97,6 +104,7 @@ function useReports() {
 
                         setHistoryReports(res?.data)
                         console.log("sucsses");
+
                         console.log(historyReports);
                     }
 

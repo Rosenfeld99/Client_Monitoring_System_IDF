@@ -6,6 +6,7 @@ import ButtonAction from '../../utils/ButtonAction'
 import { getSingleSystemStract } from '../../db/systemStract'
 import { useContext, useEffect, useState } from 'react'
 import useUser from '../../hooks/useUser'
+import { getCurrentTime } from '../../utils/func/generateId'
 import useReports from '../../hooks/useReports'
 import { ContextStore } from '../../context/ContextStore'
 
@@ -13,52 +14,61 @@ const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { pathname } = useLocation()
     const [currentSelect, setCurrentSelect] = useState(null)
+
+    const [searchParams] = useSearchParams()
+
+
+    const [urlData, setUrlData] = useState({
+        access: searchParams.get('access'),
+        report: searchParams.get('report'),
+        users: searchParams.get('users'),
+        s: searchParams.get('s'),
+        location: searchParams.get('location'),
+        startTime: searchParams.get('startTime'),
+        endTime: searchParams.get('endTime'),
+        reportId: searchParams.get('reportId')
+    })
+    console.log(urlData);
     // const { reportDeatile } = useContext(ContextStore);
 
     const { inActiveIsEdit, currentUser, activeIsEdit, isEdit } = useUser()
     const { newReport, editReport } = useReports()
-    const [searchParams] = useSearchParams()
-
-    const destructureUrl = () => {
-        const urlParams = {
-            s: searchParams.get('s'),
-            location: searchParams.get('location'),
-            startTime: searchParams.get('startTime'),
-            endTime: searchParams.get('endTime'),
-            reportId: searchParams.get('reportId')
-        };
-        return urlParams
-    }
 
     const handleStartReport = () => {
         if (!currentSelect.name || !currentSelect.value) {
             console.log("choose location and action");
             return
         }
-        console.log(currentSelect);
+
         const date = new Date()
         if (isEdit) {
-            const urlParams = destructureUrl()
+
             const editObj = {
-                startTime: urlParams?.startTime,
+                startTime: urlData?.startTime,
                 content: currentSelect?.name,
                 location: currentSelect?.value,
                 userId: currentUser?.userId,
-                reportId: urlParams?.reportId,
+                reportId: urlData?.reportId,
                 pathname
             }
             console.log(editObj);
             editReport(editObj)
         }
         else {
+
             const newReportObj = {
+                team: "",
+                mode: urlData.access ? "Manager" : "User",
+                username: currentUser?.username,
+                course: currentUser?.course,
+                endTime: "",
                 startTime: date,
                 content: currentSelect?.name,
                 location: currentSelect?.value,
                 completed: false,
                 userId: currentUser?.userId,
-                pathname
             }
+
             newReport(newReportObj)
         }
 
@@ -66,9 +76,11 @@ const ReportStart = ({ }) => {
 
 
 
-    // console.log(pathname);
+    console.log(pathname);
+    console.log(searchParams);
 
     useEffect(() => {
+        console.log(searchParams);
         if (searchParams.get('s') &&
             searchParams.get('location') &&
             searchParams.get('startTime') &&
@@ -88,16 +100,23 @@ const ReportStart = ({ }) => {
     function InnerListOPtionByStarct() {
         const current = getSingleSystemStract(pathname?.split('/')[2])
         return (
-            <div className=" flex flex-col items-center w-full justify-center mt-60 ">
+            <div className=" flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
-                    <button onClick={() => setCurrentSelect(item)} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
+                    <button onClick={() => { setCurrentSelect(item), navigation(`${pathname}?location=${item.name}`) }} key={index} className=" flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]">
                         <div className={`text-lg font-bold flex items-start justify-start w-full p-4 px-6 ${currentSelect == item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>{item?.name}</div>
                     </button>
                 ))}
             </div>
         )
     }
-    //,navigation(`${pathname}?location=${item.name}`)}
+
+
+    const routeingOnClick = () => {
+        if (searchParams.get('access') == "manager") {
+            // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
+        }
+    }
+
     return (
         <TransitionPage>
 
@@ -115,7 +134,7 @@ const ReportStart = ({ }) => {
                         {innerIcon()}
                     </div>
                     <div dir='ltr' className="self-center text-lg font-bold text-black">
-                        {searchParams.get('report') == "grup" ? "דיווח מחלקתי" : isEdit ? "? 29/6 איפה הייתם ביום" : "איפה תהיו היום בשעה 11:00"}
+                        {searchParams.get('report') == "grup" ? "דיווח מחלקתי" : isEdit ? "? 29/6 איפה הייתם ביום" : `איפה תהיו היום בשעה ${getCurrentTime()}`}
                     </div>
                     <div className="w-full text-sm text-zinc-800">
                         {searchParams.get('report') == "grup" ? "הזנת משימה עבור מחלקה : )" : isEdit ? "אתם עורכים דיווח :)" : "הזן את המשימה הקרובה שלך :)"}
@@ -127,9 +146,8 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div onClick={handleStartReport} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    {/* <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : '/endReport'} /> */}
                     <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} />
-
+                    {/* <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : searchParams.get('report') == "grup" ? `/lastReports` : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`} /> */}
                 </div>
             </div>
         </TransitionPage>

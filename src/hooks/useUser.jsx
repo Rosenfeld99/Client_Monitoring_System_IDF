@@ -11,9 +11,9 @@ const useUser = () => {
     const inActiveIsEdit = () => {
         setIsEdit(false)
     }
-    const getUser = async (userId) => {
+    const getUser = async (userId, username) => {
         try {
-            axios.get(`http://localhost:5000/user/getUser`, { params: { userId } })
+            axios.get(`http://localhost:5000/user/getUser`, { params: { userId, username } })
                 .then(res => {
                     if (!res?.data) {
                         console.log("user not found");

@@ -1,12 +1,14 @@
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 function useAdmin() {
-
-    const addUser = ({ username, role, subSolders, userId, commandId, AdminUser }) => {
+    const navigate = useNavigate()
+    const addUser = ({ course, username, role, subSolders, userId, commandId, adminUser }) => {
         try {
+            console.log(adminUser);
             axios.post(`http://localhost:5000/user/newUser`, {
-                username, role, subSolders, userId, commandId, AdminUser
+                username, role, subSolders, userId, commandId, adminUser, course
             })
                 .then(res => {
                     if (!res) {
@@ -14,6 +16,7 @@ function useAdmin() {
                         return
                     }
                     console.log("user added sucesfully");
+                    navigate('/startReport')
                 })
                 .catch(err => console.log(err))
         } catch (error) {

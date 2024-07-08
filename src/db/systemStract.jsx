@@ -1,16 +1,18 @@
 import { LiaHomeSolid, LiaMapMarkedAltSolid } from "react-icons/lia";
 import { GiWatchtower } from "react-icons/gi";
 import { CiCircleMore } from "react-icons/ci";
+import { FaRoute } from "react-icons/fa";
 
 export const SYSTEMSTRACT = [
   {
-    name: "בית",
+    name: "מחוץ לבסיס",
     value: "home",
-    icon: <LiaHomeSolid />,
+    icon: <FaRoute />,
     listOption: [
-      { name: "ישן", value: "home" },
-      { name: "אוכל", value: "home" },
-      { name: "שמח :)", value: "home" },
+      { name: "תרבות יום א / מופע חינוך", value: "home" },
+      { name: 'מטלות חוץ בסיס (שמירה / עבודות רס"ר / אחר)', value: "home" },
+      { name: "אישי (הפניה רפואית / חופשה / גימלים / אחר)", value: "home" },
+      { name: "בית (כולל נסיעה לבית)", value: "home" },
     ],
   },
   {
@@ -45,17 +47,17 @@ export const SYSTEMSTRACT = [
       { name: "מבחן", value: "base" },
     ],
   },
-  {
-    name: "שונות",
-    value: "others",
-    icon: <CiCircleMore />,
-    listOption: [
-      { name: "מטלות חוץ בסיס(הגנ''ש,שמירה,אחר)", value: "others" },
-      { name: "מופע חינוך", value: "others" },
-      { name: "אישי(הפניה,חופשה,גימלים,אחר)", value: "others" },
-      { name: "יציאה הביתה", value: "others" },
-    ],
-  },
+  // {
+  //   name: "שונות",
+  //   value: "others",
+  //   icon: <CiCircleMore />,
+  //   listOption: [
+  //     { name: "מטלות חוץ בסיס(הגנ''ש,שמירה,אחר)", value: "others" },
+  //     { name: "מופע חינוך", value: "others" },
+  //     { name: "אישי(הפניה,חופשה,גימלים,אחר)", value: "others" },
+  //     { name: "יציאה הביתה", value: "others" },
+  //   ],
+  // },
 ];
 
 export const getSingleSystemStract = (nameValue) => {
