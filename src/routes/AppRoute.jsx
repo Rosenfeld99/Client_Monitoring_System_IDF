@@ -24,7 +24,7 @@ function AppRoute() {
   const { getUser, currentUser } = useUser()
 
   useEffect(() => {
-    getUser("1", null)
+    getUser("4", null)
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
       setIsLoading(false);
@@ -52,11 +52,11 @@ function AppRoute() {
           <Route path='/todayReportsList' element={<HistoryLastDay />} />
 
           {/* Admin */}
-          <Route path='/lastReports' element={<LastReports />} />
-          <Route path='/searchResult' element={<SearchResult />} />
-          <Route path='/advanceSearch' element={<AdvanceSearch />} />
-          <Route path='/manageDate' element={<ReportDate />} />
-          <Route path='/manageUsers' element={<ManageUsers />} />
+          <Route path='/lastReports' element={currentUser?.role !== "User" && <LastReports />} />
+          <Route path='/searchResult' element={currentUser?.role !== "User" && <SearchResult />} />
+          <Route path='/advanceSearch' element={currentUser?.role !== "User" && <AdvanceSearch />} />
+          <Route path='/manageDate' element={currentUser?.role !== "User" && <ReportDate />} />
+          <Route path='/manageUsers' element={currentUser?.role !== "User" && <ManageUsers />} />
 
           <Route path='/*' element={<h2>Not found 404</h2>} />
         </Routes>
