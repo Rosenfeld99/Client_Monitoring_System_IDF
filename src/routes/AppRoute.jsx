@@ -15,6 +15,8 @@ import ChooseOption from '../pages/doc/ChooseOption'
 import CustomDatePicker from '../components/admin/reportDate/CustomDatePicker'
 import ReportDate from '../components/admin/reportDate/ReportDate'
 import ManageUsers from '../components/admin/ManageUsers/ManageUsers'
+import AnalyticsStract from '../pages/analytics/AnalyticsStract'
+import AnalyticsItem from '../pages/analytics/AnalyticsItem'
 import useUser from '../hooks/useUser'
 
 
@@ -52,11 +54,14 @@ function AppRoute() {
           <Route path='/todayReportsList' element={<HistoryLastDay />} />
 
           {/* Admin */}
-          <Route path='/lastReports' element={currentUser?.role !== "User" && <LastReports />} />
-          <Route path='/searchResult' element={currentUser?.role !== "User" && <SearchResult />} />
-          <Route path='/advanceSearch' element={currentUser?.role !== "User" && <AdvanceSearch />} />
-          <Route path='/manageDate' element={currentUser?.role !== "User" && <ReportDate />} />
-          <Route path='/manageUsers' element={currentUser?.role !== "User" && <ManageUsers />} />
+          <Route path='/lastReports' element={<LastReports />} />
+          <Route path='/searchResult' element={<SearchResult />} />
+          <Route path='/advanceSearch' element={<AdvanceSearch />} />
+          <Route path='/manageDate' element={<ReportDate />} />
+          <Route path='/manageUsers' element={<ManageUsers />} />
+          <Route path='/analytics' element={<AnalyticsStract />} />
+          <Route path='/analytics' element={<AnalyticsStract />} />
+          <Route path='/analytics/:item' element={<AnalyticsItem />} />
 
           <Route path='/*' element={<h2>Not found 404</h2>} />
         </Routes>

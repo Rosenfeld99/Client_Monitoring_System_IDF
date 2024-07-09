@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { user } from '../../../db/reportsList'
 import { GoPeople, GoPerson } from 'react-icons/go'
 
@@ -19,7 +20,7 @@ function CommandLastReports() {
                                 <div >{item?.startTime}</div>{"-"}
                                 <div >{item?.endTime}</div>
                             </div>
-                            <div className='col-span-2 mr-auto'><GoPeople /> <GoPerson /></div>
+                            {/* <div className='col-span-2 mr-auto'><GoPeople /> <GoPerson /></div> */}
                         </div>
                     </div>
                 ))}
