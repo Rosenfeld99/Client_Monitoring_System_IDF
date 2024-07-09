@@ -43,7 +43,7 @@ export const SYSTEMSTRACT = [
       { name: "נסיעות", value: "area" ,y:5},
       { name: "שינה בשטח", value: "area" ,y:10},
       { name: "מסדרים", value: "area" ,y:5},
-      { name: "(בוקר,זמן תפילה,נקנ''ש ,שעת סיום)התארגנות", value: "area" ,y:30},
+      { name: "התארגנות (בוקר,זמן תפילה,נקנ''ש ,שעת סיום)", value: "area" ,y:30},
       { name: "אימון גופני", value: "area" ,y:10},
       { name: "הפסקת אוכל", value: "area" ,y:10},
       { name: "הפסקה", value: "area" ,y:10},
