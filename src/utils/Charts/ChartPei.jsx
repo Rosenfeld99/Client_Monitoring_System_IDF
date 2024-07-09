@@ -15,12 +15,15 @@ const ChartPei = ({ dataPoints }) => {
 		// },
 		data: [{
 			type: "pie",
-			startAngle: 75,
-			toolTipContent: "<b>{label}</b>: {y}%",
+			// startAngle: 75,
+			// toolTipContent: "<b>{label}</b>: {y}%",
 			// showInLegend: "true",
+			// toolTipContent: "{label}: <strong>{y}%</strong>",
 			legendText: "{label}",
-			indexLabelFontSize: 16,
-			indexLabel: "{label} - {y}%",
+			indexLabelFontSize: 20,
+			indexLabel: "{y}%",
+			indexLabelPlacement: "inside",
+
 			dataPoints
 		}]
 	};

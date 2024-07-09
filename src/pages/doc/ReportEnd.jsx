@@ -46,7 +46,7 @@ const ReportEnd = () => {
                         </div>
                     </div>
                     <div className="  mt-[6.5rem] w-[9.5rem] h-[9.5rem] bg-blue-500 rounded-full animate-ping flex flex-col items-center justify-center"></div>
-                    <button onClick={() => navigation(`/startReport`)} className=" absolute w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
+                    <button onClick={() => navigation(`/startReport?last=end`)} className=" absolute w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
                         <div className='text-7xl text-white'>
                             {innerIcon()}
                         </div>

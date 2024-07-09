@@ -66,6 +66,7 @@ const ReportStart = ({ }) => {
             <div dir='rtl' className="flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
                     <button
+                        key={index}
                         onClick={() => {
                             setCurrentSelect(item);
                             navigation(searchParams.get('report') === "grup"
@@ -73,7 +74,6 @@ const ReportStart = ({ }) => {
                                 : `${pathname}?location=${item.name}`
                             );
                         }}
-                        key={index}
                         className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
                     >
                         <div className={`text-lg font-bold flex items-center justify-start w-full p-4 px-6 ${currentSelect === item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>
