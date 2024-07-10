@@ -8,7 +8,6 @@ import { SYSTEMSTRACT } from '../../db/systemStract'
 import CustomSelect from '../../utils/CustomSelect/CustomSelect'
 import { HiOutlineDownload } from 'react-icons/hi'
 import ButtonAction from '../../utils/ButtonAction'
-import { GiProgression } from 'react-icons/gi'
 import { FaArrowLeftLong } from 'react-icons/fa6'
 
 const AnalyticsStract = () => {

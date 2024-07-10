@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonAction from '../../../utils/ButtonAction';
 
 import useUser from '../../../hooks/useUser';
@@ -30,6 +30,9 @@ const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
 
 function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsersSelected }) {
     const { advanceSearchResults } = useUser()
+    const navigation = useNavigate()
+    // console.log(usersSelected);
+
     // check who use this component to result search or just show users
     const usersToDisplays = arrayUserDisplay || advanceSearchResults;
 
@@ -65,11 +68,10 @@ function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsers
 
             </div>
             {isSampleSoliders && usersSelected[0] &&
-                <Link >
-                    <div onClick={() => setToggleSend(true)} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
-                        <ButtonAction title="דיווח מדגם" />
-                    </div>
-                </Link>}
+                <div onClick={() => { navigation(`/startReport/base?&access=manager&report=tests&users=undefined`), setToggleSend(true) }} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                    <ButtonAction title="דיווח מדגם" />
+                </div>
+            }
         </div >
     )
 }
