@@ -3,7 +3,7 @@ import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { SYSTEMSTRACT } from '../../db/systemStract'
+import { SYSTEMSTRACT, TranslateStruct } from '../../db/systemStract'
 import { BiSolidEdit } from 'react-icons/bi'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
@@ -50,6 +50,18 @@ const ReportEdit = ({ }) => {
     }
   }
 
+  const DateToHours=(dateObj)=>{
+    const hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes();
+
+    // Zero-pad the values
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+
+    // Combine to format hh:mm
+    return`${formattedHours}:${formattedMinutes}`;
+}
+
   return (
     <TransitionPage>
       <div dir='rtl' className=" flex flex-col overflow-hidden pb-20 mx-auto w-full min-h-screen flex-1">
@@ -59,10 +71,10 @@ const ReportEdit = ({ }) => {
           <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
           <div className="grow my-auto text-md">
             עריכת דיווח {" "}
-            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{searchParams.get('location')}</span>{" "}
+            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{TranslateStruct[searchParams.get('location')] }</span>{" "}
             <div className=" flex items-center justify-center gap-2">
-              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{searchParams.get('startTime')}</span>
-              {"עד "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{searchParams.get('endTime')}</span>
+              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('startTime'))) }</span>
+              {"עד "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('endTime')))}</span>
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
 import useReports from '../../hooks/useReports'
 import { getCurrentDateFormaterHebrew } from '../../utils/func/generateId'
+import { TranslateStruct } from '../../db/systemStract'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
@@ -17,11 +18,9 @@ const HistoryLastDay = ({ }) => {
     const { activeIsEdit, currentUser } = useUser()
     const { getHistoryReports, historyReports } = useReports()
 
-
     useEffect(() => {
         getHistoryReports({ userId: currentUser?.userId, mode: "User" })
     }, [])
-    console.log(historyReports);
 
     const handleNavigation = () => {
         if (chooseOption !== null) {
@@ -36,8 +35,17 @@ const HistoryLastDay = ({ }) => {
             activeIsEdit()
         }
     }
+    const DateToHours=(dateObj)=>{
+        const hours = dateObj.getHours();
+        const minutes = dateObj.getMinutes();
 
-    // console.log(chooseOption);
+        // Zero-pad the values
+        const formattedHours = String(hours).padStart(2, '0');
+        const formattedMinutes = String(minutes).padStart(2, '0');
+
+        // Combine to format hh:mm
+        return`${formattedHours}:${formattedMinutes}`;
+    }
 
     return (
         <TransitionPage>
@@ -67,10 +75,10 @@ const HistoryLastDay = ({ }) => {
                         ${chooseOption?._id === item?._id ? "font-bold dark:text-light_primary border-2 border-[#0996E5] bg-slate-100 dark:bg-[#121212] text-light_primary_content flex items-center justify-between"
                                     : "border-2 border-gray-200 dark:border-dark_accent_content font-normal text-gray-500"}`}>
                             <div className=" flex items-center w-full gap-5 justify-between">
-                                <div >{item?.location}</div>
+                                <div >{TranslateStruct[item?.location]}</div>
                                 <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
-                                    <div >{new Date(item?.startTime).getHours()}</div>{"-"}
-                                    <div >{new Date(item?.endTime).getHours()}</div>
+                                    <div >{DateToHours(new Date(  item?.endTime))}</div>{"-"}
+                                    <div >{DateToHours(new Date( item?.startTime))}</div>
                                     {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
                                 </div>
                             </div>

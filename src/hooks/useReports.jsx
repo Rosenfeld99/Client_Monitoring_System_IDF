@@ -83,7 +83,7 @@ function useReports() {
                         console.log("the request update failed");
                         return
                     }
-                    console.log(res);
+                    console.log(res.data.dailyEdit);
                     alert("the request updated sucefully !")
                     navigate(`/startReport`)
                 })

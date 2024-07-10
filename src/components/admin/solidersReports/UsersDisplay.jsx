@@ -3,20 +3,23 @@ import { Link, useSearchParams } from 'react-router-dom';
 import ButtonAction from '../../../utils/ButtonAction';
 import { ContextStore } from '../../../context/ContextStore';
 import useUser from '../../../hooks/useUser';
+import { TranslateStruct } from '../../../db/systemStract';
 
 
 const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
     const [chooseReport, setChooseReport] = useState(false)
     const splitMission = userDisplay?.lastsReports.split("_")
+    console.log(userDisplay,splitMission);
+    const date=new Date( userDisplay?.date)
     return (<>
         {/* TODO: save the users selected on click */}
 
         <>
             <div onClick={() => { !chooseReport && sampleUsers ? setUsersSelected((prev) => [...prev, userDisplay]) : setUsersSelected((prev) => prev?.filter((user) => user?.id != userDisplay?.id)); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
-                <div className="flex w-full h-full overflow-y-auto col-span-3 items-center  justify-center ">{userDisplay?.name}</div>
-                <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">{userDisplay?.date}</div>
-                <div className="flex w-full h-full overflow-y-auto  col-span-2 items-center justify-center ">{splitMission[1]}</div>
-                <div className="flex w-full h-full overflow-y-auto col-span-3 items-center justify-center ">{splitMission[0]}</div>
+                <div className="flex w-full h-full overflow-y-auto col-span-3 items-center  justify-center ">{userDisplay?.userName||"משתמש"}</div>
+                <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">{date.getDay()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()}</div>
+                <div className="flex w-full h-full overflow-y-auto  col-span-2 items-center justify-center ">{TranslateStruct[splitMission[0]] }</div>
+                <div className="flex w-full h-full overflow-y-auto col-span-3 items-center justify-center ">{splitMission[1]}</div>
             </div>
             <div className='divide-solid divide-y border-b-2 border-[#ebebeb] dark:border-[#686868]  ' ></div>
         </>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
@@ -13,21 +13,27 @@ const ReportEnd = () => {
     const navigation = useNavigate()
     const [searchParams] = useSearchParams()
     const { currentUser } = useUser()
-    const { reportDeatile } = useContext(ContextStore);
+    const { reportDeatile,setReportDeatile } = useContext(ContextStore);
     const { endReport } = useReports();
+    useEffect(() => {
+    if (reportDeatile) {
+        localStorage.setItem("report",JSON.stringify(reportDeatile))
+    }
+    else{
+       const data=localStorage.getItem("report");
+       console.log(data);
+       console.log(JSON.parse(data));
+       setReportDeatile(JSON.parse(data))
+    }
+     }, [])
+
+
+
 
     const handleEndReport = () => {
         console.log(reportDeatile);
-        // // i get object of dates with reports
-        // const allkeys = Object?.keys(reportDeatile?.dates);
-        // // get today key in the obj
-        // const todayIndex = allkeys[allkeys?.length - 1];
-        // // oday index is the key in the obj and i take the report in the last
-        // const reportId = reportDeatil?.dates[todayIndex][reportDeatile?.dates[todayIndex].length - 1]
-
-        endReport({ userId: currentUser.userId, reportId: reportDeatile._id, endTime: new Date() })
-
-
+       
+        endReport({ userId: currentUser?.userId, reportId: reportDeatile?._id, endTime: new Date() })
     }
 
     const innerIcon = () => {

@@ -13,7 +13,7 @@ function SolidersSample({ usersToDisplay, usersSelected, setUsersSelected }) {
     const [toggleSend, setToggleSend] = useState(false)
 
     const [searchParams] = useSearchParams()
-    console.log(toggleSend);
+    
 
     useEffect(() => {
         if (usersToDisplay) {
@@ -22,8 +22,9 @@ function SolidersSample({ usersToDisplay, usersSelected, setUsersSelected }) {
             const temp = usersToDisplay?.map((userDisplay, i) => {
                 // const dateKeys = Object?.keys(userDisplay?.reports[0]?.dates);
                 // const lastDayKey = dateKeys[dateKeys?.length - 1];
-                console.log(userDisplay?.reports[0]);
+
                 const lastReport = userDisplay?.reports[0]
+                console.log(lastReport);
                 return { id: lastReport?._id, date: lastReport?.endTime, name: lastReport?.userId, lastsReports: lastReport.location + "_" + lastReport.content }
             })
             setUserArray(temp)
