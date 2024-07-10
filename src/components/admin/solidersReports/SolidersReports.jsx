@@ -18,7 +18,7 @@ function LastReports() {
   const { currentUser, getSubUsers, subUsers } = useUser();
   const { getHistoryReports, historyReports } = useReports();
   const [usersSelected, setUsersSelected] = useState([]);
-  const [usersSearch, setUsersSearch] = useState();
+  const [usersSearch, setUsersSearch] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function LastReports() {
               <div onClick={(e) => { setSearchParams({ "report": e.target.id }); setChosenCategory(e.target.id) }} className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg  cursor-pointer flex-1 p-1`} id='historyReports'>היסטוריה</div>
             </div>
 
-            {chosenCategory === "sample" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} /> : chosenCategory === "class-of-soldiers" ? <ChooseLocatin /> : <CommandLastReports />}
+            {chosenCategory === "sample" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} /> : chosenCategory === "class-of-soldiers" ? <ChooseLocatin /> : <CommandLastReports historyToDisplay={usersSearch||[]}/>}
           </div>
         </div>
 

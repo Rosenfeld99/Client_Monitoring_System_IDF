@@ -9,7 +9,7 @@ function useReports() {
 
     const { setCurrentUser, setReportDeatile } = useContext(ContextStore)
     const [historyReports, setHistoryReports] = useState([])
-    const { isEdit } = useUser();
+    const { isEdit,currentUser } = useUser();
     const navigate = useNavigate()
 
 
@@ -63,7 +63,7 @@ function useReports() {
                         console.log("the request failed");
                         return
                     }
-                    alert("the request finish!")
+                    alert("המשימה הסתיימה בהצלחה")
                     navigate(`/startReport`)
                 })
                 .catch(err => console.log(err))
@@ -79,11 +79,13 @@ function useReports() {
                 userId, reportId, startTime, endTime, content, location
             })
                 .then(res => {
-                    if (!res) {
-                        console.log("the request update failed");
+                    console.log(res);
+                    if (!res||res?.data?.msg==="Exceeds the number of authorized edits") {
+                        alert("עדכון משימה נכשל");
                         return
                     }
-                    console.log(res.data.dailyEdit);
+                    
+                    currentUser.dailyEdit=res.data.dailyEdit;
                     alert("the request updated sucefully !")
                     navigate(`/startReport`)
                 })

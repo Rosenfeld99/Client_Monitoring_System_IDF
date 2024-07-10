@@ -20,9 +20,7 @@ function SolidersSample({ usersToDisplay, usersSelected, setUsersSelected }) {
 
             console.log(usersToDisplay);
             const temp = usersToDisplay?.map((userDisplay, i) => {
-                // const dateKeys = Object?.keys(userDisplay?.reports[0]?.dates);
-                // const lastDayKey = dateKeys[dateKeys?.length - 1];
-
+            
                 const lastReport = userDisplay?.reports[0]
                 console.log(lastReport);
                 return { id: lastReport?._id, date: lastReport?.endTime, name: lastReport?.userId, lastsReports: lastReport.location + "_" + lastReport.content }

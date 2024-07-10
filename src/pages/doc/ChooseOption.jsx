@@ -29,7 +29,6 @@ const ReportStart = ({ }) => {
         reportId: searchParams.get('reportId')
     })
     console.log(urlData);
-    // const { reportDeatile } = useContext(ContextStore);
 
     const { inActiveIsEdit, currentUser, activeIsEdit, isEdit } = useUser()
     const { newReport, editReport } = useReports()
@@ -73,11 +72,6 @@ const ReportStart = ({ }) => {
         }
 
     }
-
-
-
-    console.log(pathname);
-    console.log(searchParams);
 
     useEffect(() => {
         console.log(searchParams);

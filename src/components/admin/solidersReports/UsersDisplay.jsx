@@ -11,13 +11,14 @@ const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
     const splitMission = userDisplay?.lastsReports.split("_")
     console.log(userDisplay,splitMission);
     const date=new Date( userDisplay?.date)
+    
     return (<>
         {/* TODO: save the users selected on click */}
 
         <>
             <div onClick={() => { !chooseReport && sampleUsers ? setUsersSelected((prev) => [...prev, userDisplay]) : setUsersSelected((prev) => prev?.filter((user) => user?.id != userDisplay?.id)); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
                 <div className="flex w-full h-full overflow-y-auto col-span-3 items-center  justify-center ">{userDisplay?.userName||"משתמש"}</div>
-                <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">{date.getDay()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()}</div>
+                <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">{date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()}</div>
                 <div className="flex w-full h-full overflow-y-auto  col-span-2 items-center justify-center ">{TranslateStruct[splitMission[0]] }</div>
                 <div className="flex w-full h-full overflow-y-auto col-span-3 items-center justify-center ">{splitMission[1]}</div>
             </div>
@@ -32,20 +33,7 @@ const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
 
 
 function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsersSelected }) {
-
-    const [searchParams, setSearchParams] = useSearchParams()
-
-    const handleSendReport = () => {
-
-        const newParams = new URLSearchParams(searchParams);
-
-        // Set the new parameter
-        newParams.set("users", "ffff");
-
-        // Update the URL search parameters
-        setSearchParams(newParams);
-        setToggleSend(true)
-    }
+  
 
 
     const usersToDisplays = arrayUserDisplay;
@@ -74,7 +62,7 @@ function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsers
             </div>
             {isSampleSoliders && usersSelected[0] &&
                 <Link >
-                    <div onClick={handleSendReport} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                    <div  className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
                         <ButtonAction title="דיווח מדגם" />
                     </div>
                 </Link>}

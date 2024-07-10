@@ -11,6 +11,7 @@ import Navbar from '../../components/Menu/Navbar'
 import useReports from '../../hooks/useReports'
 import { getCurrentDateFormaterHebrew } from '../../utils/func/generateId'
 import { TranslateStruct } from '../../db/systemStract'
+import { DateToHours } from '../../utils/func/dateTransform'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
@@ -35,18 +36,7 @@ const HistoryLastDay = ({ }) => {
             activeIsEdit()
         }
     }
-    const DateToHours=(dateObj)=>{
-        const hours = dateObj.getHours();
-        const minutes = dateObj.getMinutes();
-
-        // Zero-pad the values
-        const formattedHours = String(hours).padStart(2, '0');
-        const formattedMinutes = String(minutes).padStart(2, '0');
-
-        // Combine to format hh:mm
-        return`${formattedHours}:${formattedMinutes}`;
-    }
-
+   
     return (
         <TransitionPage>
             <div dir='rtl' className=" flex flex-col pb-20 mx-auto w-full relative min-h-screen flex-1 ">
