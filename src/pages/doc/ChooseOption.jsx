@@ -69,10 +69,7 @@ const ReportStart = ({ }) => {
                         key={index}
                         onClick={() => {
                             setCurrentSelect(item);
-                            navigation(searchParams.get('report') === "grup"
-                                ? `${pathname}?location=${item.name}&report=${searchParams.get('report')}`
-                                : `${pathname}?location=${item.name}`
-                            );
+                            navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}`);
                         }}
                         className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
                     >
@@ -85,10 +82,33 @@ const ReportStart = ({ }) => {
         )
     }
 
-
     const routeingOnClick = () => {
         if (searchParams.get('access') == "manager") {
             // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
+        }
+    }
+
+    const innerTypeOfReport = (typeMsg) => {
+        switch (typeMsg) {
+            case "grup":
+                return {
+                    title: "דיווח מחלקתי",
+                    description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
+                    link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`
+                }
+            case "tests":
+                return {
+                    title: "דיווח מדגם",
+                    description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
+                    link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`
+                }
+
+            default:
+                return {
+                    title: "דיווח חדש",
+                    description: isEdit ? "? 29/6 איפה הייתם ביום" : `איפה תהיו היום בשעה ${getCurrentTime()}`,
+                    link: isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
+                }
         }
     }
 
@@ -108,10 +128,10 @@ const ReportStart = ({ }) => {
                         {innerIcon()}
                     </div>
                     <div dir='ltr' className="self-center text-lg font-bold text-black">
-                        {searchParams.get('report') == "grup" ? "דיווח מחלקתי" : isEdit ? "? 29/6 איפה הייתם ביום" : `איפה תהיו היום בשעה ${getCurrentTime()}`}
+                        {innerTypeOfReport(searchParams.get('report')).title}
                     </div>
                     <div className="w-full text-sm text-zinc-800">
-                        {searchParams.get('report') == "grup" ? "הזנת משימה עבור מחלקה : )" : isEdit ? "אתם עורכים דיווח :)" : "הזן את המשימה הקרובה שלך :)"}
+                        {innerTypeOfReport(searchParams.get('report')).description}
                     </div>
                 </div>
 
@@ -120,7 +140,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : " שלח דיווח"} route={isEdit ? '/startReport' : searchParams.get('report') == "grup" ? `/lastReports` : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`} />
+                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : searchParams.get('report') == "grup" ? "שלח דיווח" : " שלח דיווח"} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>

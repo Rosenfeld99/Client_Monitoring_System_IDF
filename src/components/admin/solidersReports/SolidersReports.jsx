@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import TransitionPage from '../../../animation/TransitionPage'
 import SoldiersClassReport from './SoldiersClassReport'
 import { LuSearch } from 'react-icons/lu'
@@ -14,6 +14,7 @@ function LastReports() {
   const [chosenCategory, setChosenCategory] = useState("class-of-soldiers")
   const [usersSelected, setUsersSelected] = useState([]);
   const [usersSearch, setUsersSearch] = useState(reportListUsers.users);
+  const [searchParams] = useSearchParams()
 
 
   const handleSearch = (e) => {
