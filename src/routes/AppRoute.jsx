@@ -62,6 +62,7 @@ function AppRoute() {
           <Route path='/analytics' element={<AnalyticsStract />} />
           <Route path='/analytics' element={<AnalyticsStract />} />
           <Route path='/analytics/:item' element={<AnalyticsItem />} />
+          <Route path='/analytics/users' element={<AnalyticsItem />} />
 
           <Route path='/*' element={<h2>Not found 404</h2>} />
         </Routes>
