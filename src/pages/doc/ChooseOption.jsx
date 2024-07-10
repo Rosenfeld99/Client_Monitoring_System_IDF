@@ -94,20 +94,22 @@ const ReportStart = ({ }) => {
                 return {
                     title: "דיווח מחלקתי",
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
-                    link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`
+                    link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`,
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח'
                 }
             case "tests":
                 return {
                     title: "דיווח מדגם",
                     description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
-                    link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`
+                    link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח'
                 }
-
             default:
                 return {
-                    title: "דיווח חדש",
+                    title: isEdit ? "עריכת דיווח" : "דיווח חדש",
                     description: isEdit ? "? 29/6 איפה הייתם ביום" : `איפה תהיו היום בשעה ${getCurrentTime()}`,
-                    link: isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
+                    link: isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`,
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח'
                 }
         }
     }
@@ -127,10 +129,10 @@ const ReportStart = ({ }) => {
                     <div className="mx-auto w-fit text-4xl text-white">
                         {innerIcon()}
                     </div>
-                    <div dir='ltr' className="self-center text-lg font-bold text-black">
+                    <div className="self-center text-lg font-bold text-black">
                         {innerTypeOfReport(searchParams.get('report')).title}
                     </div>
-                    <div className="w-full text-sm text-zinc-800">
+                    <div dir='ltr' className="w-full text-sm text-zinc-800">
                         {innerTypeOfReport(searchParams.get('report')).description}
                     </div>
                 </div>
@@ -140,7 +142,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} title={isEdit ? "עריכה דיווח" : searchParams.get('report') == "grup" ? "שלח דיווח" : " שלח דיווח"} route={innerTypeOfReport(searchParams.get("report")).link} />
+                    <ButtonAction disabledBtn={!currentSelect} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>
