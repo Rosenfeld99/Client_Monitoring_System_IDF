@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import ButtonAction from '../../../utils/ButtonAction';
 import { ContextStore } from '../../../context/ContextStore';
 import useUser from '../../../hooks/useUser';
@@ -33,10 +33,12 @@ const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
 
 
 function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsersSelected }) {
-  
+    const { advanceSearchResults } = useUser()
+    const navigation = useNavigate()
+    // console.log(usersSelected);
 
-
-    const usersToDisplays = arrayUserDisplay;
+    // check who use this component to result search or just show users
+    const usersToDisplays = arrayUserDisplay || advanceSearchResults;
 
     //check if sample users table is display or results table
     const isSampleSoliders = arrayUserDisplay ? true : false;
@@ -61,11 +63,10 @@ function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsers
 
             </div>
             {isSampleSoliders && usersSelected[0] &&
-                <Link >
-                    <div  className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
-                        <ButtonAction title="דיווח מדגם" />
-                    </div>
-                </Link>}
+                <div onClick={() => { navigation(`/startReport/base?&access=manager&report=tests&users=undefined`), setToggleSend(true) }} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+                    <ButtonAction title="דיווח מדגם" />
+                </div>
+            }
         </div >
     )
 }
