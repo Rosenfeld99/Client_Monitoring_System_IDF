@@ -12,6 +12,7 @@ import useReports from '../../hooks/useReports'
 import { getCurrentDateFormaterHebrew } from '../../utils/func/generateId'
 import { TranslateStruct } from '../../db/systemStract'
 import { DateToHours } from '../../utils/func/dateTransform'
+import LoadingPage from '../LoadingPage/LoadingPage'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
@@ -36,7 +37,7 @@ const HistoryLastDay = ({ }) => {
             activeIsEdit()
         }
     }
-   
+
     return (
         <TransitionPage>
             <div dir='rtl' className=" flex flex-col pb-20 mx-auto w-full relative min-h-screen flex-1 ">
@@ -55,10 +56,12 @@ const HistoryLastDay = ({ }) => {
                     srcSet={BACKPAPER}
                     className=" mt-20 w-full opacity-15 max-w-[700px] max-h-[700px] z-10 absolute top-20 aspect-[0.72] stroke-[5px] stroke-neutral-200 stroke-opacity-40"
                 />
+                {/* Loaing page */}
+                {!historyReports && <LoadingPage />}
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
                     {console.log(historyReports)}
-                    {historyReports?.data?.map((item, index) => (
+                    {historyReports?.map((item, index) => (
                         // adding start and last time
                         <div key={index} onClick={() => setChooseOption(item)}
                             className={`p-2 rounded-lg text-md w-full 
@@ -67,8 +70,8 @@ const HistoryLastDay = ({ }) => {
                             <div className=" flex items-center w-full gap-5 justify-between">
                                 <div >{TranslateStruct[item?.location]}</div>
                                 <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
-                                    <div >{DateToHours(new Date(  item?.endTime))}</div>{"-"}
-                                    <div >{DateToHours(new Date( item?.startTime))}</div>
+                                    <div >{DateToHours(new Date(item?.endTime))}</div>{"-"}
+                                    <div >{DateToHours(new Date(item?.startTime))}</div>
                                     {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
                                 </div>
                             </div>

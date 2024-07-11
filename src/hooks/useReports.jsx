@@ -8,7 +8,7 @@ import { useToast } from '../utils/Toasttify/ToastManager';
 
 function useReports() {
 
-    const [historyReports, setHistoryReports] = useState([])
+    const [historyReports, setHistoryReports] = useState(null)
     const { isEdit,currentUser } = useUser();
     const navigate = useNavigate()
     const showToast = useToast();
