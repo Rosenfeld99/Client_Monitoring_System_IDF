@@ -24,7 +24,9 @@ function SolidersSample({ usersToDisplay, setChosenCategory, usersSelected, setU
     }, [usersToDisplay])
 
     return (
-        <div dir='rtl'> {toggleSend?<SoldiersClassReport />:<UsersDisplay usersSelected={usersSelected} setUsersSelected={setUsersSelected} setToggleSend={setToggleSend} arrayUserDisplay={userArray} />}</div>
+        <div dir='rtl'> {toggleSend
+            ? <SoldiersClassReport />
+            : <UsersDisplay usersSelected={usersSelected} setUsersSelected={setUsersSelected} setToggleSend={setToggleSend} arrayUserDisplay={userArray} />}</div>
     )
 }
 
