@@ -1,22 +1,32 @@
 import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSingleSystemStract, SYSTEMSTRACT } from '../../../db/systemStract'
-import ReportEnd from '../../../pages/doc/ReportEnd'
 import UserCardList from './UserCardPrcess/UserCardList'
 import { ImPause } from 'react-icons/im'
 import { CgFileDocument } from 'react-icons/cg'
 import { GrDocumentTest } from 'react-icons/gr'
+import useUser from '../../../hooks/useUser'
+import useReports from '../../../hooks/useReports'
 
-function ChooseLocatin({ usersSelected }) {
+function SoldiersClassReport({ usersSelected }) {
     const navigation = useNavigate()
+    const {currentUser}=useUser()
+    const {endReport}=useReports()
     const usersName = usersSelected?.map((user) => user?.name)
-    console.log(usersName);
     const [searchParams] = useSearchParams()
 
 
     const innerIcon = (val) => {
         return getSingleSystemStract(val || searchParams.get('s'))?.icon
     }
+    const handleClassReport=(e)=>{
+        endReport({
+         userId: currentUser?.userId,
+         reportId: searchParams.get("reportId"),
+         endTime: new Date()
+          ,manager:true})
+    }
+
 
     const usersTests = [
         {
@@ -39,7 +49,7 @@ function ChooseLocatin({ usersSelected }) {
                     ))}
                 </div> :
                     <div className="">
-                        {!false ?
+                        {false ?
                             <div className=" flex flex-col w-full items-center justify-center gap-5">
                                 {usersTests?.map((item, index) => (
                                     <button
@@ -88,7 +98,7 @@ function ChooseLocatin({ usersSelected }) {
                                     <div className='text-7xl text-white'>
                                         {innerIcon()}
                                     </div>
-                                    <div className='text-black'>
+                                    <div onClick={handleClassReport} className='text-black'>
                                         <div >סיום</div>
                                         <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31)}{searchParams.get('location')?.length > 31 && "..."}{searchParams.get('report') == "grup" && "דיווח מחלקה"}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
                                     </div>
@@ -101,4 +111,4 @@ function ChooseLocatin({ usersSelected }) {
     )
 }
 
-export default ChooseLocatin
+export default SoldiersClassReport

@@ -13,33 +13,20 @@ const ReportEnd = () => {
     const navigation = useNavigate()
     const [searchParams] = useSearchParams()
     const { currentUser } = useUser()
-    const { reportDeatile,setReportDeatile } = useContext(ContextStore);
+    const [reportId,setReportId]=useState()
     const { endReport } = useReports();
+
     useEffect(() => {
-    if (reportDeatile) {
-        localStorage.setItem("report",JSON.stringify(reportDeatile))
-    }
-    else{
-       const data=localStorage.getItem("report");
-       console.log(data);
-       console.log(JSON.parse(data));
-       setReportDeatile(JSON.parse(data))
-    }
+   setReportId(searchParams.get("reportId"));
      }, [])
-
-
-
-
-    const handleEndReport = () => {
-        console.log(reportDeatile);
-       
-        endReport({ userId: currentUser?.userId, reportId: reportDeatile?._id, endTime: new Date() })
+     
+    const handleEndReport = () => {       
+        endReport({ userId: currentUser?.userId, reportId: reportId, endTime: new Date() })
     }
 
     const innerIcon = () => {
         return getSingleSystemStract(searchParams.get('s'))?.icon
     }
-    console.log(searchParams);
 
     return (
         <TransitionPage>

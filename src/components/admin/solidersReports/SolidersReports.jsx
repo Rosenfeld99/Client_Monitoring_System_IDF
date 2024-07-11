@@ -8,7 +8,7 @@ import SolidersSample from './SolidersSample'
 import { reportListUsers } from '../../../db/reportsList'
 import CommandLastReports from './CommandLastReports'
 import Navbar from '../../Menu/Navbar'
-import ChooseLocatin from './ChooseLocatin'
+import SoldiersClassReport from './SoldiersClassReport'
 import useUser from '../../../hooks/useUser'
 import useReports from '../../../hooks/useReports'
 
@@ -38,7 +38,7 @@ function LastReports() {
         <div className='h-full flex-1 flex items-center'>
           <div className='w-[100vw] px-5 mt-5'>
             <div className='flex justify-center pb-4 items-center'>
-              <span className='font-bold' >מיין משתמשים</span>
+              <span className='font-bold' >דיווחי מפקד</span>
             </div>
             {/* <div className='flex flex-row-reverse gap-2'>
               <div className='border-b-2 border-[#ebebeb] dark:border-[#686868] pr-3 rounded-lg border flex w-[90%] '>
@@ -56,7 +56,7 @@ function LastReports() {
               <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg  cursor-pointer flex-1 p-1`} id='historyReports'>היסטוריה</div>
             </div>
 
-            {chosenCategory === "sample" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} /> : chosenCategory === "class-of-soldiers" ? <ChooseLocatin /> : <CommandLastReports historyToDisplay={usersSearch||[]}/>}
+            {chosenCategory === "sample" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} /> : chosenCategory === "class-of-soldiers" ? <SoldiersClassReport /> : <CommandLastReports historyToDisplay={usersSearch||[]}/>}
           </div>
         </div>
 

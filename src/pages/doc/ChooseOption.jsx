@@ -54,11 +54,11 @@ const ReportStart = ({ }) => {
             editReport(editObj)
         }
         else {
-
+                console.log(JSON?.parse(urlData.users)||[] );
             const newReportObj = {
                 team: "",
                 mode: urlData.access ? "Manager" : "User",
-                username: currentUser?.username,
+                usersId: JSON?.parse(urlData.users)||[],
                 course: currentUser?.course,
                 endTime: "",
                 startTime: date,
@@ -66,16 +66,15 @@ const ReportStart = ({ }) => {
                 location: currentSelect?.value,
                 completed: false,
                 userId: currentUser?.userId,
-                navigate:innerTypeOfReport(searchParams.get("report")).link
+                navigatePage:innerTypeOfReport(searchParams.get("report")).link,
+                // usersId:""
             }
-
             newReport(newReportObj)
         }
 
     }
 
     useEffect(() => {
-        console.log(searchParams);
         if (searchParams.get('s') &&
             searchParams.get('location') &&
             searchParams.get('startTime') &&
@@ -195,7 +194,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div  onClick={handleStartReport} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
+                    <ButtonAction disabledBtn={!currentSelect} title={innerTypeOfReport(searchParams.get('report')).btnText}  />
                 </div>
             </div>
         </TransitionPage>
@@ -203,3 +202,5 @@ const ReportStart = ({ }) => {
 }
 
 export default ReportStart
+
+// route={innerTypeOfReport(searchParams.get("report")).link}

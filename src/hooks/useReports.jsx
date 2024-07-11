@@ -4,20 +4,21 @@ import axios from 'axios';
 import { data } from 'autoprefixer';
 import useUser from './useUser';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '../utils/Toasttify/ToastManager';
 
 function useReports() {
 
-    const { setCurrentUser, setReportDeatile } = useContext(ContextStore)
     const [historyReports, setHistoryReports] = useState([])
     const { isEdit,currentUser } = useUser();
     const navigate = useNavigate()
+    const showToast = useToast();
 
+   
 
-
-    const newReport = async ({ startTime, team, mode, username, course, endTime, content, location, completed, userId,navigate }) => {
+    const newReport = async ({ startTime, team, mode, usersId, course, endTime, content, location, completed, userId,navigatePage }) => {
         //TODO change user course
 
-        console.log(userId, mode, course);
+        console.log(userId, mode, course,navigatePage);
         if (!startTime || !content || !location || !userId) {
 
             return
@@ -28,7 +29,7 @@ function useReports() {
                 startTime,
                 team,
                 mode,
-                username,
+                usersId,
                 course: course || "קמב",
                 endTime,
                 content,
@@ -41,21 +42,24 @@ function useReports() {
                         console.log("the request failed");
                         return
                     }
-                    alert("new report");
-                    setReportDeatile(res?.data)
-                    navigate(navigate)
+                   console.log(res?.data);
+                    showToast('success', 'המשימה נוצרה בהצלחה')
+                    
+                    navigate(navigatePage+"&reportId="+res?.data?._id)
                     // navigate(isEdit ? `/startReport` : `/endReport?s=${location}&location=${content}`)
                 })
                 .catch(err => console.log(err))
         } catch (error) {
             console.log(error);
+            showToast('error', 'בעיה ביצירת המשימה')
             return
         }
 
     }
 
-    const endReport = async ({ userId, reportId, endTime }) => {
+    const endReport = async ({ userId, reportId, endTime,manager }) => {
         console.log(userId, reportId, endTime);
+        console.log("in end report");
         try {
             axios.post(`http://localhost:5000/report/closeReport`, {
                 userId, reportId, endTime
@@ -65,12 +69,18 @@ function useReports() {
                         console.log("the request failed");
                         return
                     }
-                    alert("המשימה הסתיימה בהצלחה")
-                    navigate(`/startReport`)
+                    showToast('success',"המשימה הסתיימה בהצלחה")
+                    console.log("end");
+                    if (!manager) {
+                        navigate(`/startReport`)     
+                    }
+
                 })
                 .catch(err => console.log(err))
         } catch (error) {
             console.log(error);
+            showToast('error', 'בעיה בסיום המשימה')
+
         }
     }
 
@@ -88,11 +98,13 @@ function useReports() {
                     }
                     
                     currentUser.dailyEdit=res.data.dailyEdit;
-                    alert("the request updated sucefully !")
+                    showToast('success', 'המשימה עודכנה בהצלחה')
                     navigate(`/startReport`)
                 })
                 .catch(err => console.log(err))
         } catch (error) {
+            showToast('error', 'בעיה בעדכון המשימה')
+
             console.log(error);
         }
     }

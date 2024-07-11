@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import UsersDisplay from './UsersDisplay'
-import { reportListUsers } from '../../../db/reportsList';
 import SoldiersClassReport from './SolidersReports';
 import { useSearchParams } from 'react-router-dom';
-import ChooseLocatin from './ChooseLocatin';
 
 //usersToDisplay: are the users to display after serch input,
 //setChosenCategory: is to toggle to location choose screen,

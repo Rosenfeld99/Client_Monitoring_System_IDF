@@ -5,7 +5,6 @@ export const ContextStoreProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
   const [advanceSearchResults, setAdvanceSearchResults] = useState([]);
-  const [reportDeatile, setReportDeatile] = useState(null)
 
   const [subUsers, setSubUsers] = useState([])
   const [searchInputs, setSearchInputs] = useState({
@@ -19,7 +18,7 @@ export const ContextStoreProvider = ({ children }) => {
     isEdit, setIsEdit,
     advanceSearchResults, setAdvanceSearchResults,
     searchInputs, setSearchInputs,
-    subUsers, setSubUsers, reportDeatile, setReportDeatile
+    subUsers, setSubUsers
   }
 
   return (
