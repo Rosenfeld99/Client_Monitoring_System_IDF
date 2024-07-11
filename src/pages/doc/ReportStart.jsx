@@ -12,13 +12,12 @@ const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { inActiveIsEdit } = useUser()
 
-    const handleStartReport = () => {
-
-    }
 
     useEffect(() => {
         inActiveIsEdit()
     }, [])
+
+
 
     // <GiTowerFlag />
 

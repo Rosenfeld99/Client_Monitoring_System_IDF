@@ -1,27 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import TransitionPage from '../../../animation/TransitionPage'
-import SoldiersClassReport from './SoldiersClassReport'
+
 import { LuSearch } from 'react-icons/lu'
 import { LiaFilterSolid } from 'react-icons/lia'
 import SolidersSample from './SolidersSample'
 import { reportListUsers } from '../../../db/reportsList'
 import CommandLastReports from './CommandLastReports'
 import Navbar from '../../Menu/Navbar'
+import ChooseLocatin from './ChooseLocatin'
+import useUser from '../../../hooks/useUser'
+import useReports from '../../../hooks/useReports'
 
 
 function LastReports() {
   const [chosenCategory, setChosenCategory] = useState("class-of-soldiers")
+  const { currentUser, getSubUsers, subUsers } = useUser();
+  const { getHistoryReports, historyReports } = useReports();
   const [usersSelected, setUsersSelected] = useState([]);
-  const [usersSearch, setUsersSearch] = useState(reportListUsers.users);
-  const [searchParams] = useSearchParams()
+  const [usersSearch, setUsersSearch] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams()
 
+  useEffect(() => {
+    // setSearchParams({ "report": "class-of-soldiers" })
+    getHistoryReports({ userId: currentUser?.userId, mode: currentUser?.role })
+  }, [])
 
-  const handleSearch = (e) => {
-    const temp = reportListUsers.users.filter((user) => user.username.includes(e.target.value))
-    setUsersSearch(temp)
-  }
-
+  useEffect(() => {
+    setUsersSearch(historyReports?.data)
+  }, [historyReports])
 
   return (
     <TransitionPage>
@@ -44,12 +51,12 @@ function LastReports() {
             </div> */}
 
             <div className='flex w-full justify-evenly items-center p-1 flex-1 rounded-lg mt-4  bg-[#e9e9e9] dark:bg-[#131313]'>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2 text-center p-1 rounded-lg  cursor-pointer`} id='class-of-soldiers'>דיווח מחלקתי</div>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center p-1 rounded-lg cursor-pointer `} id='soldiers'>דיווח מדגם</div>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center p-1 rounded-lg  cursor-pointer`} id='historyReports'>היסטוריה</div>
+              <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}  text-center rounded-lg  cursor-pointer flex-1 p-1`} id='class-of-soldiers'>דיווח מחלקתי</div>
+              {currentUser?.role === "Manager" && <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "sample" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg cursor-pointer flex-1 p-1 `} id='sample'>דיווח מדגם</div>}
+              <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg  cursor-pointer flex-1 p-1`} id='historyReports'>היסטוריה</div>
             </div>
 
-            {chosenCategory === "soldiers" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} setChosenCategory={setChosenCategory} /> : chosenCategory === "historyReports" ? <CommandLastReports /> : <SoldiersClassReport usersSelected={usersSelected} />}
+            {chosenCategory === "sample" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} /> : chosenCategory === "class-of-soldiers" ? <ChooseLocatin /> : <CommandLastReports historyToDisplay={usersSearch||[]}/>}
           </div>
         </div>
 

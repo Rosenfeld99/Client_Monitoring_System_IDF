@@ -7,7 +7,7 @@ import { ImPause } from 'react-icons/im'
 import { CgFileDocument } from 'react-icons/cg'
 import { GrDocumentTest } from 'react-icons/gr'
 
-function SoldiersClassReport({ usersSelected }) {
+function ChooseLocatin({ usersSelected }) {
     const navigation = useNavigate()
     const usersName = usersSelected?.map((user) => user?.name)
     console.log(usersName);
@@ -101,4 +101,4 @@ function SoldiersClassReport({ usersSelected }) {
     )
 }
 
-export default SoldiersClassReport
+export default ChooseLocatin

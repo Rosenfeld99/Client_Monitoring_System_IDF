@@ -6,9 +6,14 @@ import CustomSelect from '../../../utils/CustomSelect/CustomSelect'
 import FloatingLabelInput from '../../../utils/floatingLabelInput/FloatingLabelInput'
 import { FaWindowClose } from 'react-icons/fa'
 import ButtonAction from '../../../utils/ButtonAction'
+import useAdmin from '../../../hooks/useAdmin'
 import { useToast } from '../../../utils/Toasttify/ToastManager'
+import useUser from '../../../hooks/useUser'
 
 const ManageUsers = () => {
+    const { addUser } = useAdmin()
+    const { currentUser, } = useUser();
+
     const accessOption = [
         { name: "ח", value: "חייל" },
         { name: "כ", value: "כיתה" },
@@ -28,6 +33,17 @@ const ManageUsers = () => {
         accessOption: null,
         grupAccess: []
     })
+    // course, username, role, subSolders, userId, commandId, AdminUser
+    const handleAddNewUsers = () => {
+        console.log(currentUser, newUser);
+        addUser({
+            role: newUser?.accessOption,
+            course: newUser?.curseOption,
+            subSolders: newUser?.grupAccess,
+            userId: newUser?.password,
+            adminUser: currentUser.userId,
+        })
+    }
 
     const updateSate = (newValue, keyToUpdate) => {
         switch (keyToUpdate) {
@@ -69,8 +85,6 @@ const ManageUsers = () => {
     }
 
     const showToast = useToast();
-
-    console.log(newUser);
     return (
         <TransitionPage>
             <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full  min-h-screen flex-1  ">
@@ -127,8 +141,8 @@ const ManageUsers = () => {
                             </div>
                         </React.Fragment>}
                 </div>
-                <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!validRequest()} title={"הוספת משתמש"} route={'/startReport'} />
+                <div onClick={handleAddNewUsers} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
+                    <ButtonAction disabledBtn={!validRequest()} title={"הוספת משתמש"} />
                 </div>
             </div>
         </TransitionPage>

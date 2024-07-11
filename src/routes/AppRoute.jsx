@@ -17,19 +17,22 @@ import ReportDate from '../components/admin/reportDate/ReportDate'
 import ManageUsers from '../components/admin/ManageUsers/ManageUsers'
 import AnalyticsStract from '../pages/analytics/AnalyticsStract'
 import AnalyticsItem from '../pages/analytics/AnalyticsItem'
+import useUser from '../hooks/useUser'
 
 
 
 function AppRoute() {
   const [isLoading, setIsLoading] = useState(true);
+  const { getUser, currentUser } = useUser()
 
   useEffect(() => {
+    getUser("4", null)
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
       setIsLoading(false);
     }, 2000); // Adjust the duration as needed
   }, []);
-
+  console.log(currentUser);
   const location = useLocation();
   return (
     <div className='max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content'>

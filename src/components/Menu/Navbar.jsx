@@ -12,6 +12,7 @@ import '../../App.css'
 import { appName } from '../../constant/constant'
 import { PiUserCircleCheckFill, PiUserCirclePlusFill, PiUsersThreeFill } from 'react-icons/pi'
 import { BsClipboard2Data } from 'react-icons/bs'
+import useUser from '../../hooks/useUser'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -19,15 +20,17 @@ const Navbar = () => {
     const [theme, toggleTheme] = useTheme();
     const [searchParams] = useSearchParams()
     const { pathname } = useLocation()
+    const { currentUser } = useUser();
+
 
     const navigate = useNavigate()
 
     const menu = [
-        { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
-        { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
-        { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
-        { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
-        { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
+        { show:true, route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
+        { show:currentUser?.role==="Admin"||currentUser?.role==="Manager", route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
+        { show:true, route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
+        { show:currentUser?.role==="Admin", route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
+        { show:true, route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
 
 
@@ -54,14 +57,14 @@ const Navbar = () => {
                     <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
                         <IoClose />
                     </div>
-                    {menu.map((item, index) => (
+                    {menu.map((item, index) => item.show && (
                         <div onClick={() => { navigate(`${item.route}`), handleClose() }} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             {item.title} {item.icon}
                         </div>
                     ))}
-                    <div onClick={() => { navigate('/analytics'), handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                   {currentUser?.role==="Admin"&&<div onClick={() => { navigate('/analytics'), handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         נתונים <BsClipboard2Data className='text-3xl text-black' />
-                    </div>
+                    </div>}
                     <div onClick={toggleTheme} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         ערכת נושא {theme == "light" ? <LuMoonStar className='text-3xl text-black' /> : <FiSun className='text-3xl text-black' />}
                     </div>

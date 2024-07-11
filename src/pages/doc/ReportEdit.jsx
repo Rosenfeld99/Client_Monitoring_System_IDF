@@ -3,19 +3,16 @@ import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { SYSTEMSTRACT } from '../../db/systemStract'
+import { SYSTEMSTRACT, TranslateStruct } from '../../db/systemStract'
 import { BiSolidEdit } from 'react-icons/bi'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
+import { DateToHours } from '../../utils/func/dateTransform'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
-  const { isEdit, activeIsEdit } = useUser()
+  const { isEdit, activeIsEdit,currentUser } = useUser()
 
-
-  const handleStartReport = () => {
-
-  }
 
   // <GiTowerFlag />
 
@@ -26,6 +23,7 @@ const ReportEdit = ({ }) => {
     searchParams.get('location')
     searchParams.get('startTime')
     searchParams.get('endTime')
+    searchParams.get('reportId')
     activeIsEdit()
   }, [searchParams, isEdit])
 
@@ -33,7 +31,8 @@ const ReportEdit = ({ }) => {
   console.log(isEdit);
 
 
-  const counterOfEdit = 2
+  const counterOfEdit = currentUser?.dailyEdit?.split("#")[0];
+  console.log(counterOfEdit);
 
 
   const handleNavigation = (item) => {
@@ -42,11 +41,13 @@ const ReportEdit = ({ }) => {
         s: searchParams.get('s'),
         location: searchParams.get('location'),
         startTime: searchParams.get('startTime'),
-        endTime: searchParams.get('endTime')
+        endTime: searchParams.get('endTime'),
+        reportId: searchParams.get('reportId')
       }).toString();
       navigation(`/startReport/${item?.value}?${params}`);
     }
   }
+
 
   return (
     <TransitionPage>
@@ -54,13 +55,13 @@ const ReportEdit = ({ }) => {
 
         <Navbar />
         <div className="flex gap-2 self-center px-5 mt-10 leading-5 text-center text-light_neutral dark:text-dark_accent_content">
-          <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
+          <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit <= 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
           <div className="grow my-auto text-md">
             עריכת דיווח {" "}
-            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{searchParams.get('location')}</span>{" "}
+            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{TranslateStruct[searchParams.get('location')] }</span>{" "}
             <div className=" flex items-center justify-center gap-2">
-              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{searchParams.get('startTime')}</span>
-              {"עד "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{searchParams.get('endTime')}</span>
+              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('startTime'))) }</span>
+              {"עד "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('endTime')))}</span>
             </div>
           </div>
         </div>
@@ -75,7 +76,7 @@ const ReportEdit = ({ }) => {
               עריכת דיווח
             </div>
             <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
-              נותרו עוד <span className={` font-bold ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`}>{counterOfEdit}</span> מתוך 3 אפשריות לערוך
+              נותרו עוד <span className={` font-bold ${counterOfEdit <= 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`}>{counterOfEdit}</span> מתוך 3 אפשריות לערוך
             </div>
           </div>
 

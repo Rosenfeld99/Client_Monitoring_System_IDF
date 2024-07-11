@@ -11,9 +11,10 @@ const ReportStart = ({ }) => {
     const [valueWWd, setValueWWd] = useState('')
     const [valueWMI, setValueWMI] = useState('')
 
-    const handleStartReport = () => {
-
+    const handleStartReport = (e) => {
+        console.log(e.target.value);
     }
+    console.log("aa");
 
     return (
         <TransitionPage>
@@ -56,7 +57,10 @@ const ReportStart = ({ }) => {
                             תינתן אפשרות של סיום דיווח
                         </div>
                         {/*  */}
-                        <ButtonAction title="שלח דיווח" route={'/endReport'} />
+                        <span onClick={handleStartReport}>
+
+                            <ButtonAction title="שלח דיווח" route={'/endReport'} />
+                        </span>
                     </div>
                 </div>
             </div>

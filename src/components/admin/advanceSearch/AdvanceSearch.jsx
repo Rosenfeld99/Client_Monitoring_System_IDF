@@ -6,7 +6,6 @@ import makeAnimated from 'react-select/animated';
 import TransitionPage from '../../../animation/TransitionPage';
 import { reportListUsers } from '../../../db/reportsList';
 
-import useUser from '../../../hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import { ContextStore } from '../../../context/ContextStore';
 
@@ -20,8 +19,7 @@ const optionsPlaces = [{ isFixed: true, label: "בסיס", value: "בסיס" },
 
 function AdvanceSearch() {
     const animatedComponents = makeAnimated();
-    const { advanceSearchResults, setAdvanceSearchResults } = useUser();
-    const { searchInputs, setSearchInputs } = useContext(ContextStore);
+    const { searchInputs, setSearchInputs, setAdvanceSearchResults, advanceSearchResults } = useContext(ContextStore);
     const [theme, toggleTheme] = useTheme();
     const navigate = useNavigate()
 
