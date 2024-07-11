@@ -26,7 +26,7 @@ function AppRoute() {
   const { getUser, currentUser } = useUser()
 
   useEffect(() => {
-    getUser("1", null)
+    getUser("4", null)
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
       setIsLoading(false);

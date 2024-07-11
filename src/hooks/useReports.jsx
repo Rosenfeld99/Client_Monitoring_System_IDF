@@ -14,7 +14,7 @@ function useReports() {
 
 
 
-    const newReport = async ({ startTime, team, mode, username, course, endTime, content, location, completed, userId }) => {
+    const newReport = async ({ startTime, team, mode, username, course, endTime, content, location, completed, userId,navigate }) => {
         //TODO change user course
 
         console.log(userId, mode, course);
@@ -43,6 +43,7 @@ function useReports() {
                     }
                     alert("new report");
                     setReportDeatile(res?.data)
+                    navigate(navigate)
                     // navigate(isEdit ? `/startReport` : `/endReport?s=${location}&location=${content}`)
                 })
                 .catch(err => console.log(err))

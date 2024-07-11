@@ -66,6 +66,7 @@ const ReportStart = ({ }) => {
                 location: currentSelect?.value,
                 completed: false,
                 userId: currentUser?.userId,
+                navigate:innerTypeOfReport(searchParams.get("report")).link
             }
 
             newReport(newReportObj)
