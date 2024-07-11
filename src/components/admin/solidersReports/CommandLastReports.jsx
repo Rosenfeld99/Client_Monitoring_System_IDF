@@ -5,13 +5,13 @@ import { CgMoreVerticalO } from 'react-icons/cg'
 import { getSingleSystemStract } from '../../../db/systemStract'
 import { FaEdit } from 'react-icons/fa'
 
-function CommandLastReports() {
+function CommandLastReports({historyToDisplay}) {
     const navigation = useNavigate()
     // const usersName = usersSelected?.map((user) => user?.name)
     const [isOpen, setIsOpen] = useState("");
     const dropdownRef = useRef(null);
     const [searchParams] = useSearchParams()
-
+console.log(historyToDisplay);
     const innerIcon = (val) => {
         return getSingleSystemStract(val || searchParams.get('s'))?.icon
     }

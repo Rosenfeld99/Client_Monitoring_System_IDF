@@ -9,7 +9,7 @@ import { TranslateStruct } from '../../../db/systemStract';
 const DisplayUser = ({ setUsersSelected, userDisplay }) => {
     const [chooseReport, setChooseReport] = useState(false)
     const splitMission = userDisplay?.lastsReports.split("_")
-    
+    console.log(splitMission);
     const date=new Date( userDisplay?.date)
     
     return (<>

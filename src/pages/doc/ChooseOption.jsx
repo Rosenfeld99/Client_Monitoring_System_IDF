@@ -54,11 +54,11 @@ const ReportStart = ({ }) => {
             editReport(editObj)
         }
         else {
-                console.log(JSON?.parse(urlData.users)||[] );
+                
             const newReportObj = {
                 team: "",
                 mode: urlData.access ? "Manager" : "User",
-                usersId: JSON?.parse(urlData.users)||[],
+                username: "nehoray",
                 course: currentUser?.course,
                 endTime: "",
                 startTime: date,
