@@ -56,7 +56,7 @@ function CommandLastReports() {
                             </div>
                             <div className=" flex items-center justify-between w-full">
                                 <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
-                                    <div className="gradient-bg-dark text-white z-50 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
+                                    <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
                                         {/* {innerIcon(item?.value)} */}
                                         <GrDocumentTest />
                                     </div>

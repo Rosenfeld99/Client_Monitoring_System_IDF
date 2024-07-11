@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { SYSTEMSTRACT } from '../../db/systemStract'
 import { BiSolidEdit } from 'react-icons/bi'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
+import { useToast } from '../../utils/Toasttify/ToastManager'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
+  const showToast = useToast();
   const { isEdit, activeIsEdit } = useUser()
-
 
   const handleStartReport = () => {
 
@@ -19,7 +19,10 @@ const ReportEdit = ({ }) => {
 
   // <GiTowerFlag />
 
+  const counterOfEdit = 0
   const [searchParams] = useSearchParams()
+
+  if (counterOfEdit == 0) showToast('error',  "): אין אפשרות לערוך ")
 
   useEffect(() => {
     searchParams.get('s')
@@ -33,7 +36,6 @@ const ReportEdit = ({ }) => {
   console.log(isEdit);
 
 
-  const counterOfEdit = 2
 
 
   const handleNavigation = (item) => {
@@ -54,7 +56,7 @@ const ReportEdit = ({ }) => {
 
         <Navbar />
         <div className="flex gap-2 self-center px-5 mt-10 leading-5 text-center text-light_neutral dark:text-dark_accent_content">
-          <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
+          <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit == 1 || counterOfEdit == 0 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
           <div className="grow my-auto text-md">
             עריכת דיווח {" "}
             <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{searchParams.get('location')}</span>{" "}
@@ -75,15 +77,15 @@ const ReportEdit = ({ }) => {
               עריכת דיווח
             </div>
             <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
-              נותרו עוד <span className={` font-bold ${counterOfEdit == 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`}>{counterOfEdit}</span> מתוך 3 אפשריות לערוך
+              נותרו עוד <span className={` font-bold ${counterOfEdit == 1 || counterOfEdit == 0 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`}>{counterOfEdit}</span> מתוך 3 אפשריות לערוך
             </div>
           </div>
 
           {/* List option */}
           <div className=" flex flex-wrap items-center justify-center gap-x-24 gap-y-20">
             {SYSTEMSTRACT?.map((item, index) => (
-              <button onClick={() => { isEdit ? handleNavigation(item) : navigation(`/startReport/${item?.value}`) }} key={index} className=" flex flex-col items-center justify-center gap-2">
-                <div className="gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] dark:shadow-[#000000] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
+              <button disabled={counterOfEdit == 0} onClick={() => { isEdit ? handleNavigation(item) : navigation(`/startReport/${item?.value}`) }} key={index} className={` flex flex-col items-center justify-center gap-2 ${counterOfEdit == 0 && 'opacity-70'}`}>
+                <div className={`${counterOfEdit == 0 ? "gradient-bg-dark gradient-bg-light" : "gradient-bg-dark gradient-bg-light"} shadow-md shadow-[#0000003d] dark:shadow-[#000000] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl`}>{item?.icon}</div>
                 <div className="text-lg font-bold">{item?.name}</div>
               </button>
             ))}
