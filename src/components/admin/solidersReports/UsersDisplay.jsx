@@ -6,17 +6,16 @@ import useUser from '../../../hooks/useUser';
 import { TranslateStruct } from '../../../db/systemStract';
 
 
-const DisplayUser = ({ setUsersSelected, userDisplay, sampleUsers }) => {
+const DisplayUser = ({ setUsersSelected, userDisplay }) => {
     const [chooseReport, setChooseReport] = useState(false)
     const splitMission = userDisplay?.lastsReports.split("_")
-    console.log(userDisplay,splitMission);
+    
     const date=new Date( userDisplay?.date)
     
     return (<>
         {/* TODO: save the users selected on click */}
-
         <>
-            <div onClick={() => { !chooseReport && sampleUsers ? setUsersSelected((prev) => [...prev, userDisplay]) : setUsersSelected((prev) => prev?.filter((user) => user?.id != userDisplay?.id)); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
+            <div onClick={() => { !chooseReport? setUsersSelected((prev) => [...prev, userDisplay]) : setUsersSelected((prev) => prev?.filter((user) => user?.id != userDisplay?.id)); setChooseReport(!chooseReport); }} className={` ${chooseReport && 'bg-slate-100 dark:bg-[#121212] border-[1px] border-[#62bcee] rounded-lg'} min-h-10 grid grid-cols-12 my-1 gap-3 py-1 `} >
                 <div className="flex w-full h-full overflow-y-auto col-span-3 items-center  justify-center ">{userDisplay?.userName||"משתמש"}</div>
                 <div className="flex w-full h-full overflow-y-auto col-span-4 items-center justify-center ">{date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()}</div>
                 <div className="flex w-full h-full overflow-y-auto  col-span-2 items-center justify-center ">{TranslateStruct[splitMission[0]] }</div>
@@ -57,13 +56,13 @@ function UsersDisplay({ arrayUserDisplay, setToggleSend, usersSelected, setUsers
 
                 {usersToDisplays?.map((userDisplay, i) => {
                     return <div key={i}>
-                        <DisplayUser userDisplay={userDisplay} setUsersSelected={setUsersSelected} sampleUsers={isSampleSoliders} />
+                        <DisplayUser userDisplay={userDisplay} setUsersSelected={setUsersSelected}  />
                     </div>
                 })}
 
             </div>
-            {isSampleSoliders && usersSelected[0] &&
-                <div onClick={() => { navigation(`/startReport/base?&access=manager&report=tests&users=undefined`), setToggleSend(true) }} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
+            { usersSelected[0] &&
+                <div onClick={() => { navigation(`/startReport/base?&access=manager&report=tests&users=${JSON.stringify(usersSelected.map((user)=>user.id) )}`), setToggleSend(true) }} className=" backdrop-blur-sm right-0 w-full p-5 z-50 fixed bottom-0 ">
                     <ButtonAction title="דיווח מדגם" />
                 </div>
             }

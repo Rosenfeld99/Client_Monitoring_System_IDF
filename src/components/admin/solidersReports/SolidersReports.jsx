@@ -22,7 +22,7 @@ function LastReports() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    setSearchParams({ "report": "class-of-soldiers" })
+    // setSearchParams({ "report": "class-of-soldiers" })
     getHistoryReports({ userId: currentUser?.userId, mode: currentUser?.role })
   }, [])
 
@@ -51,9 +51,9 @@ function LastReports() {
             </div> */}
 
             <div className='flex w-full justify-evenly items-center p-1 flex-1 rounded-lg mt-4  bg-[#e9e9e9] dark:bg-[#131313]'>
-              <div onClick={(e) => { setSearchParams({ "report": e.target.id }); setChosenCategory(e.target.id) }} className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}  text-center rounded-lg  cursor-pointer flex-1 p-1`} id='class-of-soldiers'>דיווח מחלקתי</div>
-              {currentUser?.role === "Manager" && <div onClick={(e) => { setSearchParams({ "report": e.target.id }); setChosenCategory(e.target.id) }} className={`${chosenCategory === "sample" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg cursor-pointer flex-1 p-1 `} id='sample'>דיווח מדגם</div>}
-              <div onClick={(e) => { setSearchParams({ "report": e.target.id }); setChosenCategory(e.target.id) }} className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg  cursor-pointer flex-1 p-1`} id='historyReports'>היסטוריה</div>
+              <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}  text-center rounded-lg  cursor-pointer flex-1 p-1`} id='class-of-soldiers'>דיווח מחלקתי</div>
+              {currentUser?.role === "Manager" && <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "sample" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg cursor-pointer flex-1 p-1 `} id='sample'>דיווח מדגם</div>}
+              <div onClick={(e) =>  setChosenCategory(e.target.id) } className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"}   text-center   rounded-lg  cursor-pointer flex-1 p-1`} id='historyReports'>היסטוריה</div>
             </div>
 
             {chosenCategory === "sample" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} /> : chosenCategory === "class-of-soldiers" ? <ChooseLocatin /> : <CommandLastReports historyToDisplay={usersSearch||[]}/>}

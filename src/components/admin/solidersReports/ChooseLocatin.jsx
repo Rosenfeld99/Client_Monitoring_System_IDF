@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useSearchParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSingleSystemStract, SYSTEMSTRACT } from '../../../db/systemStract'
 import ReportEnd from '../../../pages/doc/ReportEnd'
 

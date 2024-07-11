@@ -41,8 +41,9 @@ function useReports() {
                         console.log("the request failed");
                         return
                     }
+                    alert("new report");
                     setReportDeatile(res?.data)
-                    navigate(isEdit ? `/startReport` : `/endReport?s=${location}&location=${content}`)
+                    // navigate(isEdit ? `/startReport` : `/endReport?s=${location}&location=${content}`)
                 })
                 .catch(err => console.log(err))
         } catch (error) {
