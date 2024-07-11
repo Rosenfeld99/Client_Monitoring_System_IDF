@@ -13,7 +13,7 @@ import useUser from '../../../hooks/useUser'
 import useReports from '../../../hooks/useReports'
 
 
-function LastReports() {
+function SolidersReports() {
   const [chosenCategory, setChosenCategory] = useState("class-of-soldiers")
   const { currentUser, getSubUsers, subUsers } = useUser();
   const { getHistoryReports, historyReports } = useReports();
@@ -65,4 +65,4 @@ function LastReports() {
   )
 }
 
-export default LastReports
+export default SolidersReports

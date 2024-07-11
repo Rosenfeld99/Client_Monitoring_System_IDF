@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
-import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { SYSTEMSTRACT, TranslateStruct } from '../../db/systemStract'
 import { BiSolidEdit } from 'react-icons/bi'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
+import { useToast } from '../../utils/Toasttify/ToastManager'
 import { DateToHours } from '../../utils/func/dateTransform'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
+  const showToast = useToast();
   const { isEdit, activeIsEdit,currentUser } = useUser()
-
 
   // <GiTowerFlag />
 
+  const counterOfEdit = 0
   const [searchParams] = useSearchParams()
+
+  if (counterOfEdit == 0) showToast('error',  "): אין אפשרות לערוך ")
 
   useEffect(() => {
     searchParams.get('s')
@@ -83,8 +86,8 @@ const ReportEdit = ({ }) => {
           {/* List option */}
           <div className=" flex flex-wrap items-center justify-center gap-x-24 gap-y-20">
             {SYSTEMSTRACT?.map((item, index) => (
-              <button onClick={() => { isEdit ? handleNavigation(item) : navigation(`/startReport/${item?.value}`) }} key={index} className=" flex flex-col items-center justify-center gap-2">
-                <div className="gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] dark:shadow-[#000000] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl">{item?.icon}</div>
+              <button disabled={counterOfEdit == 0} onClick={() => { isEdit ? handleNavigation(item) : navigation(`/startReport/${item?.value}`) }} key={index} className={` flex flex-col items-center justify-center gap-2 ${counterOfEdit == 0 && 'opacity-70'}`}>
+                <div className={`${counterOfEdit == 0 ? "gradient-bg-dark gradient-bg-light" : "gradient-bg-dark gradient-bg-light"} shadow-md shadow-[#0000003d] dark:shadow-[#000000] w-20 h-20 rounded-full flex items-center justify-center text-white text-4xl`}>{item?.icon}</div>
                 <div className="text-lg font-bold">{item?.name}</div>
               </button>
             ))}

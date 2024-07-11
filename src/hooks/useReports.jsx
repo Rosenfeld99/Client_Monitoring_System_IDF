@@ -15,7 +15,7 @@ function useReports() {
 
    
 
-    const newReport = async ({ startTime, team, mode, usersId, course, endTime, content, location, completed, userId,navigatePage }) => {
+    const newReport = async ({ startTime, team, mode, username, course, endTime, content, location, completed, userId,navigatePage }) => {
         //TODO change user course
 
         console.log(userId, mode, course,navigatePage);
@@ -29,7 +29,7 @@ function useReports() {
                 startTime,
                 team,
                 mode,
-                usersId,
+                username,
                 course: course || "קמב",
                 endTime,
                 content,

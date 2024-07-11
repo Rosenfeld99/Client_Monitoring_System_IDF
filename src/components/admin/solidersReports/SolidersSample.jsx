@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import UsersDisplay from './UsersDisplay'
-import SoldiersClassReport from './SolidersReports';
+import SoldiersClassReport from './SoldiersClassReport';
 import { useSearchParams } from 'react-router-dom';
 
 //usersToDisplay: are the users to display after serch input,
@@ -21,11 +21,12 @@ function SolidersSample({ usersToDisplay, usersSelected, setUsersSelected }) {
             
                 const lastReport = userDisplay?.reports[0]
                 console.log(lastReport);
-                return { id: lastReport?._id, date: lastReport?.endTime, name: lastReport?.userId, lastsReports: lastReport.location + "_" + lastReport.content }
+                return { id: lastReport?._id, date: lastReport?.endTime||lastReport?.startTime, name: lastReport?.userId, lastsReports: lastReport.location + "_" + lastReport.content }
             })
             setUserArray(temp)
         }
     }, [usersToDisplay])
+
     return (
         <div dir='rtl'> {toggleSend
             ? <SoldiersClassReport />
