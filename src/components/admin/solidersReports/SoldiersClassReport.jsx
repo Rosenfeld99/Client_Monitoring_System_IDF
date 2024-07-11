@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSingleSystemStract, SYSTEMSTRACT } from '../../../db/systemStract'
 import UserCardList from './UserCardPrcess/UserCardList'
 import { ImPause } from 'react-icons/im'
-import { CgFileDocument } from 'react-icons/cg'
-import { GrDocumentTest } from 'react-icons/gr'
+import { CgFileDocument, CgMoreVerticalO } from 'react-icons/cg'
+import { GrAddCircle, GrDocumentTest } from 'react-icons/gr'
+import { FaEdit, FaHistory } from 'react-icons/fa'
+import { HiOutlineDocumentAdd } from 'react-icons/hi'
+import { MdOutlinePostAdd } from 'react-icons/md'
 import useUser from '../../../hooks/useUser'
 import useReports from '../../../hooks/useReports'
 
@@ -13,8 +16,9 @@ function SoldiersClassReport({ usersSelected }) {
     const {currentUser}=useUser()
     const {endReport}=useReports()
     const usersName = usersSelected?.map((user) => user?.name)
+    const [isOpen, setIsOpen] = useState("");
+    const dropdownRef = useRef(null);
     const [searchParams] = useSearchParams()
-
 
     const innerIcon = (val) => {
         return getSingleSystemStract(val || searchParams.get('s'))?.icon
@@ -28,9 +32,26 @@ function SoldiersClassReport({ usersSelected }) {
     }
 
 
+    const toggleDropdown = (userId) => {
+        setIsOpen(userId);
+    };
+
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsOpen("");
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     const usersTests = [
         {
-            username: "אליהו מאיר", id: "njckdnckjcn", report: "מטווחים", name: "בסיס", value: "base",
+            username: "אליהו מאיר", id: "vfdnkjvnfdjk", report: "מטווחים", name: "בסיס", value: "base",
         },
         { username: "נהוראי", id: "njckdnckjcn", report: "תפילה", name: "שטח", value: "area" },
     ]
@@ -53,7 +74,6 @@ function SoldiersClassReport({ usersSelected }) {
                             <div className=" flex flex-col w-full items-center justify-center gap-5">
                                 {usersTests?.map((item, index) => (
                                     <button
-                                        onClick={() => navigation(`/startReport/${item?.value}?&access=manager&report=grup&users=${encodeURIComponent(JSON.stringify(usersName))}`)}
                                         key={index} className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
                                         <div className=" flex items-center justify-between w-full">
                                             <h1 className=' text-sm font-bold text-start w-full'>משימה בתהליך</h1>
@@ -73,10 +93,31 @@ function SoldiersClassReport({ usersSelected }) {
                                                     <div className="text-sm font-bold">דיווח {item?.report} ב{item.name}</div>
                                                 </div>
                                             </div>
-                                            <div className="relative py-3">
-                                                <div className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
-                                                <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                                            <div
+                                                onClick={() => {
+                                                    false ?
+                                                        navigation(`/startReport/${item?.value}?&access=manager&report=grup&users=${encodeURIComponent(JSON.stringify(usersName))}`)
+                                                        :
+                                                        toggleDropdown(item?.id)
+                                                }}
+                                                className="relative py-3">
+                                                {!false ?
+                                                    <>
+                                                        <div className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
+                                                        <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                                                    </>
+                                                    :
+                                                    <CgMoreVerticalO className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                                                }
                                             </div>
+                                            {item?.id == isOpen && <div ref={dropdownRef} className="absolute top-3 left-16 bg-white border shadow-lg rounded-lg w-48 z-50">
+                                                <div className=" absolute w-4 h-4 bg-white border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
+                                                <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
+                                                    <li onClick={()=>console.log("Edit report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
+                                                    <li onClick={()=>console.log("New report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
+                                                    <li onClick={()=>console.log("History report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">היסטוריית דיווחים <FaHistory className=' text-xl' /></li>
+                                                </ul>
+                                            </div>}
                                         </div>
                                         <div className=' absolute top-10 -left-14 text-7xl w-40 h-40 rotate-6 opacity-5'>
                                             {innerIcon(item?.value)}
