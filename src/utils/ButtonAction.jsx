@@ -1,11 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const ButtonAction = ({ title, route, disabledBtn }) => {
+const ButtonAction = ({ title, route, disabledBtn, doAPI }) => {
     const navigation = useNavigate()
 
-    const handleClickBtn = () =>{
+    const handleClickBtn = () => {
         // console.log(route);
+        doAPI && doAPI()
         navigation(route)
     }
 

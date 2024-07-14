@@ -11,7 +11,7 @@ import { useToast } from '../../utils/Toasttify/ToastManager'
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
   const showToast = useToast();
-  const { isEdit, activeIsEdit } = useUser()
+  const { isEdit, activeIsEdit, currentUser } = useUser()
 
   const handleStartReport = () => {
 
@@ -19,10 +19,10 @@ const ReportEdit = ({ }) => {
 
   // <GiTowerFlag />
 
-  const counterOfEdit = 0
+  const counterOfEdit = currentUser?.counterEdit
   const [searchParams] = useSearchParams()
 
-  if (counterOfEdit == 0) showToast('error',  "): אין אפשרות לערוך ")
+  if (counterOfEdit == 0) showToast('error', "): אין אפשרות לערוך ")
 
   useEffect(() => {
     searchParams.get('s')

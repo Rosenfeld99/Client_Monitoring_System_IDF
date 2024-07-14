@@ -6,16 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import { SYSTEMSTRACT } from '../../db/systemStract'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
-import { userName } from '../../constant/constant'
+import { userStatic } from '../../db/userStatic'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { inActiveIsEdit } = useUser()
+    const {currentUser} = useUser()
+    console.log(currentUser);
 
     const handleStartReport = () => {
 
     }
 
+    console.log(currentUser);
+    
     useEffect(() => {
         inActiveIsEdit()
     }, [])
@@ -28,12 +32,12 @@ const ReportStart = ({ }) => {
             <div dir='rtl' className=" flex flex-col overflow-hidden relative pb-20 mx-auto w-full min-h-screen flex-1">
 
                 <Navbar />
-                <div className="flex gap-3 self-center px-5 mt-10 leading-5 text-center ">
-                    <IoCheckmarkCircleOutline className='text-xl' />
+                <div className="flex self-center px-5 mt-10 leading-5 text-center ">
+                    <IoCheckmarkCircleOutline className='text-xl w-8 h-8' />
                     <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
                         דיווח אחרון היום הייתם ב {" "}
-                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">מטווחים</span> בשעה{" "}
-                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">8:00</span>{" "}
+                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.content}</span> בשעה{" "}
+                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.endTime}</span>{" "}
                     </div>
                 </div>
                 <div className=" mx-auto">
@@ -46,7 +50,7 @@ const ReportStart = ({ }) => {
                 <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                     <div className="flex flex-col text-center leading-[150%] pb-20">
                         <div className="self-center text-lg font-bold ">
-                            שלום {userName}, איפה את/ה ?
+                            שלום {currentUser?.username}, איפה את/ה ?
                         </div>
                         <div className="w-full text-sm ">
                             הזן את המשימה הקרובה שלך :)

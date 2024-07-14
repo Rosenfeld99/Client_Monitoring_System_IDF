@@ -1,8 +1,10 @@
 import React, { createContext, useState } from 'react'
+import { KEY_WAVES_SYSTEM } from '../constant/constant'
 export const ContextStore = createContext()
 
 export const ContextStoreProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null)
+  
+  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem(KEY_WAVES_SYSTEM)) || null)
   const [isEdit, setIsEdit] = useState(false)
   const [advanceSearchResults, setAdvanceSearchResults] = useState([])
   const [searchInputs, setSearchInputs] = useState({

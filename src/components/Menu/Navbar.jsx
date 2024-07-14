@@ -26,8 +26,8 @@ const Navbar = () => {
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
         { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
-        { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
-        { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
+        // { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
+        // { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
 
 
@@ -50,7 +50,7 @@ const Navbar = () => {
             </div>
             {open && (
                 <div className={`flex overflow-hidden min-h-screen fixed max-w-[680px] w-full flex-col gap-8 items-start p-8 z-50 bg-[#00000089] ${isExiting && "animate__fadeOut"}`}>
-                    <div className={`bg-gradient-to-t gradient-bg-dark gradient-bg-light shadow-lg ${isExiting ? 'animate__slideOutUp' : 'animate__slideInDown'} shadow-[#02020256] dark:shadow-[#000000] w-[780px] aspect-square rounded-l-full rounded-r-[80px] z-50 rotate-45 absolute top-0 right-0 -mt-32 -mr-52`} />
+                    <div className={`bg-gradient-to-t gradient-bg-dark gradient-bg-light shadow-lg ${isExiting ? 'animate__slideOutUp' : 'animate__slideInDown'} shadow-[#02020256] dark:shadow-[#000000] w-[680px] aspect-square rounded-l-full rounded-r-[80px] z-50 rotate-45 absolute top-0 right-0 -mt-32 -mr-52`} />
                     <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
                         <IoClose />
                     </div>
@@ -59,9 +59,9 @@ const Navbar = () => {
                             {item.title} {item.icon}
                         </div>
                     ))}
-                    <div onClick={() => { navigate('/analytics'), handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                    {/* <div onClick={() => { navigate('/analytics'), handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         נתונים <BsClipboard2Data className='text-3xl text-black' />
-                    </div>
+                    </div> */}
                     <div onClick={toggleTheme} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         ערכת נושא {theme == "light" ? <LuMoonStar className='text-3xl text-black' /> : <FiSun className='text-3xl text-black' />}
                     </div>

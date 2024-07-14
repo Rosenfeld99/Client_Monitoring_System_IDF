@@ -6,14 +6,15 @@ import ButtonAction from '../../utils/ButtonAction'
 import { getSingleSystemStract } from '../../db/systemStract'
 import { useEffect, useState } from 'react'
 import useUser from '../../hooks/useUser'
-import { getCurrentTime } from '../../utils/func/generateId'
+import { generateID, getCurrentDateFormaterHebrew, getCurrentTime } from '../../utils/func/generateId'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { pathname } = useLocation()
+
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit, activeIsEdit, isEdit } = useUser()
+    const { inActiveIsEdit, activeIsEdit, isEdit, currentUser, createNewReportPersonale } = useUser()
 
     const handleStartReport = () => {
 
@@ -95,21 +96,34 @@ const ReportStart = ({ }) => {
                     title: "דיווח מחלקתי",
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
                     link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`,
-                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח'
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
+                    doAPI: ""
                 }
             case "tests":
                 return {
                     title: "דיווח מדגם",
                     description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
                     link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
-                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח'
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
+                    doAPI: ""
                 }
             default:
+                const genID = Date.now()
+
                 return {
                     title: isEdit ? "עריכת דיווח" : "דיווח חדש",
-                    description: isEdit ? "? 29/6 איפה הייתם ביום" : `איפה תהיו היום בשעה ${getCurrentTime()}`,
-                    link: isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`,
-                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח'
+                    description: isEdit ? `? 29/6 איפה הייתם ביום` : `איפה תהיו היום בשעה ${getCurrentTime()}`,
+                    link: isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}&id=${genID}`,
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
+                    doAPI: () => createNewReportPersonale({
+                        id: genID,
+                        date: getCurrentDateFormaterHebrew(),
+                        startTime: getCurrentTime(),
+                        endTime: "00:00",
+                        content: searchParams.get('location'),
+                        location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                        isCompited: false
+                    })
                 }
         }
     }
@@ -142,7 +156,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
+                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport("regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>

@@ -9,11 +9,12 @@ import { user } from '../../db/reportsList'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
 import { getCurrentDateFormaterHebrew } from '../../utils/func/generateId'
+import { userStatic } from '../../db/userStatic'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
     const navigation = useNavigate()
-    const { activeIsEdit } = useUser()
+    const { activeIsEdit, currentUser } = useUser()
 
     const handleNavigation = () => {
         if (chooseOption !== null) {
@@ -21,7 +22,9 @@ const HistoryLastDay = ({ }) => {
                 s: chooseOption?.content,
                 location: chooseOption?.location,
                 startTime: chooseOption?.startTime,
-                endTime: chooseOption?.endTime
+                endTime: chooseOption?.endTime,
+                id: chooseOption?.id,
+
             }).toString();
             navigation(`/ReportEdit/reportId?${params}`);
             activeIsEdit()
@@ -51,7 +54,7 @@ const HistoryLastDay = ({ }) => {
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
                     {console.log(user.lastDayReports)}
-                    {user?.lastDayReports?.map((item, index) => (
+                    {currentUser?.history?.map((item, index) => (
                         // adding start and last time
                         <div key={index} onClick={() => setChooseOption(item)}
                             className={`p-2 rounded-lg text-md w-full 
