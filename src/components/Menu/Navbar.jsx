@@ -26,7 +26,7 @@ const Navbar = () => {
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
         { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
-        // { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
+        { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
         // { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
 
@@ -43,7 +43,7 @@ const Navbar = () => {
 
     return (
         <React.Fragment>
-            <div className=" flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] ">
+            <div className=" fixed flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] ">
                 {(pathname?.substring(1) != "endReport" && searchParams.get('last') != "end") ? <FaArrowLeft onClick={() => navigate(-1)} /> : <div className='w-8 h-8' />}
                 <div className="flex-auto self-stretch my-auto">{appName}</div>
                 {pathname?.substring(1) != "endReport" ? <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} /> : <div className='w-8 h-8' />}

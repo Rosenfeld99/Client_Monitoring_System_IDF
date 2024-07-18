@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
@@ -7,12 +7,13 @@ import Navbar from '../../components/Menu/Navbar'
 import { getSingleSystemStract } from '../../db/systemStract'
 import { userStatic } from '../../db/userStatic'
 import useUser from '../../hooks/useUser'
-import { getCurrentTime } from '../../utils/func/generateId'
+import { formatDateToNumber, getCurrentDateFormaterHebrew, getCurrentTime } from '../../utils/func/generateId'
 
 const ReportEnd = () => {
     const navigation = useNavigate()
     const [searchParams] = useSearchParams()
     const { currentUser, endProcessReport } = useUser()
+
 
     console.log(searchParams.get('id'));
 
@@ -25,13 +26,24 @@ const ReportEnd = () => {
         return getSingleSystemStract(searchParams.get('s'))?.icon
     }
 
+    useEffect(() => {
+        // console.log(searchParams.get('s'), searchParams.get('location'), searchParams.get('id'));
+        if (!searchParams.get('s') && !searchParams.get('location') && !searchParams.get('id')) {
+            navigation(`/endReport?s=${currentUser?.process?.place}&location=${currentUser?.process?.location}&id=${currentUser?.process?.id}`)
+        }
+        if ((formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(currentUser?.process?.date)) && currentUser?.process?.id == searchParams.get('id')) {
+            endProcessReport(searchParams.get('id'), "00:00")
+            navigation(`/startReport?last=end`)
+        }
+    }, [])
+
 
     return (
         <TransitionPage>
             <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full  min-h-screen flex-1  ">
 
                 <Navbar />
-                <div className="flex self-center px-5 mt-10 leading-5 text-center ">
+                <div className="flex self-center px-5 mt-20 leading-5 text-center ">
                     <IoCheckmarkCircleOutline className='text-2xl w-10 h-10' />
                     <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
                         דיווח אחרון היום הייתם ב {" "}
@@ -44,7 +56,7 @@ const ReportEnd = () => {
                     srcSet={BACKPAPER}
                     className="mt-20 max-w-[800px] dark:opacity-15 max-h-[800px] object-cover w-full absolute top-[33vw]  "
                 />
-                <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
+                <div className=" z-40 flex flex-col pt-14 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                     <div className="flex flex-col text-center  pb-20">
                         <div className="self-center text-lg font-semibold ">
                             סיימו דיווח!

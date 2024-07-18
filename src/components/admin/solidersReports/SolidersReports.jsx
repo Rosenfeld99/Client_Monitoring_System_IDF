@@ -44,9 +44,9 @@ function LastReports() {
             </div> */}
 
             <div className='flex w-full justify-evenly items-center p-1 flex-1 rounded-lg mt-4  bg-[#e9e9e9] dark:bg-[#131313]'>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2 text-center p-1 rounded-lg  cursor-pointer`} id='class-of-soldiers'>דיווח מחלקתי</div>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center p-1 rounded-lg cursor-pointer `} id='soldiers'>דיווח מדגם</div>
-              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center p-1 rounded-lg  cursor-pointer`} id='historyReports'>היסטוריה</div>
+              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "class-of-soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2 text-center py-1 rounded-lg  cursor-pointer`} id='class-of-soldiers'>דיווח מחלקתי</div>
+              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "soldiers" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center py-1 rounded-lg cursor-pointer `} id='soldiers'>דיווח מדגם</div>
+              <div onClick={(e) => setChosenCategory(e.target.id)} className={`${chosenCategory === "historyReports" && "bg-light_primary dark:bg-dark_accent_content text-light_primary_content dark:text-dark_primary font-semibold"} w-1/2  text-center py-1 rounded-lg  cursor-pointer`} id='historyReports'>היסטוריה</div>
             </div>
 
             {chosenCategory === "soldiers" ? <SolidersSample usersToDisplay={usersSearch} usersSelected={usersSelected} setUsersSelected={setUsersSelected} setChosenCategory={setChosenCategory} /> : chosenCategory === "historyReports" ? <CommandLastReports /> : <SoldiersClassReport usersSelected={usersSelected} />}

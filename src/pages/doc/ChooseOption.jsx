@@ -14,7 +14,7 @@ const ReportStart = ({ }) => {
 
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit, activeIsEdit, isEdit, currentUser, createNewReportPersonale } = useUser()
+    const { inActiveIsEdit, activeIsEdit, isEdit, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
     const handleStartReport = () => {
 
@@ -70,7 +70,11 @@ const ReportStart = ({ }) => {
                         key={index}
                         onClick={() => {
                             setCurrentSelect(item);
-                            navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}`);
+                            isEdit
+                                ?
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}`)
+                                :
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}`);
                         }}
                         className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
                     >
@@ -112,18 +116,24 @@ const ReportStart = ({ }) => {
 
                 return {
                     title: isEdit ? "עריכת דיווח" : "דיווח חדש",
-                    description: isEdit ? `? 29/6 איפה הייתם ביום` : `איפה תהיו היום בשעה ${getCurrentTime()}`,
-                    link: isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}&id=${genID}`,
+                    description: isEdit ? `? ${getSingleReport(searchParams.get('id'))?.date} איפה הייתם ביום` : `איפה תהיו היום בשעה ${getCurrentTime()}`,
+                    link: isEdit ? `/startReport` : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}&id=${genID}`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: () => createNewReportPersonale({
-                        id: genID,
-                        date: getCurrentDateFormaterHebrew(),
-                        startTime: getCurrentTime(),
-                        endTime: "00:00",
-                        content: searchParams.get('location'),
-                        location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                        isCompited: false
-                    })
+                    doAPI: () => {
+                        isEdit ? updateSingleReport({
+                            id: searchParams.get('id'),
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                        }) : createNewReportPersonale({
+                            id: genID,
+                            date: getCurrentDateFormaterHebrew(),
+                            startTime: getCurrentTime(),
+                            endTime: "00:00",
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                            isCompited: false
+                        },pathname?.split('/')[2])
+                    }
                 }
         }
     }

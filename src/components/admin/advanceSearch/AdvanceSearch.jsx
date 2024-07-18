@@ -115,7 +115,7 @@ function AdvanceSearch() {
                         <div dir='rtl' className='min-h-52 w-full flex flex-col justify-evenly items-center '>
                             <div className={` ${theme === "dark" && "border-[#838386]"}    flex border p-1 w-full`}>
                                 {searchInputs.date ? searchInputs?.date?.split('-').reverse().join('/') : "חיפוש לפי תאריכים"}
-                                <input onChange={(e) => setSearchInputs({ ...searchInputs, "date": e.target.value })} type="date" className="  w-[20px] mr-auto" required={true} placeholder='חיפוש לפי תאריכים' />
+                                <input onChange={(e) => setSearchInputs({ ...searchInputs, "date": e.target.value })} type="date" className="  w-[20px] mr-auto"  placeholder='חיפוש לפי תאריכים' />
                             </div>
 
                             <Select
@@ -129,7 +129,7 @@ function AdvanceSearch() {
                                 placeholder="חיפוש לפי מקומות"
                                 options={optionsPlaces}
                                 onChange={(e) => handleInputs(e, "place")}
-                                required={true}
+                               
                                 styles={customStyles}
 
                             />
@@ -144,7 +144,7 @@ function AdvanceSearch() {
                                 placeholder="חיפוש לפי משימות"
                                 options={optionsMissions}
                                 onChange={(e) => handleInputs(e, "missions")}
-                                required={true}
+                                
                                 styles={customStyles}
                             />
                             <Select
@@ -158,7 +158,7 @@ function AdvanceSearch() {
                                 placeholder="חיפוש לפי משתמשים"
                                 options={optionsUsers}
                                 onChange={(e) => handleInputs(e, "users")}
-                                required={true}
+                                
                                 styles={customStyles}
                             />
 

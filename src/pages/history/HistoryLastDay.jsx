@@ -38,7 +38,7 @@ const HistoryLastDay = ({ }) => {
             <div dir='rtl' className=" flex flex-col pb-20 mx-auto w-full relative min-h-screen flex-1 ">
                 <Navbar />
                 {/* title */}
-                <div className=" flex-row-reverse gap-3 flex items-center justify-center py-10">
+                <div className=" flex-row-reverse gap-3 flex items-center justify-center py-10 pt-20">
                     <LiaFilterSolid className='w-10 h-10' />
                     <div className=' flex-col flex items-center justify-center'>
                         <div className=" text-xl font-semibold">היסטוריית דיווחים</div>
@@ -56,19 +56,21 @@ const HistoryLastDay = ({ }) => {
                     {console.log(user.lastDayReports)}
                     {currentUser?.history?.map((item, index) => (
                         // adding start and last time
-                        <div key={index} onClick={() => setChooseOption(item)}
-                            className={`p-2 rounded-lg text-md w-full 
+                        <>
+                            {getCurrentDateFormaterHebrew() == item?.date && <div key={index} onClick={() => setChooseOption(item)}
+                                className={`p-2 rounded-lg text-md w-full 
                         ${chooseOption?.id === item?.id ? "font-bold dark:text-light_primary border-2 border-[#0996E5] bg-slate-100 dark:bg-[#121212] text-light_primary_content flex items-center justify-between"
-                                    : "border-2 border-gray-200 dark:border-dark_accent_content font-normal text-gray-500"}`}>
-                            <div className=" flex items-center w-full gap-5 justify-between">
-                                <div >{item?.content}</div>
-                                <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
-                                    <div >{item?.startTime}</div>{"-"}
-                                    <div >{item?.endTime}</div>
-                                    {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                        : "border-2 border-gray-200 dark:border-dark_accent_content font-normal text-gray-500"}`}>
+                                <div className=" flex items-center w-full gap-5 justify-between">
+                                    <div >{item?.content}</div>
+                                    <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
+                                        <div >{item?.startTime}</div>{"-"}
+                                        <div >{item?.endTime}</div>
+                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>}
+                        </>
                     ))}
                 </div>
             </div>

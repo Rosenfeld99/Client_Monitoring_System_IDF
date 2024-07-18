@@ -7,11 +7,13 @@ import { BiSolidEdit } from 'react-icons/bi'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
 import { useToast } from '../../utils/Toasttify/ToastManager'
+import { getCurrentTime } from '../../utils/func/generateId'
+import { timeToupdatedCounterEdit } from '../../constant/constant'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
   const showToast = useToast();
-  const { isEdit, activeIsEdit, currentUser } = useUser()
+  const { isEdit, activeIsEdit, currentUser, patchCounterEditReport } = useUser()
 
   const handleStartReport = () => {
 
@@ -30,6 +32,10 @@ const ReportEdit = ({ }) => {
     searchParams.get('startTime')
     searchParams.get('endTime')
     activeIsEdit()
+    console.log("render");
+    if (getCurrentTime() == timeToupdatedCounterEdit) {
+      patchCounterEditReport()
+    }
   }, [searchParams, isEdit])
 
   // console.log(searchParams.get('s'));
@@ -44,7 +50,8 @@ const ReportEdit = ({ }) => {
         s: searchParams.get('s'),
         location: searchParams.get('location'),
         startTime: searchParams.get('startTime'),
-        endTime: searchParams.get('endTime')
+        endTime: searchParams.get('endTime'),
+        id: searchParams.get('id')
       }).toString();
       navigation(`/startReport/${item?.value}?${params}`);
     }
@@ -55,7 +62,7 @@ const ReportEdit = ({ }) => {
       <div dir='rtl' className=" flex flex-col overflow-hidden pb-20 mx-auto w-full min-h-screen flex-1">
 
         <Navbar />
-        <div className="flex gap-2 self-center px-5 mt-10 leading-5 text-center text-light_neutral dark:text-dark_accent_content">
+        <div className="flex gap-2 self-center px-5 mt-20 leading-5 text-center text-light_neutral dark:text-dark_accent_content">
           <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit == 1 || counterOfEdit == 0 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
           <div className="grow my-auto text-md">
             עריכת דיווח {" "}
@@ -71,7 +78,7 @@ const ReportEdit = ({ }) => {
           srcSet={BACKPAPER}
           className="mt-20 max-w-[800px] dark:opacity-15 max-h-[800px] object-cover w-full absolute top-[33vw]  "
         />
-        <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
+        <div className=" z-40 flex flex-col pt-14 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
           <div className="flex flex-col text-center leading-[150%] pb-20">
             <div className="self-center text-lg font-bold text-light_primary_content dark:text-dark_primary_content">
               עריכת דיווח

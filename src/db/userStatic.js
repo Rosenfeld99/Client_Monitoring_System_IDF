@@ -4,8 +4,9 @@ import { generateID } from "../utils/func/generateId";
 export const userStatic = localStorage.getItem(KEY_WAVES_SYSTEM) || {
   username: "אליהו מאיר",
   role: "admin",
-  counterEdit : 3,
+  counterEdit: 3,
   isProcess: false,
+  process: null,
   lastReport: {
     id: generateID(),
     date: "26/06/2024",

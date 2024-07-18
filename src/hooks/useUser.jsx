@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { ContextStore } from '../context/ContextStore'
-import { KEY_WAVES_SYSTEM } from '../constant/constant'
+import { KEY_WAVES_SYSTEM, timeToupdatedCounterEdit } from '../constant/constant'
+import { getCurrentTime } from '../utils/func/generateId'
 
 const useUser = () => {
     const { currentUser, setCurrentUser, isEdit, setIsEdit, advanceSearchResults, setAdvanceSearchResults } = useContext(ContextStore)
@@ -13,20 +14,53 @@ const useUser = () => {
     const getAllReports = () => {
 
     }
-    const getSingleReport = () => {
-
+    const getSingleReport = (id) => {
+        return currentUser.history.find((item) => item.id == id) || null
     }
-    const getLastReport = () => {
-
+    const patchCounterEditReport = () => {
+        if (getCurrentTime() == timeToupdatedCounterEdit) {
+            currentUser.counterEdit = 3
+            saveToLocalStorage(currentUser)
+        }
     }
 
-    const createNewReportPersonale = (newReport) => {
+    const updateSingleReport = (oldReport) => {
+        console.log(oldReport);
+        if (currentUser?.counterEdit > 0) {
+            const allReport = currentUser?.history || [];
+
+            const updatedHistory = allReport.map((report) =>
+                report.id == oldReport?.id ? { ...report, location: oldReport?.location, content: oldReport?.content } : report
+            );
+
+            const updatedUser = {
+                ...currentUser,
+                history: updatedHistory,
+                isProcess: false,
+                counterEdit: currentUser?.counterEdit - 1
+            };
+
+            setCurrentUser(updatedUser);
+            saveToLocalStorage(updatedUser);
+        }
+    }
+
+    const createNewReportPersonale = (newReport, place) => {
         const allReport = currentUser?.history || [];
 
         const updatedUser = {
             ...currentUser,
             history: [...allReport, newReport],
             isProcess: true,
+            process: {
+                id: newReport?.id,
+                content: newReport?.content,
+                location: newReport?.location,
+                date: newReport?.date,
+                endTime: newReport?.endTime,
+                startTime: newReport?.startTime,
+                place
+            }
         };
 
         setCurrentUser(updatedUser);
@@ -34,8 +68,8 @@ const useUser = () => {
     };
 
 
-    const endProcessReport = (reportId,endTime) => {
-        console.log(reportId,endTime);
+    const endProcessReport = (reportId, endTime) => {
+        console.log(reportId, endTime);
         const allReport = currentUser?.history || [];
 
         const updatedHistory = allReport.map((report) =>
@@ -48,6 +82,7 @@ const useUser = () => {
             ...currentUser,
             history: updatedHistory,
             isProcess: false,
+            process: null,
             lastReport: updatedReport
         };
 
@@ -66,8 +101,9 @@ const useUser = () => {
         isEdit, activeIsEdit
         , inActiveIsEdit,
         advanceSearchResults, setAdvanceSearchResults,
-        getSingleReport, getLastReport,
-        createNewReportPersonale, endProcessReport
+        getSingleReport, patchCounterEditReport,
+        createNewReportPersonale, endProcessReport,
+        updateSingleReport
     }
 }
 
