@@ -21,7 +21,7 @@ function DownloadExcel() {
         xlsx.writeFile(wb, 'events.xlsx');
     }
     return (
-        <button className=' bg-[#1b834c] p-2 flex flex-row-reverse active:scale-75 duration-100 items-center justify-center gap-1 rounded-lg px-3 text-sm'
+        <button className=' bg-[#1b834c] border py-1 flex flex-row-reverse active:scale-75 duration-100 items-center justify-center gap-1 rounded-lg px-3 text-sm'
             onClick={handelExelPrint}
         >
             <RiFileExcel2Fill className='text-lg' /> הורדה ל
