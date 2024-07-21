@@ -4,6 +4,7 @@ import { GrAddCircle, GrDocumentTest } from 'react-icons/gr'
 import { CgMoreVerticalO } from 'react-icons/cg'
 import { getSingleSystemStract } from '../../../db/systemStract'
 import { FaEdit } from 'react-icons/fa'
+import useUser from '../../../hooks/useUser'
 
 function CommandLastReports() {
     const navigation = useNavigate()
@@ -11,6 +12,7 @@ function CommandLastReports() {
     const [isOpen, setIsOpen] = useState("");
     const dropdownRef = useRef(null);
     const [searchParams] = useSearchParams()
+    const { currentUser} = useUser()
 
     const innerIcon = (val) => {
         return getSingleSystemStract(val || searchParams.get('s'))?.icon
@@ -45,7 +47,7 @@ function CommandLastReports() {
             <div className=' border-b-2  border-transparent ' ></div>
             <div className='  h-[50vh] overflow-y-auto mt-6 px-1 '>
                 <div className=" flex flex-col w-full items-center justify-center gap-5">
-                    {usersTests?.map((item, index) => (
+                    {currentUser?.userGrup?.historyList?.map((item, index) => (
                         <button
                             key={index} className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
                             <div className=" flex items-center justify-between w-full">
