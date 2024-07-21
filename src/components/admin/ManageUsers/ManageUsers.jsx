@@ -9,8 +9,10 @@ import ButtonAction from '../../../utils/ButtonAction'
 import { useToast } from '../../../utils/Toasttify/ToastManager'
 import { generateID } from '../../../utils/func/generateId'
 import { GrTest } from 'react-icons/gr'
+import useUser from '../../../hooks/useUser'
 
 const ManageUsers = () => {
+    const { currentUser, handleManageUsers } = useUser()
     const accessOption = [
         { name: "מדגם", value: "מדגם" },
         { name: "מחלקה", value: "מחלקה" },
@@ -25,7 +27,7 @@ const ManageUsers = () => {
         password: null,
         curseOption: null,
         accessOption: null,
-        userGrup: []
+        userGrup: currentUser?.userGrup || []
     })
 
     const updateSate = (newValue, keyToUpdate) => {
@@ -36,7 +38,6 @@ const ManageUsers = () => {
             case "accessOption":
                 setNewUser({ ...newUser, accessOption: newValue })
                 break;
-
             case "password":
                 setNewUser({ ...newUser, password: newValue })
                 break;
@@ -45,7 +46,7 @@ const ManageUsers = () => {
                 console.log(" in case");
                 if (newUser?.password?.toString()?.length == 9) {
                     const updateGrupUusers = newUser?.userGrup || []
-                    updateGrupUusers?.push({ password: newUser.password, curseOption: newUser.curseOption, accessOption: newUser.accessOption, id: generateID() })
+                    updateGrupUusers?.push({ password: newUser.password, curseOption: newUser.curseOption, accessOption: newUser.accessOption, id: generateID(), reportsList: [] })
                     setNewUser({ ...newUser, userGrup: updateGrupUusers, password: "" })
                 } else {
                     // alert(`ת"ז לא חוקית ...`)
@@ -64,7 +65,7 @@ const ManageUsers = () => {
     }
 
     const validRequest = () => {
-        return newUser.password && newUser.password?.toString()?.length == 9 && newUser.accessOption && newUser.curseOption
+        return newUser?.userGrup?.length > 0
     }
 
     const showToast = useToast();
@@ -118,7 +119,7 @@ const ManageUsers = () => {
                         </React.Fragment>}
                 </div>
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-40 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!validRequest()} title={"שמירה וסיום"} route={'/startReport'} />
+                    <ButtonAction disabledBtn={!validRequest()} title={"שמירה וסיום"} route={'/startReport'} doAPI={() => handleManageUsers(newUser?.userGrup)} />
                 </div>
             </div>
         </TransitionPage>

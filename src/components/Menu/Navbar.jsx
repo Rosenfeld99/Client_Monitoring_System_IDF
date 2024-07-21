@@ -12,6 +12,7 @@ import '../../App.css'
 import { appName } from '../../constant/constant'
 import { PiUserCircleCheckFill, PiUserCirclePlusFill, PiUsersThreeFill } from 'react-icons/pi'
 import { BsClipboard2Data } from 'react-icons/bs'
+import DownloadExcel from '../../utils/excel/DownloadExcel'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -51,8 +52,13 @@ const Navbar = () => {
             {open && (
                 <div className={`flex overflow-hidden min-h-screen fixed max-w-[680px] w-full flex-col gap-8 items-start p-8 z-50 bg-[#00000089] ${isExiting && "animate__fadeOut"}`}>
                     <div className={`bg-gradient-to-t gradient-bg-dark gradient-bg-light shadow-lg ${isExiting ? 'animate__slideOutUp' : 'animate__slideInDown'} shadow-[#02020256] dark:shadow-[#000000] w-[680px] aspect-square rounded-l-full rounded-r-[80px] z-50 rotate-45 absolute top-0 right-0 -mt-32 -mr-52`} />
-                    <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
-                        <IoClose />
+                    <div className=" flex items-center justify-between w-full">
+                        <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
+                            <IoClose />
+                        </div>
+                        <div className={`flex flex-row-reverse text-2xl items-center pt-8 gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                            <DownloadExcel />
+                        </div>
                     </div>
                     {menu.map((item, index) => (
                         <div onClick={() => { navigate(`${item.route}`), handleClose() }} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>

@@ -3,12 +3,14 @@ import UsersDisplay from './UsersDisplay'
 import { reportListUsers } from '../../../db/reportsList';
 import SoldiersClassReport from './SoldiersClassReport';
 import { useSearchParams } from 'react-router-dom';
+import useUser from '../../../hooks/useUser';
 
 //usersToDisplay: are the users to display after serch input,
 //setChosenCategory: is to toggle to location choose screen,
 //usersSelected: are the users that the manger selected them,
 function SolidersSample({ usersToDisplay, setChosenCategory, usersSelected, setUsersSelected }) {
     const [userArray, setUserArray] = useState()
+    const {currentUser} = useUser()
     const [toggleSend, setToggleSend] = useState(false)
 
     const [searchParams] = useSearchParams()

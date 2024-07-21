@@ -18,10 +18,8 @@ const useUser = () => {
         return currentUser.history.find((item) => item.id == id) || null
     }
     const patchCounterEditReport = () => {
-        if (getCurrentTime() == timeToupdatedCounterEdit) {
-            currentUser.counterEdit = 3
-            saveToLocalStorage(currentUser)
-        }
+        currentUser.counterEdit = 3
+        saveToLocalStorage(currentUser)
     }
 
     const updateSingleReport = (oldReport) => {
@@ -67,7 +65,6 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
 
-
     const endProcessReport = (reportId, endTime) => {
         console.log(reportId, endTime);
         const allReport = currentUser?.history || [];
@@ -90,6 +87,20 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
 
+    const handleManageUsers = (newGrup) => {
+        console.log("newGrup :", newGrup);
+        const allUsers = newGrup || [];
+
+        const updatedUser = {
+            ...currentUser,
+            userGrup: allUsers
+        };
+
+        setCurrentUser(updatedUser);
+        saveToLocalStorage(updatedUser);
+
+    }
+
     const activeIsEdit = () => {
         setIsEdit(true)
     }
@@ -103,7 +114,7 @@ const useUser = () => {
         advanceSearchResults, setAdvanceSearchResults,
         getSingleReport, patchCounterEditReport,
         createNewReportPersonale, endProcessReport,
-        updateSingleReport
+        updateSingleReport, handleManageUsers
     }
 }
 

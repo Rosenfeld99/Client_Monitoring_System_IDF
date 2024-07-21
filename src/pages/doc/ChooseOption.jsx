@@ -52,7 +52,7 @@ const ReportStart = ({ }) => {
             // Push the text before the match
             result.push(text.slice(lastIndex, offset));
             // Push the matched text wrapped in a span
-            result.push(<span className="text-sm px-2 ">{`(${p1})`}</span>);
+            result.push(<span className="text-xs font-normal px-2 ">{`(${p1})`}</span>);
             lastIndex = offset + match.length;
         });
 
@@ -78,7 +78,7 @@ const ReportStart = ({ }) => {
                         }}
                         className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
                     >
-                        <div className={`text-lg font-bold flex items-center justify-start w-full p-4 px-6 ${currentSelect === item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>
+                        <div className={`text-md font-bold flex items-center justify-start w-full p-2 ${currentSelect === item && "text-light_accent bg-slate-100 dark:bg-[#121212]"}`}>
                             {processText(item?.name)}
                         </div>
                     </button>

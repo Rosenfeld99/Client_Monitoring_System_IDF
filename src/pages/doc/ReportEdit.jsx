@@ -7,7 +7,7 @@ import { BiSolidEdit } from 'react-icons/bi'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
 import { useToast } from '../../utils/Toasttify/ToastManager'
-import { getCurrentTime } from '../../utils/func/generateId'
+import { formatDateToNumber, getCurrentDateFormaterHebrew, getCurrentTime } from '../../utils/func/generateId'
 import { timeToupdatedCounterEdit } from '../../constant/constant'
 
 const ReportEdit = ({ }) => {
@@ -33,7 +33,8 @@ const ReportEdit = ({ }) => {
     searchParams.get('endTime')
     activeIsEdit()
     console.log("render");
-    if (getCurrentTime() == timeToupdatedCounterEdit) {
+    if (formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(currentUser?.lastReport?.date)) {
+      console.log("last edit report date", formatDateToNumber(currentUser?.lastReport?.date), "Current date", formatDateToNumber(getCurrentDateFormaterHebrew()));
       patchCounterEditReport()
     }
   }, [searchParams, isEdit])
