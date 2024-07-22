@@ -24,7 +24,7 @@ export const userStatic = localStorage.getItem(KEY_WAVES_SYSTEM) || {
   ],
   reportsClass: [
     {
-      name: "מחלקת לומר",
+      nameClass: "מחלקת לומר",
       id: "y3z0bvx2ddplbr4qn47fhdcsncdsmclk",
       reportsList: [
         {
@@ -60,53 +60,7 @@ export const userStatic = localStorage.getItem(KEY_WAVES_SYSTEM) || {
     location: "בסיס",
     isComplited: true,
   },
-  history: [
-    // {
-    //   id: generateID(),
-    //   startTime: "12:00",
-    //   date: "25/06/2024",
-    //   endTime: "13:00",
-    //   content: "תפילה",
-    //   location: "בסיס",
-    //   isComplited: true,
-    // },
-    // {
-    //   id: generateID(),
-    //   startTime: "14:00",
-    //   date: "25/06/2024",
-    //   endTime: "15:00",
-    //   content: "ספורט",
-    //   location: "בסיס",
-    //   isComplited: true,
-    // },
-    // {
-    //   id: generateID(),
-    //   startTime: "16:00",
-    //   date: "25/06/2024",
-    //   endTime: "17:00",
-    //   content: "הכשרה X",
-    //   location: "בסיס",
-    //   isComplited: true,
-    // },
-    // {
-    //   id: generateID(),
-    //   startTime: "18:00",
-    //   date: "25/06/2024",
-    //   endTime: "19:00",
-    //   content: "הכשרה Y",
-    //   location: "בסיס",
-    //   isComplited: true,
-    // },
-    // {
-    //   id: generateID(),
-    //   startTime: "18:00",
-    //   date: "26/06/2024",
-    //   endTime: "19:00",
-    //   content: "הכשרה Y",
-    //   location: "בסיס",
-    //   isComplited: true,
-    // },
-  ],
+  history: [],
 };
 
 if (!localStorage.getItem(KEY_WAVES_SYSTEM))

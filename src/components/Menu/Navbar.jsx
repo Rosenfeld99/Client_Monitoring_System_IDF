@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IoClose, IoDocumentTextOutline } from 'react-icons/io5'
 import { HiOutlineMenu, HiUserCircle } from 'react-icons/hi'
 import { RiHistoryFill } from 'react-icons/ri'
-import { MdOutlineLogout } from 'react-icons/md'
+import { MdManageAccounts, MdOutlineLogout } from 'react-icons/md'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { FaArrowLeft } from 'react-icons/fa'
 import { LuMoonStar } from 'react-icons/lu'
@@ -11,7 +11,6 @@ import { FiSun } from 'react-icons/fi'
 import '../../App.css'
 import { appName } from '../../constant/constant'
 import { PiUserCircleCheckFill, PiUserCirclePlusFill, PiUsersThreeFill } from 'react-icons/pi'
-import { BsClipboard2Data } from 'react-icons/bs'
 import DownloadExcel from '../../utils/excel/DownloadExcel'
 
 const Navbar = () => {
@@ -27,7 +26,7 @@ const Navbar = () => {
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
         { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
-        { route: "/manageUsers", title: "הוספת משתמש", icon: <PiUserCirclePlusFill className='text-3xl text-black' /> },
+        { route: "/manageUsers", title: "ניהול משתמשים", icon: <MdManageAccounts className='text-3xl text-black' /> },
         // { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
 

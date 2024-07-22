@@ -19,7 +19,7 @@ const FloatingLabelInput = ({ placeholder, label, state, setState, inputType, mi
     if (pattern) {
       if (pattern?.test(value)) {
         setState(value, keyToUpdate);
-        }
+      }
     } else {
       setState(value, keyToUpdate)
     }
@@ -50,7 +50,7 @@ const FloatingLabelInput = ({ placeholder, label, state, setState, inputType, mi
         onBlur={handleBlur}
         placeholder={isFocused ? '' : placeholder}
       />
-      {state?.length > 0 &&
+      {state?.length > 0 && inputType == "password" &&
         <button onClick={togglePasswordVisibility} className=' absolute left-0 top-0 text-xl p-3'>{!isPasswordVisible ? <LiaEyeSolid /> : <LiaEyeSlash />}</button>
       }
     </div>
