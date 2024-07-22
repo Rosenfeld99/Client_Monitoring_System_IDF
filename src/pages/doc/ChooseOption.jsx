@@ -14,7 +14,7 @@ const ReportStart = ({ }) => {
 
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit, activeIsEdit, isEdit, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
+    const { inActiveIsEdit, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
     const handleStartReport = () => {
 
@@ -94,6 +94,8 @@ const ReportStart = ({ }) => {
     }
 
     const innerTypeOfReport = (typeMsg) => {
+        const genID = Date.now()
+
         switch (typeMsg) {
             case "grup":
                 return {
@@ -101,7 +103,26 @@ const ReportStart = ({ }) => {
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
                     link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ""
+                    doAPI: () => {
+                        isEdit ?
+                            // updateSingleReport({
+                            //     id: searchParams.get('id'),
+                            //     content: searchParams.get('location'),
+                            //     location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                            // }) 
+                            console.log("Edit Report grup")
+                            :
+                            console.log("Case grup")
+                        createNewReportForGrupOrSingle({
+                            id: genID,
+                            date: getCurrentDateFormaterHebrew(),
+                            startTime: getCurrentTime(),
+                            endTime: "00:00",
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                            isCompited: false
+                        }, pathname?.split('/')[2], "grup")
+                    }
                 }
             case "tests":
                 return {
@@ -112,7 +133,6 @@ const ReportStart = ({ }) => {
                     doAPI: ""
                 }
             default:
-                const genID = Date.now()
 
                 return {
                     title: isEdit ? "עריכת דיווח" : "דיווח חדש",
@@ -132,7 +152,7 @@ const ReportStart = ({ }) => {
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
                             isCompited: false
-                        },pathname?.split('/')[2])
+                        }, pathname?.split('/')[2])
                     }
                 }
         }
@@ -166,7 +186,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport("regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
+                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport(searchParams.get('report') || "regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>

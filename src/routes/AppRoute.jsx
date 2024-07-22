@@ -47,7 +47,6 @@ function AppRoute() {
             </>
           }
 
-
           {/* Admin */}
           <Route path='/lastReports' element={<LastReports />} />
           <Route path='/searchResult' element={<SearchResult />} />

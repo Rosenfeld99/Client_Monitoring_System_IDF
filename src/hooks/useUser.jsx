@@ -65,57 +65,89 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
 
-    const endProcessReport = (reportId, endTime) => {
-        console.log(reportId, endTime);
-        const allReport = currentUser?.history || [];
+    const createNewReportForGrupOrSingle = (newReport, place, accessType, userId) => {
+        console.log(newReport, place, accessType);
+        // return
+        const allReport = currentUser?.userGrup?.historyList || [];
 
-        const updatedHistory = allReport.map((report) =>
-            report.id == reportId ? { ...report, endTime: endTime } : report
-        );
-
-        const updatedReport = updatedHistory.find(report => report.id == reportId);
+        const createObj = {
+            id: newReport?.id,
+            content: newReport?.content,
+            location: newReport?.location,
+            date: newReport?.date,
+            endTime: newReport?.endTime,
+            startTime: newReport?.startTime,
+            isCompited: false,
+            place
+        }
 
         const updatedUser = {
             ...currentUser,
-            history: updatedHistory,
-            isProcess: false,
-            process: null,
-            lastReport: updatedReport
-        };
-
-        setCurrentUser(updatedUser);
-        saveToLocalStorage(updatedUser);
+            userGrup: {
+                ...currentUser.userGrup,
+                reportsList: [...allReport, newReport],
+                lastReportGrup: accessType == "grup" ? createObj : currentUser?.userGrup?.lastReportGrup,
+                lastReportTests: accessType == "tests" ? createObj : currentUser?.userGrup?.lastReportTests
+            },
+            
     };
 
-    const handleManageUsers = (newGrup) => {
-        console.log("newGrup :", newGrup);
-        const allUsers = newGrup || [];
+    setCurrentUser(updatedUser);
+    saveToLocalStorage(updatedUser);
+};
 
-        const updatedUser = {
-            ...currentUser,
-            userGrup: allUsers
-        };
+const endProcessReport = (reportId, endTime) => {
+    console.log(reportId, endTime);
+    const allReport = currentUser?.history || [];
 
-        setCurrentUser(updatedUser);
-        saveToLocalStorage(updatedUser);
+    const updatedHistory = allReport.map((report) =>
+        report.id == reportId ? { ...report, endTime: endTime } : report
+    );
 
-    }
+    const updatedReport = updatedHistory.find(report => report.id == reportId);
 
-    const activeIsEdit = () => {
-        setIsEdit(true)
-    }
-    const inActiveIsEdit = () => {
-        setIsEdit(false)
-    }
-    return {
-        currentUser, setCurrentUser,
-        isEdit, activeIsEdit
-        , inActiveIsEdit,
-        advanceSearchResults, setAdvanceSearchResults,
-        getSingleReport, patchCounterEditReport,
-        createNewReportPersonale, endProcessReport,
-        updateSingleReport, handleManageUsers
-    }
+    const updatedUser = {
+        ...currentUser,
+        history: updatedHistory,
+        isProcess: false,
+        process: null,
+        lastReport: updatedReport
+    };
+
+    setCurrentUser(updatedUser);
+    saveToLocalStorage(updatedUser);
+};
+
+const handleManageUsers = (newGrup) => {
+    console.log("newGrup :", newGrup);
+    const allUsers = newGrup || [];
+
+    const updatedUser = {
+        ...currentUser,
+        userGrup: allUsers
+    };
+
+    setCurrentUser(updatedUser);
+    saveToLocalStorage(updatedUser);
+
+}
+
+const activeIsEdit = () => {
+    setIsEdit(true)
+}
+const inActiveIsEdit = () => {
+    setIsEdit(false)
+}
+return {
+    currentUser, setCurrentUser,
+    isEdit, activeIsEdit
+    , inActiveIsEdit,
+    advanceSearchResults, setAdvanceSearchResults,
+    getSingleReport, patchCounterEditReport,
+    createNewReportPersonale, endProcessReport,
+    updateSingleReport, handleManageUsers,
+    createNewReportForGrupOrSingle
+}
 }
 
 export default useUser
