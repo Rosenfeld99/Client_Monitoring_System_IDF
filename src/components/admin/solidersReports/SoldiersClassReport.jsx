@@ -9,6 +9,9 @@ import { GrAddCircle, GrDocumentTest } from 'react-icons/gr'
 import { FaEdit, FaHistory } from 'react-icons/fa'
 import { HiOutlineDocumentAdd } from 'react-icons/hi'
 import { MdOutlinePostAdd } from 'react-icons/md'
+import { KEY_WAVES_SYSTEM } from '../../../constant/constant'
+import useUser from '../../../hooks/useUser'
+import { getCurrentTime } from '../../../utils/func/generateId'
 
 function SoldiersClassReport({ usersSelected }) {
     const navigation = useNavigate()
@@ -16,6 +19,15 @@ function SoldiersClassReport({ usersSelected }) {
     const [isOpen, setIsOpen] = useState("");
     const dropdownRef = useRef(null);
     const [searchParams] = useSearchParams()
+    const {currentUser,endProcessReport,endProcessClassReport}=useUser()
+     
+    const handleEndReport = (id) => {
+        endProcessClassReport(id, getCurrentTime())
+        navigation(`/lastReport?last=end`)
+        
+    }
+
+
 
     const innerIcon = (val) => {
         return getSingleSystemStract(val || searchParams.get('s'))?.icon
@@ -45,11 +57,13 @@ function SoldiersClassReport({ usersSelected }) {
         },
         { username: "נהוראי", id: "njckdnckjcn", report: "תפילה", name: "שטח", value: "area" },
     ]
+    const lastGrupReport=currentUser?.userGrup?.lastGrupReport;
+    console.log(lastGrupReport);
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className=' border-b-2  border-transparent ' ></div>
             <div className='  min-h-[45vh] overflow-y-auto mt-6 px-1 '>
-                {searchParams.get('end') !== "process" ? <div className=" flex flex-wrap items-center justify-center gap-y-20 gap-x-7">
+                {lastGrupReport?.isCompited ? <div className=" flex flex-wrap items-center justify-center gap-y-20 gap-x-7">
                     {SYSTEMSTRACT?.map((item, index) => (
                         <button
                             onClick={() => navigation(`/startReport/${item?.value}?&access=manager&report=grup&users=${encodeURIComponent(JSON.stringify(usersName))}`)}
@@ -60,7 +74,7 @@ function SoldiersClassReport({ usersSelected }) {
                     ))}
                 </div> :
                     <div className="">
-                        {!false ?
+                        {false ?
                             <div className=" flex flex-col w-full items-center justify-center gap-5">
                                 {usersTests?.map((item, index) => (
                                     <button
@@ -127,11 +141,11 @@ function SoldiersClassReport({ usersSelected }) {
                                 <div className="  mt-[6.5rem] w-[9.5rem] h-[9.5rem] bg-blue-500 rounded-full animate-ping flex flex-col items-center justify-center"></div>
                                 <button onClick={() => navigation(`/lastReports?end=complate`)} className=" absolute top-56 w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
                                     <div className='text-7xl text-white'>
-                                        {innerIcon()}
+                                        { SYSTEMSTRACT?.find((item) => item?.name == lastGrupReport?.location)?.icon}
                                     </div>
-                                    <div className='text-black'>
+                                    <div onClick={()=>handleEndReport(lastGrupReport?.id)} className='text-black'>
                                         <div >סיום</div>
-                                        <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31)}{searchParams.get('location')?.length > 31 && "..."}{searchParams.get('report') == "grup" && "דיווח מחלקה"}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
+                                        <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31)||lastGrupReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31||lastGrupReport?.content) && "..."}{searchParams.get('report') == "grup" && "דיווח מחלקה"}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
                                     </div>
                                 </button>
                             </div>}

@@ -64,6 +64,22 @@ const useUser = () => {
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
     };
+    const createNewReportGrup = (newReport,key) => {
+        const grupReports = currentUser?.userGrup || [];
+            
+        const updatedUser = {
+            ...currentUser,
+            userGrup:{
+                ...grupReports,
+                lastGrupReport:key==="grup"?newReport:grupReports.lastGrupReport,
+                [key]:[...grupReports[key]||[],newReport]
+            }
+        };
+
+        setCurrentUser(updatedUser);
+        saveToLocalStorage(updatedUser);
+    };
+
 
     const endProcessReport = (reportId, endTime) => {
         console.log(reportId, endTime);
@@ -87,6 +103,20 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
 
+    const endProcessClassReport = (reportId, endTime) => {
+        const grupReports = currentUser?.userGrup || [];
+          
+        const updatedHistory = grupReports?.grup?.map((report) =>
+            report.id == reportId ? { ...report,isCompited:true, endTime: endTime } : report
+        );
+             let userUpdate={...currentUser};
+             userUpdate.userGrup.grup=[...updatedHistory];
+             userUpdate.userGrup.lastGrupReport.isCompited=true;
+       
+        setCurrentUser(userUpdate);
+        saveToLocalStorage(userUpdate);
+    };
+
     const handleManageUsers = (newGrup) => {
         console.log("newGrup :", newGrup);
         const allUsers = newGrup || [];
@@ -108,13 +138,15 @@ const useUser = () => {
         setIsEdit(false)
     }
     return {
+        createNewReportGrup,
         currentUser, setCurrentUser,
         isEdit, activeIsEdit
         , inActiveIsEdit,
         advanceSearchResults, setAdvanceSearchResults,
         getSingleReport, patchCounterEditReport,
         createNewReportPersonale, endProcessReport,
-        updateSingleReport, handleManageUsers
+        updateSingleReport, handleManageUsers,
+        endProcessClassReport
     }
 }
 

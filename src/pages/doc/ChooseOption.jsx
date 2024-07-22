@@ -14,7 +14,7 @@ const ReportStart = ({ }) => {
 
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit, activeIsEdit, isEdit, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
+    const { inActiveIsEdit, activeIsEdit, isEdit, getSingleReport,createNewReportGrup, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
     const handleStartReport = () => {
 
@@ -72,9 +72,9 @@ const ReportStart = ({ }) => {
                             setCurrentSelect(item);
                             isEdit
                                 ?
-                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}`)
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}&users=${searchParams.get('users')}`)
                                 :
-                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}`);
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&users=${searchParams.get('users')}`);
                         }}
                         className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
                     >
@@ -87,13 +87,26 @@ const ReportStart = ({ }) => {
         )
     }
 
-    const routeingOnClick = () => {
-        if (searchParams.get('access') == "manager") {
-            // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
-        }
-    }
+    // const routeingOnClick = () => {
+    //     if (searchParams.get('access') == "manager") {
+    //         // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
+    //     }
+    // }
+    console.log(searchParams.get("report"));
 
     const innerTypeOfReport = (typeMsg) => {
+        console.log(typeMsg);
+        const genID = Date.now()
+        const reportObj={ 
+            // accessOption:searchParams.get("report"),
+            id: genID,
+            date: getCurrentDateFormaterHebrew(),
+            startTime: getCurrentTime(),
+            endTime: "00:00",
+            content: searchParams.get('location'),
+            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+            isCompited: false}
+
         switch (typeMsg) {
             case "grup":
                 return {
@@ -101,7 +114,9 @@ const ReportStart = ({ }) => {
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
                     link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ""
+                    doAPI: ()=>{
+                        createNewReportGrup(reportObj,"grup")
+                    }
                 }
             case "tests":
                 return {
@@ -109,11 +124,15 @@ const ReportStart = ({ }) => {
                     description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
                     link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ""
+                    doAPI: ()=>{
+                        reportObj.usersId=(searchParams.get("users"));
+                        console.log(reportObj.usersId);
+                        createNewReportGrup(reportObj,"tests")
+                    }
                 }
             default:
                 const genID = Date.now()
-
+               
                 return {
                     title: isEdit ? "עריכת דיווח" : "דיווח חדש",
                     description: isEdit ? `? ${getSingleReport(searchParams.get('id'))?.date} איפה הייתם ביום` : `איפה תהיו היום בשעה ${getCurrentTime()}`,
@@ -124,7 +143,8 @@ const ReportStart = ({ }) => {
                             id: searchParams.get('id'),
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                        }) : createNewReportPersonale({
+                        }) : 
+                        createNewReportPersonale({
                             id: genID,
                             date: getCurrentDateFormaterHebrew(),
                             startTime: getCurrentTime(),
@@ -137,7 +157,7 @@ const ReportStart = ({ }) => {
                 }
         }
     }
-
+ console.log( innerTypeOfReport("report").title); 
     return (
         <TransitionPage>
             <div dir='rtl' className=" flex flex-col overflow-hidden pb-10 mx-auto w-full min-h-screen flex-1">
@@ -166,7 +186,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport("regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
+                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport(searchParams.get("report")).doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>
