@@ -111,6 +111,7 @@ const useUser = () => {
         if (accessType == "grup") {
            if ( tempCurrentUser.reportsClass[0]) {
                tempCurrentUser.reportsClass[0].lastReport = { ...createObj };
+              
            }
            else{
             alert("אין מחלקה קיימת")
@@ -160,11 +161,12 @@ const useUser = () => {
         const tempCurrentUser = { ...currentUser };
 
         if (accessType === "grup") {
-            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport??{};
+            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport||{};
             lastClassReport.isComplited = true;
             tempCurrentUser.reportsClass[0].lastReport = null;
-            if (tempCurrentUser?.reportsClass[0]?.reportsList?.length!=0) {
-              tempCurrentUser?.reportsClass[0]?.reportsList?.push(lastClassReport);  
+         
+            if (tempCurrentUser?.reportsClass[0]?.reportsList) {
+              tempCurrentUser?.reportsClass[0]?.reportsList?.push(lastClassReport); 
             }
             else tempCurrentUser.reportsClass[0].reportsList=[lastClassReport]
         }
