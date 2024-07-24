@@ -14,8 +14,10 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
     const [chooseReport, setChooseReport] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const dropdownRef = useRef(null);
-    const navigation = useNavigate()
-    const { activeIsEdit, currentUser, endManagerProcessReport } = useUser()
+    const navigation=useNavigate()
+    const {activeIsEdit,currentUser,endManagerProcessReport}=useUser()
+    const isNewUser=!(userDisplay?.lastReport?.date)&&userDisplay?.reportsList.length==0;
+
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -41,46 +43,50 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
             userId: userDisplay?.id,
             report: "tests",
 
-        }).toString();
-        navigation(`/ReportEdit/reportId?${params}`);
-        activeIsEdit()
+            }).toString();
+            if (!isNewUser) {
+                navigation(`/ReportEdit/reportId?${params}`);
+            }
+            activeIsEdit()  
     }
     const handeleFinishReport = () => {
         endManagerProcessReport(currentUser?.reportsClass[0].lastReport?.id, "tests", userDisplay?.id)
         navigation(`/lastReports?end=complate`)
     }
-
+    const isHaveLastReport=userDisplay?.lastReport
     return (<>
         {/* TODO: save the users selected on click */}
-
-        <>
-            <button
-                className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
-                <div className=" flex items-center justify-between w-full">
-                    <h1 className=' text-sm font-bold text-start w-full'>דיווח אחרון</h1>
-                    <div className="text-xs text-nowrap text-gray-400">
-
-                        בתאריך 22/05/2024 , 10:20
-                    </div>
-                </div>
-                <div className=" flex items-center justify-between w-full">
-                    <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
-                        <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
-                            {/* {innerIcon(item?.value)} */}
-                            <GrDocumentTest />
-                        </div>
-                        <div className="max-w-[60%] flex flex-col items-start">
-                            <div className="text-lg font-bold">{userDisplay?.name}</div>
-                            <div className="text-sm font-bold">דיווח {userDisplay?.lastReport?.content} ב{userDisplay?.lastReport?.location}</div>
+        
+            <>
+                <button
+                    className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
+                    <div className=" flex items-center justify-between w-full">
+                        <h1 className=' text-sm font-bold text-start w-full'>דיווח אחרון</h1>
+                        <div className="text-xs text-nowrap text-gray-400">
+                        {isHaveLastReport? userDisplay?.lastReport?.date+" ":"אין דיווח אחרון"}
+                        {" "+isHaveLastReport? (userDisplay?.lastReport?.endTime||userDisplay?.lastReport?.startTime):"אין דיווח אחרון"}
+                     
+                          
                         </div>
                     </div>
-                    <div
-                        className="relative py-3">
-                        {userDisplay?.lastReport?.isComplited ?
-                            <CgMoreVerticalO onClick={() => setIsOpen(userDisplay?.id)} className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
-                            :
-                            <div onClick={() => handeleFinishReport()}>
-                                <div className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
+                    <div className=" flex items-center justify-between w-full">
+                        <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
+                            <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
+                                {/* {innerIcon(item?.value)} */}
+                                <GrDocumentTest />
+                            </div>
+                            <div className="max-w-[60%] flex flex-col items-start">
+                                <div className="text-lg font-bold">{userDisplay?.name}</div>
+                                <div className="text-sm font-bold">  {!isHaveLastReport? "אין דיווח אחרון":    `דיווח  ${userDisplay?.lastReport?.content} ב ${userDisplay?.lastReport?.location}`}</div>
+                            </div>
+                        </div>
+                        <div
+                            className="relative py-3">
+                                {(userDisplay?.lastReport?.isComplited||isNewUser)?
+                            <CgMoreVerticalO  onClick={() => setIsOpen(userDisplay?.id) }  className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                                :
+                                <div onClick={()=>handeleFinishReport()}>
+                                <div   className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
                                 <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
                             </div>}
                     </div>

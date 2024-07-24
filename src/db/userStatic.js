@@ -6,6 +6,7 @@ export const userStatic = localStorage.getItem(KEY_WAVES_SYSTEM) || {
   userTests: [],
   reportsClass: [],
   counterEdit: 3,
+  commandCounterEdit: 3,
   isProcess: false,
   process: null,
   lastReport: null,
