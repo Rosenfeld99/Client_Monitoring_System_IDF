@@ -15,14 +15,13 @@ const ReportEdit = ({ }) => {
   const showToast = useToast();
   const { isEdit, activeIsEdit, currentUser, patchCounterEditReport } = useUser()
 
-  const handleStartReport = () => {
 
-  }
 
   // <GiTowerFlag />
 
-  const counterOfEdit = currentUser?.counterEdit
   const [searchParams] = useSearchParams()
+  const currEdit=searchParams.get("report") 
+  const counterOfEdit =(currEdit==="grup"|| currEdit==="tests")?currentUser?.commandCounterEdit:currentUser?.counterEdit
 
   if (counterOfEdit == 0) showToast('error', "): אין אפשרות לערוך ")
 
@@ -84,7 +83,8 @@ const ReportEdit = ({ }) => {
         <div className=" z-40 flex flex-col pt-14 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
           <div className="flex flex-col text-center leading-[150%] pb-20">
             <div className="self-center text-lg font-bold text-light_primary_content dark:text-dark_primary_content">
-              עריכת דיווח
+            עריכת דיווח {searchParams.get("report")==="grup"?"מחלקה":searchParams.get("report")==="tests"&&"מדגם"}
+
             </div>
             <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
               נותרו עוד <span className={` font-bold ${counterOfEdit == 1 || counterOfEdit == 0 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`}>{counterOfEdit}</span> מתוך 3 אפשריות לערוך

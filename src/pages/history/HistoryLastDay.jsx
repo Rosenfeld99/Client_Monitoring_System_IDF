@@ -30,7 +30,6 @@ const HistoryLastDay = ({ }) => {
             activeIsEdit()
         }
     }
-
     // console.log(chooseOption);
 
     return (

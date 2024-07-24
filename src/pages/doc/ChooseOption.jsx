@@ -87,7 +87,7 @@ const ReportStart = ({ }) => {
 
     const innerTypeOfReport = (typeMsg) => {
         const genID = Date.now()
-       
+       console.log(typeMsg);
         switch (typeMsg) {
             case "grup":
               

@@ -7,6 +7,7 @@ import { FaEdit } from 'react-icons/fa'
 import useUser from '../../../hooks/useUser'
 import ChooseLocation from './ChooseLocation'
 import { ImPause } from 'react-icons/im'
+import { getCurrentDateFormaterHebrew } from '../../../utils/func/generateId'
 
 function CommandLastReports() {
     const navigation = useNavigate()
@@ -61,12 +62,16 @@ const handeleFinishReport=(report)=>{
 }
 
     const getComanndHistory = () => {
-
-        let history = [...currentUser?.reportsClass[0]?.reportsList];
+        const currentDate=getCurrentDateFormaterHebrew()
+       const currentDayReports=currentUser?.reportsClass[0]?.reportsList?.filter((report)=>report?.date===currentDate)
+       console.log(currentDate);
+        let history = [...currentDayReports??[]];
         const tempUser = currentUser?.userTests;
         for (let index = 0; index < tempUser?.length; index++) {
             for (let j = 0; j < tempUser[index]?.reportsList?.length; j++) {
-                history = [...history, { ...tempUser[index]?.reportsList[j], type: "User", userId: tempUser[index].id }]
+                if (tempUser[index]?.reportsList[j].date===currentDate) { 
+                    history = [...history, { ...tempUser[index]?.reportsList[j], type: "User", userId: tempUser[index].id }]
+                }
             }
         }
         return history
@@ -76,16 +81,18 @@ const handeleFinishReport=(report)=>{
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className=' h-[100vh]  overflow-y-auto mt-6 px-1 '>
                 <div className=" flex flex-col w-full items-center justify-center gap-5">
-                    {createReport.type ? <ChooseLocation type={createReport.type} access={"manager"} userId={createReport.userId} />
+                    {createReport?.type ? <ChooseLocation type={createReport?.type} access={"manager"} userId={createReport?.userId} />
                         : getComanndHistory()?.map((item, index) => (
                             <button
                                 key={index} className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
                                 <div className=" flex items-center justify-between w-full">
                                     <h1 className=' text-sm font-bold text-start w-full'>דיווח אחרון</h1>
                                     <div className="text-xs text-nowrap text-gray-400">
-                                        בתאריך 22/05/2024 , 10:20
+                                    {item?.date}
+                                    {" "+(item?.endTime||item?.startTime)}
                                     </div>
                                 </div>
+                              
                                 <div className=" flex items-center justify-between w-full">
                                     <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
                                         <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">

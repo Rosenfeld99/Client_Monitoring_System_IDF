@@ -75,7 +75,7 @@ function SoldiersClassReport({ usersSelected }) {
                                 </div>
                                 <div className='text-black'>
                                     <div >סיום</div>
-                                    <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31) || lastClassReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31 || lastClassReport?.content?.length > 31) && "..."}{searchParams.get('report') == "grup" && "דיווח מחלקה"}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
+                                    <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31) || lastClassReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31 || lastClassReport?.content?.length > 31) && "..."}{searchParams.get('report') == "grup" &&   " דיווח מחלקה "}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
                                 </div>
                             </button>
                         </div>

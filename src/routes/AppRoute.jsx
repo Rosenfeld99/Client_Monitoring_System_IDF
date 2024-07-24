@@ -19,7 +19,7 @@ import InitPage from '../pages/initPage/InitPage'
 function AppRoute() {
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useUser()
-
+console.log(currentUser);
   useEffect(() => {
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
@@ -27,9 +27,9 @@ function AppRoute() {
     }, 2000); // Adjust the duration as needed
   }, []);
 
-  if (currentUser?.isInit) {
-    return <InitPage/>
-  }
+  // if (currentUser?.isInit) {
+  //   return <InitPage/>
+  // }
 
   const location = useLocation();
   return (

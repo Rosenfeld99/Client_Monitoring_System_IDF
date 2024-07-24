@@ -11,11 +11,13 @@ import { SYSTEMSTRACT } from '../../../db/systemStract';
 
 
 const DisplayUser = ({userDisplay,setCreateReport }) => {
-    const [chooseReport, setChooseReport] = useState(false)
+    // const [chooseReport, setChooseReport] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const dropdownRef = useRef(null);
     const navigation=useNavigate()
     const {activeIsEdit,currentUser,endManagerProcessReport}=useUser()
+    const isNewUser=!(userDisplay?.lastReport?.date)&&userDisplay?.reportsList.length==0;
+
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -41,14 +43,15 @@ const DisplayUser = ({userDisplay,setCreateReport }) => {
                 report:"tests",
 
             }).toString();
-            navigation(`/ReportEdit/reportId?${params}`);
+            if (!isNewUser) {
+                navigation(`/ReportEdit/reportId?${params}`);
+            }
             activeIsEdit()  
     }
     const handeleFinishReport=()=>{
-        endManagerProcessReport(currentUser?.reportsClass[0].lastReport?.id,"tests",userDisplay?.id)
+        endManagerProcessReport(currentUser?.reportsClass[0]?.lastReport?.id,"tests",userDisplay?.id)
         navigation(`/lastReports?end=complate`)
     }
-
     return (<>
         {/* TODO: save the users selected on click */}
         
@@ -58,8 +61,10 @@ const DisplayUser = ({userDisplay,setCreateReport }) => {
                     <div className=" flex items-center justify-between w-full">
                         <h1 className=' text-sm font-bold text-start w-full'>דיווח אחרון</h1>
                         <div className="text-xs text-nowrap text-gray-400">
-
-                            בתאריך 22/05/2024 , 10:20
+                        {userDisplay?.lastReport?.date}
+                        {" "+userDisplay?.lastReport?.endTime||userDisplay?.lastReport?.startTime}
+                     
+                            {/* בתאריך 22/05/2024 , 10:20 */}
                         </div>
                     </div>
                     <div className=" flex items-center justify-between w-full">
@@ -75,7 +80,7 @@ const DisplayUser = ({userDisplay,setCreateReport }) => {
                         </div>
                         <div
                             className="relative py-3">
-                                {userDisplay?.lastReport?.isComplited?
+                                {(userDisplay?.lastReport?.isComplited||isNewUser)?
                             <CgMoreVerticalO  onClick={() => setIsOpen(userDisplay?.id) }  className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
                                 :
                                 <div onClick={()=>handeleFinishReport()}>
