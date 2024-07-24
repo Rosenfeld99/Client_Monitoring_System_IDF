@@ -48,19 +48,19 @@ const useUser = () => {
             const updatedUser = { ...currentUser, counterEdit: currentUser?.counterEdit - 1 };
 
             if (type === "tests") {
-              
-                const changeUserIndex=currentUser?.userTests?.findIndex((user) => user.id == userId);
-                if (changeUserIndex==-1) {
+
+                const changeUserIndex = currentUser?.userTests?.findIndex((user) => user.id == userId);
+                if (changeUserIndex == -1) {
                     console.log("not found user");
-                    return 
+                    return
                 }
                 const foundUser = currentUser?.userTests[changeUserIndex]
                 foundUser.reportsList = foundUser?.reportsList?.map((report) =>
                     report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
                 );
-               foundUser.lastReport={ ...foundUser?.lastReport, location: newReport?.location, content: newReport?.content }
-               updatedUser.userTests[changeUserIndex]=foundUser;
-               console.log(updatedUser);
+                foundUser.lastReport = { ...foundUser?.lastReport, location: newReport?.location, content: newReport?.content }
+                updatedUser.userTests[changeUserIndex] = foundUser;
+                console.log(updatedUser);
             }
             else if (type === "grup") {
                 const allGrupReports = currentUser?.reportsClass[0].reportsList || [];
@@ -151,17 +151,17 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
     const endManagerProcessReport = (reportId, accessType, userId) => {
-console.log( accessType, userId);
+        console.log(accessType, userId);
         const tempCurrentUser = { ...currentUser };
 
         if (accessType === "grup") {
             const lastClassReport = tempCurrentUser.reportsClass[0].lastReport;
-            lastClassReport.isComplited=true;
+            lastClassReport.isComplited = true;
             tempCurrentUser.reportsClass[0].lastReport = null;
             tempCurrentUser?.reportsClass[0]?.reportsList.push(lastClassReport);
         }
         else if (accessType == "tests") {
-                console.log();
+            console.log();
             for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
                 if (tempCurrentUser.userTests[index].id == userId) {
                     const reportList = tempCurrentUser.userTests[index].reportsList;
@@ -180,11 +180,12 @@ console.log( accessType, userId);
         console.log("newGrup :", newGrup);
         const allUsers = newGrup || [];
 
-    const updatedUser = {
-        username: newGrup?.systemUsername || "",
-        ...currentUser,
-        userGrup: allUsers
-    };
+        const updatedUser = {
+            ...currentUser,
+            username: newGrup?.systemUsername || "",
+            userGrup: allUsers
+        };
+        console.log(updatedUser);
 
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
