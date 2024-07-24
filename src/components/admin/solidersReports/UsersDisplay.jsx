@@ -54,6 +54,7 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
         navigation(`/lastReports?end=complate`)
     }
     const isHaveLastReport=userDisplay?.lastReport
+    
     return (<>
         {/* TODO: save the users selected on click */}
         
@@ -73,7 +74,7 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
                         <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
                             <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
                                 {/* {innerIcon(item?.value)} */}
-                                <GrDocumentTest />
+                                {<GrDocumentTest />}
                             </div>
                             <div className="max-w-[60%] flex flex-col items-start">
                                 <div className="text-lg font-bold">{userDisplay?.name}</div>
@@ -83,18 +84,18 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
                         <div
                             className="relative py-3">
                                 {(userDisplay?.lastReport?.isComplited||isNewUser)?
-                            <CgMoreVerticalO  onClick={() => setIsOpen(userDisplay?.id) }  className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                            <CgMoreVerticalO  onClick={() => setIsOpen(userDisplay?.id) }  className='top-0 left-0 absolute text-5xl w-10 h-10 text-light_primary_content dark:text-dark_primary_content rounded-full z-40' />
                                 :
                                 <div onClick={()=>handeleFinishReport()}>
                                 <div   className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
-                                <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                                <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 text-light_primary_content dark:text-dark_primary_content rounded-full z-40' />
                             </div>}
                     </div>
-                    {userDisplay?.id == isOpen && <div ref={dropdownRef} className="absolute left-16 bg-white border shadow-lg rounded-lg w-48 z-50">
-                        <div className=" absolute w-4 h-4 bg-white border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
+                    {userDisplay?.id == isOpen && <div ref={dropdownRef} className="absolute left-16 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content border shadow-lg rounded-lg w-48 z-50">
+                        <div className=" absolute w-4 h-4 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
                         <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
-                            <li onClick={() => handeleEdit()} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
-                            <li onClick={() => setCreateReport(userDisplay?.id)} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
+                            <li onClick={() => handeleEdit()} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
+                            <li onClick={() => setCreateReport(userDisplay?.id)} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
                         </ul>
                     </div>}
                 </div>
