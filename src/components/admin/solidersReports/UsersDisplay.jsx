@@ -52,6 +52,7 @@ const DisplayUser = ({userDisplay,setCreateReport }) => {
         endManagerProcessReport(currentUser?.reportsClass[0]?.lastReport?.id,"tests",userDisplay?.id)
         navigation(`/lastReports?end=complate`)
     }
+    const isHaveLastReport=userDisplay?.lastReport
     return (<>
         {/* TODO: save the users selected on click */}
         
@@ -61,10 +62,10 @@ const DisplayUser = ({userDisplay,setCreateReport }) => {
                     <div className=" flex items-center justify-between w-full">
                         <h1 className=' text-sm font-bold text-start w-full'>דיווח אחרון</h1>
                         <div className="text-xs text-nowrap text-gray-400">
-                        {userDisplay?.lastReport?.date}
-                        {" "+userDisplay?.lastReport?.endTime||userDisplay?.lastReport?.startTime}
+                        {isHaveLastReport? userDisplay?.lastReport?.date+" ":"אין דיווח אחרון"}
+                        {" "+isHaveLastReport? (userDisplay?.lastReport?.endTime||userDisplay?.lastReport?.startTime):"אין דיווח אחרון"}
                      
-                            {/* בתאריך 22/05/2024 , 10:20 */}
+                          
                         </div>
                     </div>
                     <div className=" flex items-center justify-between w-full">
@@ -75,7 +76,7 @@ const DisplayUser = ({userDisplay,setCreateReport }) => {
                             </div>
                             <div className="max-w-[60%] flex flex-col items-start">
                                 <div className="text-lg font-bold">{userDisplay?.name}</div>
-                                <div className="text-sm font-bold">דיווח {userDisplay?.lastReport?.content} ב{userDisplay?.lastReport?.location}</div>
+                                <div className="text-sm font-bold">  {!isHaveLastReport? "אין דיווח אחרון":    `דיווח  ${userDisplay?.lastReport?.content} ב ${userDisplay?.lastReport?.location}`}</div>
                             </div>
                         </div>
                         <div
