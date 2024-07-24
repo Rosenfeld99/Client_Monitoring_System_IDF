@@ -25,6 +25,7 @@ const ManageUsers = () => {
 
     const [newUser, setNewUser] = useState({
         password: null,
+        name: null,
         curseOption: null,
         accessOption: null,
         userGrup: currentUser?.userGrup || []
@@ -41,13 +42,16 @@ const ManageUsers = () => {
             case "password":
                 setNewUser({ ...newUser, password: newValue })
                 break;
+            case "name":
+                setNewUser({ ...newUser, name: newValue })
+                break;
             case "userGrup":
                 // await to response from server to get correct password to create reletion wetween grup
                 console.log(" in case");
                 if (newUser?.password?.toString()?.length == 9) {
-                    const updateGrupUusers = newUser?.userGrup || []
-                    updateGrupUusers?.push({ password: newUser.password, curseOption: newUser.curseOption, accessOption: newUser.accessOption, id: generateID(), reportsList: [] })
-                    setNewUser({ ...newUser, userGrup: updateGrupUusers, password: "" })
+                    const updateGrupUusers = newUser?.userGrup || {}
+                    updateGrupUusers?.historyList?.push({ password: newUser.password, curseOption: newUser.curseOption, accessOption: newUser.accessOption, id: generateID(), name: newUser?.name, reportsList: [] })
+                    setNewUser({ ...newUser, userGrup: updateGrupUusers, password: "", name: "" })
                 } else {
                     // alert(`ת"ז לא חוקית ...`)
                     showToast('error', 'שגיאה! ת"ז לא חוקית')
@@ -60,12 +64,13 @@ const ManageUsers = () => {
     }
 
     const handleDeletePassFromGrup = (pass) => {
-        const filteredGrup = newUser.userGrup.filter((item) => item != pass)
+        let filteredGrup = newUser.userGrup
+        filteredGrup.historyList = filteredGrup?.historyList?.filter((item) => item != pass)
         setNewUser({ ...newUser, userGrup: filteredGrup })
     }
 
     const validRequest = () => {
-        return newUser?.userGrup?.length > 0
+        return newUser?.userGrup?.historyList?.length > 0
     }
 
     const showToast = useToast();
@@ -101,13 +106,20 @@ const ManageUsers = () => {
                         maxLen={9}
                         pattern={/^\d{0,9}$/}
                     />
+                    <FloatingLabelInput label={'שם משתמש'} placeholder={'שם...'} state={newUser?.name}
+                        setState={updateSate}
+                        keyToUpdate={"name"}
+                        inputType="text"
+                        minLen={1}
+                        maxLen={20}
+                    />
                     <CustomSelect labelText={"בחר קורס"} options={curseOption} placeholder="קורס..." setState={updateSate} keyToUpdate={"curseOption"} />
                     <CustomSelect labelText={"בחר קבוצה"} options={accessOption} placeholder="קבוצה..." setState={updateSate} keyToUpdate={"accessOption"} />
                     <button onClick={() => updateSate(newUser, "userGrup")} className=' flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content'>הוסף{newUser?.accessOption && " ל" + newUser?.accessOption}</button>
-                    {newUser?.userGrup?.length > 0 &&
+                    {newUser?.userGrup?.historyList?.length > 0 &&
                         <React.Fragment>
                             <div className=" flex flex-col items-center pt-10 justify-center w-full gap-3">
-                                {newUser.userGrup.map((item, index) => (
+                                {newUser?.userGrup?.historyList?.map((item, index) => (
                                     <div key={item} className="px-4 border border-dark_accent_content rounded-md relative w-full flex gap-2">
                                         <span className=' border-l pl-2 py-2'>ת"ז</span>
                                         <span className='py-2'>{item?.password}</span>

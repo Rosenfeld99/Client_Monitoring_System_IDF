@@ -12,7 +12,7 @@ function DownloadExcel() {
             תאריך: rest.date,
             שעת_התחלה: rest.startTime,
             שעת_סיום: rest.endTime,
-            הושלם: rest.isCompited ? "כן" : "לא",
+            הושלם: rest. isComplited ? "כן" : "לא",
         }));
         const ws = xlsx.utils.json_to_sheet(translatedData || "");
         // Add the worksheet to the workbook
@@ -21,7 +21,7 @@ function DownloadExcel() {
         xlsx.writeFile(wb, 'events.xlsx');
     }
     return (
-        <button className=' bg-[#1b834c] p-2 flex flex-row-reverse active:scale-75 duration-100 items-center justify-center gap-1 rounded-lg px-3 text-sm'
+        <button className=' bg-[#1b834c] border py-1 flex flex-row-reverse active:scale-75 duration-100 items-center justify-center gap-1 rounded-md px-3 text-sm'
             onClick={handelExelPrint}
         >
             <RiFileExcel2Fill className='text-lg' /> הורדה ל

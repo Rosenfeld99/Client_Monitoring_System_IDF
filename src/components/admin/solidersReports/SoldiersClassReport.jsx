@@ -9,9 +9,7 @@ import { GrAddCircle, GrDocumentTest } from 'react-icons/gr'
 import { FaEdit, FaHistory } from 'react-icons/fa'
 import { HiOutlineDocumentAdd } from 'react-icons/hi'
 import { MdOutlinePostAdd } from 'react-icons/md'
-import { KEY_WAVES_SYSTEM } from '../../../constant/constant'
 import useUser from '../../../hooks/useUser'
-import { getCurrentTime } from '../../../utils/func/generateId'
 
 function SoldiersClassReport({ usersSelected }) {
     const navigation = useNavigate()
@@ -19,24 +17,13 @@ function SoldiersClassReport({ usersSelected }) {
     const [isOpen, setIsOpen] = useState("");
     const dropdownRef = useRef(null);
     const [searchParams] = useSearchParams()
-    const {currentUser,endProcessReport,endProcessClassReport}=useUser()
-     
-    const handleEndReport = (id) => {
-        endProcessClassReport(id, getCurrentTime())
-        navigation(`/lastReport?last=end`)
-        
+    const {currentUser,endManagerProcessReport}=useUser()
+    const lastClassReport=currentUser?.reportsClass[0]?.lastReport;
+
+    const handeleFinishReport=()=>{
+        endManagerProcessReport(null,"grup")
+        navigation(`/lastReports?end=complate`)
     }
-
-
-
-    const innerIcon = (val) => {
-        return getSingleSystemStract(val || searchParams.get('s'))?.icon
-    }
-
-
-    const toggleDropdown = (userId) => {
-        setIsOpen(userId);
-    };
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -57,13 +44,11 @@ function SoldiersClassReport({ usersSelected }) {
         },
         { username: "נהוראי", id: "njckdnckjcn", report: "תפילה", name: "שטח", value: "area" },
     ]
-    const lastGrupReport=currentUser?.userGrup?.lastGrupReport;
-    console.log(lastGrupReport);
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className=' border-b-2  border-transparent ' ></div>
             <div className='  min-h-[45vh] overflow-y-auto mt-6 px-1 '>
-                {lastGrupReport?.isCompited ? <div className=" flex flex-wrap items-center justify-center gap-y-20 gap-x-7">
+                {(lastClassReport==null||lastClassReport.isComplited) ? <div className=" flex flex-wrap items-center justify-center gap-y-20 gap-x-7">
                     {SYSTEMSTRACT?.map((item, index) => (
                         <button
                             onClick={() => navigation(`/startReport/${item?.value}?&access=manager&report=grup&users=${encodeURIComponent(JSON.stringify(usersName))}`)}
@@ -75,60 +60,61 @@ function SoldiersClassReport({ usersSelected }) {
                 </div> :
                     <div className="">
                         {false ?
-                            <div className=" flex flex-col w-full items-center justify-center gap-5">
-                                {usersTests?.map((item, index) => (
-                                    <button
-                                        key={index} className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
-                                        <div className=" flex items-center justify-between w-full">
-                                            <h1 className=' text-sm font-bold text-start w-full'>משימה בתהליך</h1>
-                                            <div className="text-xs text-nowrap text-gray-400">
-                                                בתאריך 22/05/2024 , 10:20
-                                            </div>
+                        <div>h</div>
+                            // <div className=" flex flex-col w-full items-center justify-center gap-5">
+                            //     {usersTests?.map((item, index) => (
+                            //         <button
+                            //             key={index} className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
+                            //             <div className=" flex items-center justify-between w-full">
+                            //                 <h1 className=' text-sm font-bold text-start w-full'>משימה בתהליך</h1>
+                            //                 <div className="text-xs text-nowrap text-gray-400">
+                            //                     בתאריך 22/05/2024 , 10:20
+                            //                 </div>
 
-                                        </div>
-                                        <div className=" flex items-center justify-between w-full">
-                                            <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
-                                                <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
-                                                    {/* {innerIcon(item?.value)} */}
-                                                    <GrDocumentTest />
-                                                </div>
-                                                <div className=" flex flex-col items-start">
-                                                    <div className="text-lg font-bold">{item?.username}</div>
-                                                    <div className="text-sm font-bold">דיווח {item?.report} ב{item.name}</div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                onClick={() => {
-                                                    false ?
-                                                        navigation(`/startReport/${item?.value}?&access=manager&report=grup&users=${encodeURIComponent(JSON.stringify(usersName))}`)
-                                                        :
-                                                        toggleDropdown(item?.id)
-                                                }}
-                                                className="relative py-3">
-                                                {!false ?
-                                                    <>
-                                                        <div className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
-                                                        <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
-                                                    </>
-                                                    :
-                                                    <CgMoreVerticalO className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
-                                                }
-                                            </div>
-                                            {item?.id == isOpen && <div ref={dropdownRef} className="absolute top-3 left-16 bg-white border shadow-lg rounded-lg w-48 z-50">
-                                                <div className=" absolute w-4 h-4 bg-white border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
-                                                <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
-                                                    <li onClick={()=>console.log("Edit report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
-                                                    <li onClick={()=>console.log("New report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
-                                                    <li onClick={()=>console.log("History report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">היסטוריית דיווחים <FaHistory className=' text-xl' /></li>
-                                                </ul>
-                                            </div>}
-                                        </div>
-                                        <div className=' absolute top-10 -left-14 text-7xl w-40 h-40 rotate-6 opacity-5'>
-                                            {innerIcon(item?.value)}
-                                        </div>
-                                    </button>
-                                ))}
-                            </div>
+                            //             </div>
+                            //             <div className=" flex items-center justify-between w-full">
+                            //                 <div className=" w-full rounded-3xl flex flex-row gap-2 items-center justify-strat text-4xl">
+                            //                     <div className="gradient-bg-dark text-white z-30 text-4xl gradient-bg-light w-16 h-16 flex items-center justify-center rounded-full">
+                            //                         {/* {innerIcon(item?.value)} */}
+                            //                         <GrDocumentTest />
+                            //                     </div>
+                            //                     <div className=" flex flex-col items-start">
+                            //                         <div className="text-lg font-bold">{item?.username}</div>
+                            //                         <div className="text-sm font-bold">דיווח {item?.report} ב{item.name}</div>
+                            //                     </div>
+                            //                 </div>
+                            //                 <div
+                            //                     onClick={() => {
+                            //                         false ?
+                            //                             navigation(`/startReport/${item?.value}?&access=manager&report=grup&users=${encodeURIComponent(JSON.stringify(usersName))}`)
+                            //                             :
+                            //                             toggleDropdown(item?.id)
+                            //                     }}
+                            //                     className="relative py-3">
+                            //                     {!false ?
+                            //                         <>
+                            //                             <div className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
+                            //                             <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                            //                         </>
+                            //                         :
+                            //                         <CgMoreVerticalO className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
+                            //                     }
+                            //                 </div>
+                            //                 {item?.id == isOpen && <div ref={dropdownRef} className="absolute top-3 left-16 bg-white border shadow-lg rounded-lg w-48 z-50">
+                            //                     <div className=" absolute w-4 h-4 bg-white border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
+                            //                     <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
+                            //                         <li onClick={()=>console.log("Edit report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
+                            //                         <li onClick={()=>console.log("New report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
+                            //                         <li onClick={()=>console.log("History report")} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">היסטוריית דיווחים <FaHistory className=' text-xl' /></li>
+                            //                     </ul>
+                            //                 </div>}
+                            //             </div>
+                            //             <div className=' absolute top-10 -left-14 text-7xl w-40 h-40 rotate-6 opacity-5'>
+                            //                 {innerIcon(item?.value)}
+                            //             </div>
+                            //         </button>
+                            //     ))}
+                            // </div>
                             : <div className=" z-40 flex flex-col text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                                 <div className="flex flex-col text-center ">
                                     <div className="self-center text-lg font-semibold ">
@@ -139,13 +125,13 @@ function SoldiersClassReport({ usersSelected }) {
                                     </div>
                                 </div>
                                 <div className="  mt-[6.5rem] w-[9.5rem] h-[9.5rem] bg-blue-500 rounded-full animate-ping flex flex-col items-center justify-center"></div>
-                                <button onClick={() => navigation(`/lastReports?end=complate`)} className=" absolute top-56 w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
+                                <button onClick={handeleFinishReport} className=" absolute top-56 w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
                                     <div className='text-7xl text-white'>
-                                        { SYSTEMSTRACT?.find((item) => item?.name == lastGrupReport?.location)?.icon}
+                                    { SYSTEMSTRACT?.find((item) => item?.name == lastClassReport?.location)?.icon}
                                     </div>
-                                    <div onClick={()=>handleEndReport(lastGrupReport?.id)} className='text-black'>
+                                    <div  className='text-black'>
                                         <div >סיום</div>
-                                        <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31)||lastGrupReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31||lastGrupReport?.content) && "..."}{searchParams.get('report') == "grup" && "דיווח מחלקה"}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
+                                        <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31)||lastClassReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31||lastClassReport?.content?.length > 31) && "..."}{searchParams.get('report') == "grup" && "דיווח מחלקה"}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
                                     </div>
                                 </button>
                             </div>}

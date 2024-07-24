@@ -2,13 +2,6 @@ import {  LiaMapMarkedAltSolid } from "react-icons/lia";
 import { GiWatchtower } from "react-icons/gi";
 import { FaRoute } from "react-icons/fa";
 
-export const TranslateSystemStruct={
-
-   
-}
-
-
-
 export const SYSTEMSTRACT = [
   {
     y:20,

@@ -14,11 +14,8 @@ const ReportStart = ({ }) => {
 
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit, activeIsEdit, isEdit, getSingleReport,createNewReportGrup, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
+    const { inActiveIsEdit,updateCommandSingleReport, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
-    const handleStartReport = () => {
-
-    }
 
     const [searchParams] = useSearchParams()
 
@@ -63,6 +60,7 @@ const ReportStart = ({ }) => {
 
     function InnerListOPtionByStarct() {
         const current = getSingleSystemStract(pathname?.split('/')[2])
+        console.log(searchParams.get("userId"));
         return (
             <div dir='rtl' className="flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
@@ -72,7 +70,7 @@ const ReportStart = ({ }) => {
                             setCurrentSelect(item);
                             isEdit
                                 ?
-                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}&users=${searchParams.get('users')}`)
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}&userId=${searchParams.get('userId')}`)
                                 :
                                 navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&users=${searchParams.get('users')}`);
                         }}
@@ -87,52 +85,63 @@ const ReportStart = ({ }) => {
         )
     }
 
-    // const routeingOnClick = () => {
-    //     if (searchParams.get('access') == "manager") {
-    //         // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
-    //     }
-    // }
-    console.log(searchParams.get("report"));
-
     const innerTypeOfReport = (typeMsg) => {
-        console.log(typeMsg);
         const genID = Date.now()
-        const reportObj={ 
-            // accessOption:searchParams.get("report"),
-            id: genID,
-            date: getCurrentDateFormaterHebrew(),
-            startTime: getCurrentTime(),
-            endTime: "00:00",
-            content: searchParams.get('location'),
-            location: getSingleSystemStract(pathname?.split('/')[2]).name,
-            isCompited: false}
-
+       
         switch (typeMsg) {
             case "grup":
+              
                 return {
                     title: "דיווח מחלקתי",
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
                     link: `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=grup`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ()=>{
-                        createNewReportGrup(reportObj,"grup")
+                    doAPI: () => {
+                        isEdit ?
+                        updateCommandSingleReport({
+                            id: searchParams.get('id'),
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                        },"grup",null)
+                            :
+                            createNewReportForGrupOrSingle({
+                            id: genID,
+                            date: getCurrentDateFormaterHebrew(),
+                            startTime: getCurrentTime(),
+                            endTime: "00:00",
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                            isComplited: false
+                        },   "grup")
                     }
                 }
             case "tests":
+              
                 return {
                     title: "דיווח מדגם",
                     description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
                     link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ()=>{
-                        reportObj.usersId=(searchParams.get("users"));
-                        console.log(reportObj.usersId);
-                        createNewReportGrup(reportObj,"tests")
-                    }
+                    doAPI: ()=>
+                        isEdit?
+                          updateCommandSingleReport({
+                            id: searchParams.get('id'),
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                        },"tests",searchParams.get('userId')):
+                        
+                        createNewReportForGrupOrSingle({
+                            id: genID,
+                            date: getCurrentDateFormaterHebrew(),
+                            startTime: getCurrentTime(),
+                            endTime: "00:00",
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                            isComplited: false
+                        },"tests",searchParams.get("users"))
                 }
             default:
-                const genID = Date.now()
-               
+
                 return {
                     title: isEdit ? "עריכת דיווח" : "דיווח חדש",
                     description: isEdit ? `? ${getSingleReport(searchParams.get('id'))?.date} איפה הייתם ביום` : `איפה תהיו היום בשעה ${getCurrentTime()}`,
@@ -143,21 +152,20 @@ const ReportStart = ({ }) => {
                             id: searchParams.get('id'),
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                        }) : 
-                        createNewReportPersonale({
+                        }) : createNewReportPersonale({
                             id: genID,
                             date: getCurrentDateFormaterHebrew(),
                             startTime: getCurrentTime(),
                             endTime: "00:00",
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                            isCompited: false
-                        },pathname?.split('/')[2])
+                            isComplited: false
+                        }, pathname?.split('/')[2])
                     }
                 }
         }
     }
- console.log( innerTypeOfReport("report").title); 
+
     return (
         <TransitionPage>
             <div dir='rtl' className=" flex flex-col overflow-hidden pb-10 mx-auto w-full min-h-screen flex-1">
@@ -186,7 +194,7 @@ const ReportStart = ({ }) => {
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport(searchParams.get("report")).doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
+                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport(searchParams.get('report') || "regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>

@@ -26,8 +26,10 @@ export const getCurrentTime = () => {
 };
 
 export const formatDateToNumber = (dateStr) => {
-  // Split the date string into day, month, and year
-  const [day, month, year] = dateStr.split("/");
-  // Concatenate them into a single number
-  return parseInt(day + month + year, 10);
+  if (dateStr) {
+    // Split the date string into day, month, and year
+    const [day, month, year] = dateStr.split("/");
+    // Concatenate them into a single number
+    return parseInt(day + month + year, 10);
+  }
 };

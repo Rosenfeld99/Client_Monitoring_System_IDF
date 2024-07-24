@@ -42,6 +42,39 @@ const useUser = () => {
             saveToLocalStorage(updatedUser);
         }
     }
+    const updateCommandSingleReport = (newReport, type, userId) => {
+        console.log("in update ");
+        if (currentUser?.counterEdit > 0) {
+            const updatedUser = { ...currentUser, counterEdit: currentUser?.counterEdit - 1 };
+
+            if (type === "tests") {
+              
+                const changeUserIndex=currentUser?.userTests?.findIndex((user) => user.id == userId);
+                if (changeUserIndex==-1) {
+                    console.log("not found user");
+                    return 
+                }
+                const foundUser = currentUser?.userTests[changeUserIndex]
+                foundUser.reportsList = foundUser?.reportsList?.map((report) =>
+                    report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
+                );
+               foundUser.lastReport={ ...foundUser?.lastReport, location: newReport?.location, content: newReport?.content }
+               updatedUser.userTests[changeUserIndex]=foundUser;
+               console.log(updatedUser);
+            }
+            else if (type === "grup") {
+                const allGrupReports = currentUser?.reportsClass[0].reportsList || [];
+                const updatedHistory = allGrupReports?.map((report) =>
+                    report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
+                );
+                updatedUser.reportsClass[0].reportsList = updatedHistory;
+                console.log(updatedUser);
+            }
+            setCurrentUser(updatedUser);
+            saveToLocalStorage(updatedUser);
+            inActiveIsEdit()
+        }
+    }
 
     const createNewReportPersonale = (newReport, place) => {
         const allReport = currentUser?.history || [];
@@ -64,25 +97,37 @@ const useUser = () => {
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
     };
-    const createNewReportGrup = (newReport,key) => {
-        const grupReports = currentUser?.userGrup || [];
-            
-        const updatedUser = {
-            ...currentUser,
-            userGrup:{
-                ...grupReports,
-                lastGrupReport:key==="grup"?newReport:grupReports.lastGrupReport,
-                [key]:[...grupReports[key]||[],newReport]
-            }
-        };
 
-        setCurrentUser(updatedUser);
-        saveToLocalStorage(updatedUser);
+    const createNewReportForGrupOrSingle = (newReport, accessType, userId) => {
+        console.log("in create ");
+        const tempCurrentUser = { ...currentUser }
+
+        const createObj = {
+            ...newReport,
+            isComplited: false,
+            endTime: getCurrentTime()
+        }
+        if (accessType == "grup") {
+            tempCurrentUser.reportsClass[0].lastReport = { ...createObj };
+        }
+        else if (accessType == "tests") {
+            for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
+                if (tempCurrentUser.userTests[index].id == userId) {
+                    console.log(tempCurrentUser.userTests[index]);
+                    tempCurrentUser.userTests[index].reportsList.push({ ...createObj });
+                    tempCurrentUser.userTests[index].lastReport = createObj;
+                }
+            }
+        }
+
+        console.log(createObj);
+
+        setCurrentUser(tempCurrentUser);
+        saveToLocalStorage(tempCurrentUser);
     };
 
-
     const endProcessReport = (reportId, endTime) => {
-        console.log(reportId, endTime);
+
         const allReport = currentUser?.history || [];
 
         const updatedHistory = allReport.map((report) =>
@@ -102,19 +147,30 @@ const useUser = () => {
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
     };
+    const endManagerProcessReport = (reportId, accessType, userId) => {
+console.log( accessType, userId);
+        const tempCurrentUser = { ...currentUser };
 
-    const endProcessClassReport = (reportId, endTime) => {
-        const grupReports = currentUser?.userGrup || [];
-          
-        const updatedHistory = grupReports?.grup?.map((report) =>
-            report.id == reportId ? { ...report,isCompited:true, endTime: endTime } : report
-        );
-             let userUpdate={...currentUser};
-             userUpdate.userGrup.grup=[...updatedHistory];
-             userUpdate.userGrup.lastGrupReport.isCompited=true;
-       
-        setCurrentUser(userUpdate);
-        saveToLocalStorage(userUpdate);
+        if (accessType === "grup") {
+            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport;
+            lastClassReport.isComplited=true;
+            tempCurrentUser.reportsClass[0].lastReport = null;
+            tempCurrentUser?.reportsClass[0]?.reportsList.push(lastClassReport);
+        }
+        else if (accessType == "tests") {
+                console.log();
+            for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
+                if (tempCurrentUser.userTests[index].id == userId) {
+                    const reportList = tempCurrentUser.userTests[index].reportsList;
+                    tempCurrentUser.userTests[index].reportsList[reportList.length - 1].isComplited = true;
+                    tempCurrentUser.userTests[index].lastReport.isComplited = true;
+                    tempCurrentUser.userTests[index].lastReport.endTime = getCurrentTime();
+                }
+            }
+            console.log(tempCurrentUser.userTests);
+        }
+        setCurrentUser(tempCurrentUser);
+        saveToLocalStorage(tempCurrentUser);
     };
 
     const handleManageUsers = (newGrup) => {
@@ -138,7 +194,6 @@ const useUser = () => {
         setIsEdit(false)
     }
     return {
-        createNewReportGrup,
         currentUser, setCurrentUser,
         isEdit, activeIsEdit
         , inActiveIsEdit,
@@ -146,7 +201,9 @@ const useUser = () => {
         getSingleReport, patchCounterEditReport,
         createNewReportPersonale, endProcessReport,
         updateSingleReport, handleManageUsers,
-        endProcessClassReport
+        createNewReportForGrupOrSingle,
+        endManagerProcessReport,
+        updateCommandSingleReport
     }
 }
 
