@@ -14,11 +14,8 @@ const ReportStart = ({ }) => {
 
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
+    const { inActiveIsEdit,updateCommandSingleReport, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
-    const handleStartReport = () => {
-
-    }
 
     const [searchParams] = useSearchParams()
 
@@ -63,6 +60,7 @@ const ReportStart = ({ }) => {
 
     function InnerListOPtionByStarct() {
         const current = getSingleSystemStract(pathname?.split('/')[2])
+        console.log(searchParams.get("userId"));
         return (
             <div dir='rtl' className="flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
@@ -72,9 +70,9 @@ const ReportStart = ({ }) => {
                             setCurrentSelect(item);
                             isEdit
                                 ?
-                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}`)
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}&userId=${searchParams.get('userId')}`)
                                 :
-                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}`);
+                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&users=${searchParams.get('users')}`);
                         }}
                         className="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-[#ebebeb] dark:border-[#686868]"
                     >
@@ -87,17 +85,12 @@ const ReportStart = ({ }) => {
         )
     }
 
-    const routeingOnClick = () => {
-        if (searchParams.get('access') == "manager") {
-            // isEdit ? '/startReport' : `/endReport?s=${pathname?.split('/')[2]}&location=${searchParams.get('location')}`
-        }
-    }
-
     const innerTypeOfReport = (typeMsg) => {
         const genID = Date.now()
-
+       
         switch (typeMsg) {
             case "grup":
+              
                 return {
                     title: "דיווח מחלקתי",
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
@@ -105,14 +98,38 @@ const ReportStart = ({ }) => {
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
                     doAPI: () => {
                         isEdit ?
-                            // updateSingleReport({
-                            //     id: searchParams.get('id'),
-                            //     content: searchParams.get('location'),
-                            //     location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                            // }) 
-                            console.log("Edit Report grup")
+                        updateCommandSingleReport({
+                            id: searchParams.get('id'),
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                        },"grup",null)
                             :
-                            console.log("Case grup")
+                            createNewReportForGrupOrSingle({
+                            id: genID,
+                            date: getCurrentDateFormaterHebrew(),
+                            startTime: getCurrentTime(),
+                            endTime: "00:00",
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                            isComplited: false
+                        },   "grup")
+                    }
+                }
+            case "tests":
+              
+                return {
+                    title: "דיווח מדגם",
+                    description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
+                    link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
+                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
+                    doAPI: ()=>
+                        isEdit?
+                          updateCommandSingleReport({
+                            id: searchParams.get('id'),
+                            content: searchParams.get('location'),
+                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                        },"tests",searchParams.get('userId')):
+                        
                         createNewReportForGrupOrSingle({
                             id: genID,
                             date: getCurrentDateFormaterHebrew(),
@@ -120,17 +137,8 @@ const ReportStart = ({ }) => {
                             endTime: "00:00",
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                            isCompited: false
-                        }, pathname?.split('/')[2], "grup")
-                    }
-                }
-            case "tests":
-                return {
-                    title: "דיווח מדגם",
-                    description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
-                    link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
-                    btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ""
+                            isComplited: false
+                        },"tests",searchParams.get("users"))
                 }
             default:
 
@@ -151,7 +159,7 @@ const ReportStart = ({ }) => {
                             endTime: "00:00",
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                            isCompited: false
+                            isComplited: false
                         }, pathname?.split('/')[2])
                     }
                 }

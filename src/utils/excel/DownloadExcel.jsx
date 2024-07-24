@@ -12,7 +12,7 @@ function DownloadExcel() {
             תאריך: rest.date,
             שעת_התחלה: rest.startTime,
             שעת_סיום: rest.endTime,
-            הושלם: rest.isCompited ? "כן" : "לא",
+            הושלם: rest. isComplited ? "כן" : "לא",
         }));
         const ws = xlsx.utils.json_to_sheet(translatedData || "");
         // Add the worksheet to the workbook

@@ -12,10 +12,6 @@ const ReportStart = ({ }) => {
     const { inActiveIsEdit } = useUser()
     const {currentUser} = useUser()
     console.log(currentUser);
-
-    const handleStartReport = () => {
-
-    }
     
     useEffect(() => {
         inActiveIsEdit()

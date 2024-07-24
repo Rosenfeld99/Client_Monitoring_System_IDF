@@ -42,6 +42,39 @@ const useUser = () => {
             saveToLocalStorage(updatedUser);
         }
     }
+    const updateCommandSingleReport = (newReport, type, userId) => {
+        console.log("in update ");
+        if (currentUser?.counterEdit > 0) {
+            const updatedUser = { ...currentUser, counterEdit: currentUser?.counterEdit - 1 };
+
+            if (type === "tests") {
+              
+                const changeUserIndex=currentUser?.userTests?.findIndex((user) => user.id == userId);
+                if (changeUserIndex==-1) {
+                    console.log("not found user");
+                    return 
+                }
+                const foundUser = currentUser?.userTests[changeUserIndex]
+                foundUser.reportsList = foundUser?.reportsList?.map((report) =>
+                    report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
+                );
+               foundUser.lastReport={ ...foundUser?.lastReport, location: newReport?.location, content: newReport?.content }
+               updatedUser.userTests[changeUserIndex]=foundUser;
+               console.log(updatedUser);
+            }
+            else if (type === "grup") {
+                const allGrupReports = currentUser?.reportsClass[0].reportsList || [];
+                const updatedHistory = allGrupReports?.map((report) =>
+                    report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
+                );
+                updatedUser.reportsClass[0].reportsList = updatedHistory;
+                console.log(updatedUser);
+            }
+            setCurrentUser(updatedUser);
+            saveToLocalStorage(updatedUser);
+            inActiveIsEdit()
+        }
+    }
 
     const createNewReportPersonale = (newReport, place) => {
         console.log(newReport);
@@ -66,39 +99,36 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
 
-    const createNewReportForGrupOrSingle = (newReport, place, accessType, userId) => {
-        console.log(newReport, place, accessType);
-        // return
-        const allReport = currentUser?.userGrup?.historyList || [];
+    const createNewReportForGrupOrSingle = (newReport, accessType, userId) => {
+        console.log("in create ");
+        const tempCurrentUser = { ...currentUser }
 
         const createObj = {
-            id: newReport?.id,
-            content: newReport?.content,
-            location: newReport?.location,
-            date: newReport?.date,
-            endTime: newReport?.endTime,
-            startTime: newReport?.startTime,
-            isCompited: false,
-            place
+            ...newReport,
+            isComplited: false,
+            endTime: getCurrentTime()
+        }
+        if (accessType == "grup") {
+            tempCurrentUser.reportsClass[0].lastReport = { ...createObj };
+        }
+        else if (accessType == "tests") {
+            for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
+                if (tempCurrentUser.userTests[index].id == userId) {
+                    console.log(tempCurrentUser.userTests[index]);
+                    tempCurrentUser.userTests[index].reportsList.push({ ...createObj });
+                    tempCurrentUser.userTests[index].lastReport = createObj;
+                }
+            }
         }
 
-        const updatedUser = {
-            ...currentUser,
-            userGrup: {
-                ...currentUser.userGrup,
-                reportsList: [...allReport, newReport],
-                lastReportGrup: accessType == "grup" ? createObj : currentUser?.userGrup?.lastReportGrup,
-                lastReportTests: accessType == "tests" ? createObj : currentUser?.userGrup?.lastReportTests
-            },
+        console.log(createObj);
 
-        };
-
-        setCurrentUser(updatedUser);
-        saveToLocalStorage(updatedUser);
+        setCurrentUser(tempCurrentUser);
+        saveToLocalStorage(tempCurrentUser);
     };
 
     const endProcessReport = (reportId, endTime) => {
-        console.log(reportId, endTime);
+
         const allReport = currentUser?.history || [];
 
         const updatedHistory = allReport.map((report) =>
@@ -120,16 +150,41 @@ const useUser = () => {
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
     };
+    const endManagerProcessReport = (reportId, accessType, userId) => {
+console.log( accessType, userId);
+        const tempCurrentUser = { ...currentUser };
+
+        if (accessType === "grup") {
+            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport;
+            lastClassReport.isComplited=true;
+            tempCurrentUser.reportsClass[0].lastReport = null;
+            tempCurrentUser?.reportsClass[0]?.reportsList.push(lastClassReport);
+        }
+        else if (accessType == "tests") {
+                console.log();
+            for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
+                if (tempCurrentUser.userTests[index].id == userId) {
+                    const reportList = tempCurrentUser.userTests[index].reportsList;
+                    tempCurrentUser.userTests[index].reportsList[reportList.length - 1].isComplited = true;
+                    tempCurrentUser.userTests[index].lastReport.isComplited = true;
+                    tempCurrentUser.userTests[index].lastReport.endTime = getCurrentTime();
+                }
+            }
+            console.log(tempCurrentUser.userTests);
+        }
+        setCurrentUser(tempCurrentUser);
+        saveToLocalStorage(tempCurrentUser);
+    };
 
     const handleManageUsers = (newGrup) => {
         console.log("newGrup :", newGrup);
+        const allUsers = newGrup || [];
 
-        const updatedUser = {
-            ...currentUser,
-            username: newGrup?.systemUsername || "",
-            reportsClass: newGrup?.reportsClass || [],
-            userTests: newGrup?.userTests || [],
-        };
+    const updatedUser = {
+        username: newGrup?.systemUsername || "",
+        ...currentUser,
+        userGrup: allUsers
+    };
 
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
@@ -150,7 +205,9 @@ const useUser = () => {
         getSingleReport, patchCounterEditReport,
         createNewReportPersonale, endProcessReport,
         updateSingleReport, handleManageUsers,
-        createNewReportForGrupOrSingle
+        createNewReportForGrupOrSingle,
+        endManagerProcessReport,
+        updateCommandSingleReport
     }
 }
 

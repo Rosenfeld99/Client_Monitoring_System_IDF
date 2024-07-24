@@ -52,7 +52,9 @@ const ReportEdit = ({ }) => {
         location: searchParams.get('location'),
         startTime: searchParams.get('startTime'),
         endTime: searchParams.get('endTime'),
-        id: searchParams.get('id')
+        id: searchParams.get('id'),
+        report:searchParams.get("report"),
+        userId:searchParams.get("userId")
       }).toString();
       navigation(`/startReport/${item?.value}?${params}`);
     }
