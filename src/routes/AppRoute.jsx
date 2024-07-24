@@ -12,6 +12,7 @@ import ChooseOption from '../pages/doc/ChooseOption'
 import ReportDate from '../components/admin/reportDate/ReportDate'
 import ManageUsers from '../components/admin/ManageUsers/ManageUsers'
 import useUser from '../hooks/useUser'
+import InitPage from '../pages/initPage/InitPage'
 
 
 
@@ -25,6 +26,10 @@ function AppRoute() {
       setIsLoading(false);
     }, 2000); // Adjust the duration as needed
   }, []);
+
+  if (currentUser?.isInit) {
+    return <InitPage/>
+  }
 
   const location = useLocation();
   return (

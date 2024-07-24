@@ -10,6 +10,7 @@ export const userStatic = localStorage.getItem(KEY_WAVES_SYSTEM) || {
   process: null,
   lastReport: null,
   history: [],
+  isInit: true,
 };
 
 if (!localStorage.getItem(KEY_WAVES_SYSTEM))
