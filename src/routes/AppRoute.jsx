@@ -27,9 +27,9 @@ console.log(currentUser);
     }, 2000); // Adjust the duration as needed
   }, []);
 
-  // if (currentUser?.isInit) {
-  //   return <InitPage/>
-  // }
+  if (currentUser?.isInit) {
+    return <InitPage/>
+  }
 
   const location = useLocation();
   return (
