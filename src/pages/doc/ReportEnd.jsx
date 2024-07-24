@@ -43,14 +43,16 @@ const ReportEnd = () => {
             <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full  min-h-screen flex-1  ">
 
                 <Navbar />
-                <div className="flex self-center px-5 mt-20 leading-5 text-center ">
-                    <IoCheckmarkCircleOutline className='text-2xl w-10 h-10' />
-                    <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
-                        דיווח אחרון היום הייתם ב {" "}
-                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.content}</span> בשעה{" "}
-                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.endTime}</span>{" "}
+                {currentUser?.history?.length == 0 || (currentUser?.history?.length == 1 && currentUser?.lastReport == null) ? <div className=" text-md text-light_neutral dark:text-dark_accent_content mt-20 text-center "></div> :
+                    <div className="flex self-center px-5 mt-20 leading-5 text-center ">
+                        <IoCheckmarkCircleOutline className='text-2xl w-10 h-10' />
+                        <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
+                            דיווח אחרון היום הייתם ב {" "}
+                            <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.content}</span> בשעה{" "}
+                            <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.endTime}</span>{" "}
+                        </div>
                     </div>
-                </div>
+                }
                 <img
                     loading="lazy"
                     srcSet={BACKPAPER}

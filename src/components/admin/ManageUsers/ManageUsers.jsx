@@ -110,7 +110,7 @@ const ManageUsers = () => {
                 <div className=" flex items-center gap-5 pt-20 justify-center">
                     <div className="flex flex-col text-center ">
                         <div className="self-center text-lg font-bold ">
-                            הוספת משתמש
+                            ניהול משתמשים
                         </div>
                         <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
                             הגדרת נתוני משתמש
@@ -129,34 +129,38 @@ const ManageUsers = () => {
                         maxLen={20}
                     />
                 </div>
-                <div className=" flex items-center flex-col p-5 relative">
-                    <div className="w-full border-b absolute top-0 border-gray-400 text-center" />
-                    <span className="px-2 bg-white -mt-8 z-30 font-semibold">הגדרת משתמשי מדגם</span>
-                </div>
                 {/* Tests */}
-                <div className="w-64 mx-auto flex flex-col gap-3 items-center justify-center">
-                    <FloatingLabelInput label={'ת"ז מדגם'} placeholder={'ת"ז...'} state={newUser?.password}
-                        setState={updateSate}
-                        keyToUpdate={"password"}
-                        inputType="password"
-                        minLen={9}
-                        maxLen={9}
-                        pattern={/^\d{0,9}$/}
-                    />
-                    <FloatingLabelInput label={'שם מדגם'} placeholder={'שם...'} state={newUser?.name}
-                        setState={updateSate}
-                        keyToUpdate={"name"}
-                        inputType="text"
-                        minLen={1}
-                        maxLen={20}
-                    />
-                    <button onClick={() => updateSate(newUser, "userTests")} className=' flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content'>יצירת מדגם</button>
-                </div>
+                {(currentUser?.role == "manager") &&
+                    <React.Fragment>
+                        <div className=" flex items-center flex-col p-5 relative">
+                            <div className="w-full border-b absolute top-0 border-gray-400 text-center" />
+                            <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">הגדרת משתמשי מדגם</span>
+                        </div>
+                        <div className="w-64 mx-auto flex flex-col gap-3 items-center justify-center">
+                            <FloatingLabelInput label={'ת"ז מדגם'} placeholder={'ת"ז...'} state={newUser?.password}
+                                setState={updateSate}
+                                keyToUpdate={"password"}
+                                inputType="password"
+                                minLen={9}
+                                maxLen={9}
+                                pattern={/^\d{0,9}$/}
+                            />
+                            <FloatingLabelInput label={'שם מדגם'} placeholder={'שם...'} state={newUser?.name}
+                                setState={updateSate}
+                                keyToUpdate={"name"}
+                                inputType="text"
+                                minLen={1}
+                                maxLen={20}
+                            />
+                            <button onClick={() => updateSate(newUser, "userTests")} className=' flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content'>יצירת מדגם</button>
+                        </div>
+                    </React.Fragment>
+                }
 
                 {/* divider */}
                 <div className=" flex items-center flex-col p-5 relative mt-12">
                     <div className="w-full border-b absolute top-0 border-gray-400 text-center" />
-                    <span className="px-2 bg-white -mt-8 z-30 font-semibold">הגדרת מחלקה</span>
+                    <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">הגדרת מחלקה</span>
                 </div>
 
                 {/* Classes */}
@@ -174,7 +178,7 @@ const ManageUsers = () => {
                 {/* Results */}
                 <div className=" flex items-center flex-col p-5 relative mt-12">
                     <div className="w-full border-b absolute top-0 border-gray-400 text-center" />
-                    <span className="px-2 bg-white -mt-8 z-30 font-semibold">רשימת מחלקה/מדגם</span>
+                    <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">{(currentUser?.role == "manager") ? "רשימת מחלקה/מדגם" : "רשימת מחלקות"} </span>
                 </div>
 
                 {newUser?.userTests?.length === 0 && newUser?.reportsClass?.length === 0 && <div className=" text-xl font-semibold text-center my-10">אין נתונים להציג...</div>}

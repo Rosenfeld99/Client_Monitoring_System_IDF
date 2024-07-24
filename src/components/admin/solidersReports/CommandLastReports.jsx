@@ -14,7 +14,7 @@ function CommandLastReports() {
     const [isOpen, setIsOpen] = useState("");
     const dropdownRef = useRef(null);
     const [searchParams] = useSearchParams()
-    const { currentUser,activeIsEdit,endManagerProcessReport} = useUser()
+    const { currentUser, activeIsEdit, endManagerProcessReport } = useUser()
     const [createReport, setCreateReport] = useState({ userId: "", type: "" })
 
     const innerIcon = (val) => {
@@ -39,30 +39,29 @@ function CommandLastReports() {
 
 
 
-    
+
     const handeleEdit = (report) => {
         console.log(report);
         const params = new URLSearchParams({
-            s:report?.content,
-            location:report?.location,
-            startTime:report?.startTime,
-            endTime:report?.endTime,
-            id:report?.id,
-            report:report.type === "User" ? "tests" : "grup",
-            userId:report?.userId
+            s: report?.content,
+            location: report?.location,
+            startTime: report?.startTime,
+            endTime: report?.endTime,
+            id: report?.id,
+            report: report.type === "User" ? "tests" : "grup",
+            userId: report?.userId
         }).toString();
         navigation(`/ReportEdit/reportId?${params}`);
-        activeIsEdit()  
-}
+        activeIsEdit()
+    }
 
-const handeleFinishReport=(report)=>{
-    endManagerProcessReport(null,report.type==="User"?"tests":"grup",report?.userId)
-    navigation(`/lastReports?end=complate`)
-}
+    const handeleFinishReport = (report) => {
+        endManagerProcessReport(null, report.type === "User" ? "tests" : "grup", report?.userId)
+        navigation(`/lastReports?end=complate`)
+    }
 
     const getComanndHistory = () => {
-
-        let history = [...currentUser?.reportsClass[0]?.reportsList];
+        let history = [...currentUser?.reportsClass[0]?.reportsList ?? []];
         const tempUser = currentUser?.userTests;
         for (let index = 0; index < tempUser?.length; index++) {
             for (let j = 0; j < tempUser[index]?.reportsList?.length; j++) {
@@ -76,7 +75,7 @@ const handeleFinishReport=(report)=>{
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className=' h-[100vh]  overflow-y-auto mt-6 px-1 '>
                 <div className=" flex flex-col w-full items-center justify-center gap-5">
-                    {createReport.type ? <ChooseLocation type={createReport.type} access={"manager"} userId={createReport.userId} />
+                    {createReport?.type ? <ChooseLocation type={createReport?.type} access={"manager"} userId={createReport?.userId} />
                         : getComanndHistory()?.map((item, index) => (
                             <button
                                 key={index} className="relative overflow-hidden shadow-md shadow-[#0000003d] p-3 flex gap-2 flex-col items-center justify-center border rounded-xl w-full ">
@@ -97,14 +96,14 @@ const handeleFinishReport=(report)=>{
                                             <div className="text-sm font-bold">דיווח {item?.content} ב{item.location}</div>
                                         </div>
                                     </div>
-                                
+
                                     {item.isComplited ?
                                         <div
                                             onClick={() => { toggleDropdown(item?.id) }}
                                             className="relative py-3">
                                             <CgMoreVerticalO className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
                                         </div>
-                                        : <div onClick={()=>handeleFinishReport(item)} className='relative'>
+                                        : <div onClick={() => handeleFinishReport(item)} className='relative'>
                                             <div className=" top-0 left-0 absolute z-20 w-8 h-8 ml-1 mt-1 bg-red-200 rounded-full animate-ping flex flex-col items-center justify-center"></div>
                                             <ImPause className='top-0 left-0 absolute text-5xl w-10 h-10 bg-white rounded-full z-40' />
                                         </div>}
@@ -112,7 +111,7 @@ const handeleFinishReport=(report)=>{
                                     {item?.id == isOpen && <div ref={dropdownRef} className="absolute left-16 bg-white border shadow-lg rounded-lg w-48 z-50">
                                         <div className=" absolute w-4 h-4 bg-white border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
                                         <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
-                                            <li onClick={() =>handeleEdit(item)} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
+                                            <li onClick={() => handeleEdit(item)} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
                                             <li onClick={() => setCreateReport({ userId: item.type === "User" ? item?.userId : "", type: item.type ? "tests" : "grup" })} className="py-1 hover:bg-gray-100 bg-white w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
                                         </ul>
                                     </div>}

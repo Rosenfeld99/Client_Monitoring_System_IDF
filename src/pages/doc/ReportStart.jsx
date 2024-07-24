@@ -10,9 +10,9 @@ import Navbar from '../../components/Menu/Navbar'
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { inActiveIsEdit } = useUser()
-    const {currentUser} = useUser()
+    const { currentUser } = useUser()
     console.log(currentUser);
-    
+
     useEffect(() => {
         inActiveIsEdit()
     }, [])
@@ -23,14 +23,15 @@ const ReportStart = ({ }) => {
             <div dir='rtl' className=" flex flex-col overflow-hidden relative pb-20 mx-auto w-full h-screen flex-1">
 
                 <Navbar />
-                <div className="flex self-center px-5 mt-20 leading-5 text-center ">
-                    <IoCheckmarkCircleOutline className='text-xl w-8 h-8' />
-                    <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
-                        דיווח אחרון היום הייתם ב {" "}
-                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.content}</span> בשעה{" "}
-                        <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.endTime}</span>{" "}
-                    </div>
-                </div>
+                {currentUser?.history?.length == 0 ? <div className=" text-md text-light_neutral dark:text-dark_accent_content mt-20 text-center "></div> :
+                    <div className="flex self-center px-5 mt-20 leading-5 text-center ">
+                        <IoCheckmarkCircleOutline className='text-xl w-8 h-8' />
+                        <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
+                            דיווח אחרון היום הייתם ב {" "}
+                            <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.content}</span> בשעה{" "}
+                            <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.endTime}</span>{" "}
+                        </div>
+                    </div>}
                 <div className=" mx-auto">
                     <img
                         loading="lazy"

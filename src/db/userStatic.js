@@ -2,7 +2,7 @@ import { KEY_WAVES_SYSTEM } from "../constant/constant";
 
 export const userStatic = localStorage.getItem(KEY_WAVES_SYSTEM) || {
   username: "username",
-  role: "admin",
+  role: null,
   userTests: [],
   reportsClass: [],
   counterEdit: 3,

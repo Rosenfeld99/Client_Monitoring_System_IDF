@@ -183,7 +183,6 @@ const useUser = () => {
         const updatedUser = {
             ...currentUser,
             username: newGrup?.systemUsername || "",
-            userGrup: allUsers
         };
         console.log(updatedUser);
 
@@ -208,7 +207,8 @@ const useUser = () => {
         updateSingleReport, handleManageUsers,
         createNewReportForGrupOrSingle,
         endManagerProcessReport,
-        updateCommandSingleReport
+        updateCommandSingleReport,
+        saveToLocalStorage
     }
 }
 

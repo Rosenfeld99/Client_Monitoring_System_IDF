@@ -12,21 +12,23 @@ import '../../App.css'
 import { appName } from '../../constant/constant'
 import { PiUserCircleCheckFill, PiUserCirclePlusFill, PiUsersThreeFill } from 'react-icons/pi'
 import DownloadExcel from '../../utils/excel/DownloadExcel'
+import useUser from '../../hooks/useUser'
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
     const [theme, toggleTheme] = useTheme();
     const [searchParams] = useSearchParams()
+    const { currentUser } = useUser()
     const { pathname } = useLocation()
 
     const navigate = useNavigate()
 
     const menu = [
         { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
-        { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
+        // { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
-        { route: "/manageUsers", title: "ניהול משתמשים", icon: <MdManageAccounts className='text-3xl text-black' /> },
+        // { route: "/manageUsers", title: "ניהול משתמשים", icon: <MdManageAccounts className='text-3xl text-black' /> },
         // { route: "/", title: "התנתקות", icon: <MdOutlineLogout className='text-3xl text-black' /> },
     ]
 
@@ -55,18 +57,21 @@ const Navbar = () => {
                         <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
                             <IoClose />
                         </div>
-                        <div className={`flex flex-row-reverse text-2xl items-center pt-8 gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div className={`flex flex-row-reverse text-2xl items-center pt-8 gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             <DownloadExcel />
-                        </div>
+                        </div>}
                     </div>
                     {menu.map((item, index) => (
                         <div onClick={() => { navigate(`${item.route}`), handleClose() }} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             {item.title} {item.icon}
                         </div>
                     ))}
-                    {/* <div onClick={() => { navigate('/analytics'), handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
-                        נתונים <BsClipboard2Data className='text-3xl text-black' />
-                    </div> */}
+                    {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div onClick={() => { navigate('/lastReports') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        כניסת מפקד <PiUserCircleCheckFill className='text-3xl text-black' />
+                    </div>}
+                    {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div onClick={() => { navigate('/manageUsers') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        ניהול משתמשים <MdManageAccounts className='text-3xl text-black' />
+                    </div>}
                     <div onClick={toggleTheme} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         ערכת נושא {theme == "light" ? <LuMoonStar className='text-3xl text-black' /> : <FiSun className='text-3xl text-black' />}
                     </div>

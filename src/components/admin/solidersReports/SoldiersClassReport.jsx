@@ -1,14 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { getSingleSystemStract, SYSTEMSTRACT } from '../../../db/systemStract'
-import ReportEnd from '../../../pages/doc/ReportEnd'
-import UserCardList from './UserCardPrcess/UserCardList'
-import { ImPause } from 'react-icons/im'
-import { CgFileDocument, CgMoreVerticalO } from 'react-icons/cg'
-import { GrAddCircle, GrDocumentTest } from 'react-icons/gr'
-import { FaEdit, FaHistory } from 'react-icons/fa'
-import { HiOutlineDocumentAdd } from 'react-icons/hi'
-import { MdOutlinePostAdd } from 'react-icons/md'
+import {  SYSTEMSTRACT } from '../../../db/systemStract'
 import useUser from '../../../hooks/useUser'
 
 function SoldiersClassReport({ usersSelected }) {
@@ -38,12 +30,12 @@ function SoldiersClassReport({ usersSelected }) {
         };
     }, []);
 
-    const usersTests = [
-        {
-            username: "אליהו מאיר", id: "vfdnkjvnfdjk", report: "מטווחים", name: "בסיס", value: "base",
-        },
-        { username: "נהוראי", id: "njckdnckjcn", report: "תפילה", name: "שטח", value: "area" },
-    ]
+    if (currentUser?.reportsClass?.length == 0 || !currentUser?.reportsClass) {
+        return(
+            <div className=" flex items-center justify-center py-20 gap-5"><span>אין מחקלקות...</span>  <br /><button onClick={()=>navigation('/manageUsers')} className=' justify-center items-center self-stretch px-4 py-1.5 text-xl active:scale-90 duration-150 font-medium text-center text-light_primary dark:text-dark_primary rounded-lg dark:bg-dark_accent_content bg-light_accent_content'>צרו עכשיו</button></div>
+        )
+    }
+
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className=' border-b-2  border-transparent ' ></div>
