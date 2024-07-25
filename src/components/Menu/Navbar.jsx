@@ -69,8 +69,8 @@ const Navbar = () => {
                     {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div onClick={() => { navigate('/lastReports') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         כניסת מפקד <PiUserCircleCheckFill className='text-3xl text-black' />
                     </div>}
-                    {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div onClick={() => { navigate('/manageUsers') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
-                        ניהול משתמשים <MdManageAccounts className='text-3xl text-black' />
+                    {<div onClick={() => { navigate('/manageUsers') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        {currentUser?.role == "admin" ? "ניהול מחלקות" : currentUser?.role == "manager" ? "ניהול משתמשים" : "פרופיל"} <MdManageAccounts className='text-3xl text-black' />
                     </div>}
                     <div onClick={toggleTheme} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         ערכת נושא {theme == "light" ? <LuMoonStar className='text-3xl text-black' /> : <FiSun className='text-3xl text-black' />}

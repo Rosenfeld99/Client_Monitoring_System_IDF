@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import {  SYSTEMSTRACT } from '../../../db/systemStract'
+import { SYSTEMSTRACT } from '../../../db/systemStract'
 import useUser from '../../../hooks/useUser'
 
 function SoldiersClassReport({ usersSelected }) {
@@ -31,8 +31,8 @@ function SoldiersClassReport({ usersSelected }) {
     }, []);
 
     if (currentUser?.reportsClass?.length == 0 || !currentUser?.reportsClass) {
-        return(
-            <div className=" flex items-center justify-center py-20 gap-5"><span>אין מחקלקות...</span>  <br /><button onClick={()=>navigation('/manageUsers')} className=' justify-center items-center self-stretch px-4 py-1.5 text-xl active:scale-90 duration-150 font-medium text-center text-light_primary dark:text-dark_primary rounded-lg dark:bg-dark_accent_content bg-light_accent_content'>צרו עכשיו</button></div>
+        return (
+            <div className=" flex items-center justify-center py-20 gap-5"><span>אין מחלקות...</span>  <br /><button onClick={() => navigation('/manageUsers')} className=' justify-center items-center self-stretch px-4 py-1.5 text-xl active:scale-90 duration-150 font-medium text-center text-light_primary dark:text-dark_primary rounded-lg dark:bg-dark_accent_content bg-light_accent_content'>צרו עכשיו</button></div>
         )
     }
 
@@ -54,7 +54,7 @@ function SoldiersClassReport({ usersSelected }) {
                         <div className=" z-40 flex flex-col text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                             <div className="flex flex-col text-center ">
                                 <div className="self-center text-lg font-semibold ">
-                                    סיימו דיווח!
+                                    סיום דיווח מחלקה
                                 </div>
                                 <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
                                     הגש את הדיווח שלך :)
@@ -67,7 +67,7 @@ function SoldiersClassReport({ usersSelected }) {
                                 </div>
                                 <div className='text-black'>
                                     <div >סיום</div>
-                                    <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31) || lastClassReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31 || lastClassReport?.content?.length > 31) && "..."}{searchParams.get('report') == "grup" &&   " דיווח מחלקה "}{searchParams.get('report') == "tests" && "דיווח מדגם"}</div>
+                                    <div className=' w-56 mx-auto flex items-center justify-center'>{searchParams.get('location')?.substring(0, 31) || lastClassReport?.content?.substring(0, 31)}{(searchParams.get('location')?.length > 31 || lastClassReport?.content?.length > 31) && "..."}</div>
                                 </div>
                             </button>
                         </div>

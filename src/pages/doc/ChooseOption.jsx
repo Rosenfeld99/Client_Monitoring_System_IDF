@@ -26,11 +26,11 @@ const ReportStart = ({ }) => {
             searchParams.get('location') &&
             searchParams.get('startTime') &&
             searchParams.get('endTime')) {
-            console.log("in case");
+            // console.log("in case");
             activeIsEdit()
         }
         else if (searchParams.get('report')) {
-            console.log(searchParams.get('report'));
+            // console.log(searchParams.get('report'));
         }
     }, [searchParams, isEdit])
 
@@ -60,7 +60,7 @@ const ReportStart = ({ }) => {
 
     function InnerListOPtionByStarct() {
         const current = getSingleSystemStract(pathname?.split('/')[2])
-        console.log(searchParams.get("userId"));
+        // console.log(searchParams.get("userId"));
         return (
             <div dir='rtl' className="flex flex-col items-center w-full justify-center mt-60 pb-20">
                 {current.listOption?.map((item, index) => (
@@ -87,7 +87,7 @@ const ReportStart = ({ }) => {
 
     const innerTypeOfReport = (typeMsg) => {
         const genID = Date.now()
-       console.log(typeMsg);
+    //    console.log(typeMsg);
         switch (typeMsg) {
             case "grup":
               

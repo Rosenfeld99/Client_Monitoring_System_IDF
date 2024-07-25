@@ -17,7 +17,7 @@ const useUser = () => {
     }
     const patchCounterEditReport = () => {
         currentUser.counterEdit = 3
-        currentUser.commandCounterEdit=3
+        currentUser.commandCounterEdit = 3
         saveToLocalStorage(currentUser)
     }
 
@@ -70,7 +70,7 @@ const useUser = () => {
                 updatedUser.reportsClass[0].reportsList = updatedHistory;
                 console.log(updatedUser);
             }
-          
+
             setCurrentUser(updatedUser);
             saveToLocalStorage(updatedUser);
         }
@@ -109,13 +109,13 @@ const useUser = () => {
             endTime: getCurrentTime()
         }
         if (accessType == "grup") {
-           if ( tempCurrentUser.reportsClass[0]) {
-               tempCurrentUser.reportsClass[0].lastReport = { ...createObj };
-              
-           }
-           else{
-            alert("אין מחלקה קיימת")
-           }
+            if (tempCurrentUser.reportsClass[0]) {
+                tempCurrentUser.reportsClass[0].lastReport = { ...createObj };
+
+            }
+            else {
+                alert("אין מחלקה קיימת")
+            }
         }
         else if (accessType == "tests") {
             for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
@@ -133,13 +133,14 @@ const useUser = () => {
         saveToLocalStorage(tempCurrentUser);
     };
 
-    const endProcessReport = (reportId, endTime) => {
+    const endProcessReport = (reportId, endTimePress) => {
+        console.log(endTimePress);
 
         const allReport = currentUser?.history || [];
 
         const updatedHistory = allReport.map((report) =>
             report.id == reportId ? {
-                ...report, endTime: endTime, isCompited: true
+                ...report, endTime: endTimePress, isComplited: true
             } : report
         );
 
@@ -161,14 +162,14 @@ const useUser = () => {
         const tempCurrentUser = { ...currentUser };
 
         if (accessType === "grup") {
-            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport||{};
+            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport || {};
             lastClassReport.isComplited = true;
             tempCurrentUser.reportsClass[0].lastReport = null;
-         
+
             if (tempCurrentUser?.reportsClass[0]?.reportsList) {
-              tempCurrentUser?.reportsClass[0]?.reportsList?.push(lastClassReport); 
+                tempCurrentUser?.reportsClass[0]?.reportsList?.push(lastClassReport);
             }
-            else tempCurrentUser.reportsClass[0].reportsList=[lastClassReport]
+            else tempCurrentUser.reportsClass[0].reportsList = [lastClassReport]
         }
         else if (accessType == "tests") {
             console.log();

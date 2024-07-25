@@ -42,7 +42,8 @@ const ReportStart = ({ }) => {
                 <div className=" z-40 flex flex-col pt-14 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                     <div className="flex flex-col text-center leading-[150%] pb-20">
                         <div className="self-center text-lg font-bold ">
-                            שלום {currentUser?.username}, איפה את/ה ?
+                            שלום {currentUser?.username}
+                            {/* , איפה את/ה ? */}
                         </div>
                         <div className="w-full text-sm ">
                             הזן את המשימה הקרובה שלך :)
