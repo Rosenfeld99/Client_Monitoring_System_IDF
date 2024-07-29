@@ -19,7 +19,7 @@ import InitPage from '../pages/initPage/InitPage'
 function AppRoute() {
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useUser()
-// console.log(currentUser);
+  // console.log(currentUser);
   useEffect(() => {
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
@@ -28,7 +28,7 @@ function AppRoute() {
   }, []);
 
   if (currentUser?.isInit) {
-    return <InitPage/>
+    return <InitPage />
   }
 
   const location = useLocation();
@@ -39,7 +39,7 @@ function AppRoute() {
       ) : (
         <Routes location={location} key={location.pathname}>
           {/* Auth */}
-          <Route index element={currentUser?.isProcess ? <ReportEnd /> : <ReportStart />} />
+          <Route index element={(currentUser?.role == "manager" || currentUser?.role == "admin") ? <LastReports/> : currentUser?.isProcess ? <ReportEnd /> : <ReportStart />} />
 
           {/* User */}
           {currentUser?.isProcess ?

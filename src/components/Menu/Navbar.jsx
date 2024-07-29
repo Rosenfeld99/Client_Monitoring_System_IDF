@@ -25,7 +25,7 @@ const Navbar = () => {
     const navigate = useNavigate()
 
     const menu = [
-        { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
+        // { route: "/startReport", title: "דיווח חדש", icon: <IoDocumentTextOutline className='text-3xl text-black' /> },
         // { route: "/lastReports", title: " כניסת מפקד", icon: <PiUserCircleCheckFill className='text-3xl text-black' /> },
         { route: "/todayReportsList", title: "היסטוריה דיווחים", icon: <RiHistoryFill className='text-3xl text-black' /> },
         // { route: "/manageUsers", title: "ניהול משתמשים", icon: <MdManageAccounts className='text-3xl text-black' /> },
@@ -54,6 +54,10 @@ const Navbar = () => {
                 <div className={`flex overflow-hidden min-h-screen fixed max-w-[680px] w-full flex-col gap-8 items-start p-8 z-50 bg-[#00000089] ${isExiting && "animate__fadeOut"}`}>
                     <div className={`bg-gradient-to-t gradient-bg-dark gradient-bg-light shadow-lg ${isExiting ? 'animate__slideOutUp' : 'animate__slideInDown'} shadow-[#02020256] dark:shadow-[#000000] w-[680px] aspect-square rounded-l-full rounded-r-[80px] z-50 rotate-45 absolute top-0 right-0 -mt-32 -mr-52`} />
                     <div className=" flex items-center justify-between w-full">
+                        {currentUser?.role == "user" && <div onClick={() => { navigate('/startReport'),handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                            דיווח חדש <IoDocumentTextOutline className='text-3xl text-black' />
+                        </div>}
+
                         <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
                             <IoClose />
                         </div>
@@ -66,10 +70,10 @@ const Navbar = () => {
                             {item.title} {item.icon}
                         </div>
                     ))}
-                    {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div onClick={() => { navigate('/lastReports') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                    {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div onClick={() => { navigate('/lastReports') ,handleClose()}} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         כניסת מפקד <PiUserCircleCheckFill className='text-3xl text-black' />
                     </div>}
-                    {<div onClick={() => { navigate('/manageUsers') }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                    {<div onClick={() => { navigate('/manageUsers') ,handleClose()}} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                         {currentUser?.role == "admin" ? "ניהול מחלקות" : currentUser?.role == "manager" ? "ניהול משתמשים" : "פרופיל"} <MdManageAccounts className='text-3xl text-black' />
                     </div>}
                     <div onClick={toggleTheme} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>

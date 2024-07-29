@@ -10,7 +10,7 @@ import { ImPause } from 'react-icons/im'
 import { getCurrentDateFormaterHebrew } from '../../../utils/func/generateId'
 import { SiGoogleclassroom } from 'react-icons/si'
 
-function CommandLastReports() {
+function CommandLastReports({ setChosenCategory }) {
     const navigation = useNavigate()
     // const usersName = usersSelected?.map((user) => user?.name)
     const [isOpen, setIsOpen] = useState("");
@@ -58,7 +58,7 @@ function CommandLastReports() {
     }
 
     const handeleFinishReport = (report) => {
-        endManagerProcessReport(null, report.type === "User" ? "tests" : "grup", report?.userId)
+        endManagerProcessReport(report?.id, report.type === "User" ? "tests" : "grup", report?.userId)
         navigation(`/lastReports?end=complate`)
     }
 
@@ -71,12 +71,14 @@ function CommandLastReports() {
         for (let index = 0; index < tempUser?.length; index++) {
             for (let j = 0; j < tempUser[index]?.reportsList?.length; j++) {
                 if (tempUser[index]?.reportsList[j].date === currentDate) {
-                    history = [...history, { ...tempUser[index]?.reportsList[j], type: "User", userId: tempUser[index].id }]
+                    history = [...history, { ...tempUser[index]?.reportsList[j], type: "User", userId: tempUser[index].id, name: tempUser[index]?.name }]
                 }
             }
         }
         return history
     }
+
+    // console.log(getComanndHistory() );
 
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
@@ -101,7 +103,7 @@ function CommandLastReports() {
                                             {item.type === "User" ? <GrDocumentTest /> : <SiGoogleclassroom />}
                                         </div>
                                         <div className="max-w-[60%] flex flex-col items-start">
-                                            <div className="text-lg font-bold">{item.type ? "חייל מדגם" : "מחלקה"}</div>
+                                            <div className="text-lg font-bold">{item.type ? item?.name : (currentUser?.reportsClass[0]?.nameClass || "מחלקה")}</div>
                                             <div className="text-sm font-bold">דיווח {item?.content} ב{item.location}</div>
                                         </div>
                                     </div>
@@ -120,8 +122,8 @@ function CommandLastReports() {
                                     {item?.id == isOpen && <div ref={dropdownRef} className="absolute left-16 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content border shadow-lg rounded-lg w-48 z-50">
                                         <div className=" absolute w-4 h-4 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
                                         <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
-                                            <li onClick={() => handeleEdit(item)} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
-                                            <li onClick={() => setCreateReport({ userId: item.type === "User" ? item?.userId : "", type: item.type ? "tests" : "grup" })} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
+                                            <li onClick={() => { handeleEdit(item), scrollTo({ top: 0, behavior: 'smooth' }) }} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
+                                            <li onClick={() => { setCreateReport({ userId: item.type === "User" ? item?.userId : "", type: item.type ? "tests" : "grup" }), setChosenCategory(item.type === "User" ? `soldiers` : `class-of-soldiers`), scrollTo({ top: 0, behavior: 'smooth' }) }} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
                                         </ul>
                                     </div>}
                                 </div>

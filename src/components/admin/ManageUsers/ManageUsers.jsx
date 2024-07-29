@@ -69,7 +69,7 @@ const ManageUsers = () => {
                 console.log(" in case", newUser?.nameClass?.toString());
                 if (newUser?.nameClass?.toString()?.length > 1) {
                     const updateGrupUusers = newUser?.reportsClass || []
-                    updateGrupUusers?.push({ id: generateID(), nameClass: newValue?.nameClass })
+                    updateGrupUusers?.push({ id: Date.now(), nameClass: newValue?.nameClass })
                     setNewUser({
                         ...newUser, reportsClass: updateGrupUusers, nameClass: "", reportsList: [], lastReport: null
                     })
@@ -91,7 +91,7 @@ const ManageUsers = () => {
 
     const handleDeletePassFromGClass = (pass) => {
         console.log(pass);
-        const filteredGrup = newUser?.userTests?.filter((item) => item?.id != pass)
+        const filteredGrup = newUser?.reportsClass?.filter((item) => item?.id != pass)
         setNewUser({ ...newUser, reportsClass: filteredGrup })
     }
 
@@ -161,7 +161,7 @@ const ManageUsers = () => {
                     {/* divider */}
                     <div className=" flex items-center flex-col p-5 relative mt-12">
                         <div className="w-full border-b absolute top-0 border-gray-400 text-center" />
-                        <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">הגדרת מחלקה</span>
+                        <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">{(currentUser?.role == "manager") ? "הגדרת כיתה" : "הגדרת מחלקה"}</span>
                     </div>
 
                     {/* Classes */}
@@ -173,13 +173,13 @@ const ManageUsers = () => {
                             minLen={1}
                             maxLen={20}
                         />
-                        <button onClick={() => updateSate(newUser, "reportsClass")} className=' flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content'>יצירת מחלקה</button>
+                        <button onClick={() => updateSate(newUser, "reportsClass")} className=' flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content'>{(currentUser?.role == "manager") ? "יצירת כיתה" : "יצירת מחלקה"}</button>
                     </div>
 
                     {/* Results */}
                     <div className=" flex items-center flex-col p-5 relative mt-12">
                         <div className="w-full border-b absolute top-0 border-gray-400 text-center" />
-                        <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">{(currentUser?.role == "manager") ? "רשימת מחלקה/מדגם" : "רשימת מחלקות"} </span>
+                        <span className="px-2 max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content -mt-8 z-30 font-semibold">{(currentUser?.role == "manager") ? "רשימת כיתה/מדגם" : "רשימת מחלקות"} </span>
                     </div>
 
                     {newUser?.userTests?.length === 0 && newUser?.reportsClass?.length === 0 && <div className=" text-xl font-semibold text-center my-10">אין נתונים להציג...</div>}
@@ -188,7 +188,7 @@ const ManageUsers = () => {
                         {newUser?.userTests?.length > 0 &&
                             <div className=" flex flex-col items-center pt-10 justify-center w-full gap-3">
                                 {newUser?.userTests?.map((item, index) => (
-                                    <div key={item} className="px-4 border border-dark_accent_content rounded-md relative w-full flex gap-2">
+                                    <div key={item?.id} className="px-4 border border-dark_accent_content rounded-md relative w-full flex gap-2">
                                         <span className=' border-l pl-2 py-2'>ת"ז</span>
                                         <span className='py-2'>{item?.password}</span>
                                         <span className={`${"w-10"}  h-6 rounded-full absolute top-0 right-0 -mt-3 -mr-3 text-light_primary dark:text-dark_primary flex items-center justify-center dark:bg-dark_accent_content bg-light_accent_content gap-1`}>{index + 1}<GrTest className='' /></span>
@@ -198,7 +198,7 @@ const ManageUsers = () => {
                             </div>}
                         {newUser?.reportsClass?.length > 0 && <div className=" flex flex-col items-center pt-10 justify-center w-full gap-3">
                             {newUser?.reportsClass?.map((item, index) => (
-                                <div key={item} className="px-4 border border-dark_accent_content rounded-md relative w-full flex gap-2">
+                                <div key={item?.id} className="px-4 border border-dark_accent_content rounded-md relative w-full flex gap-2">
                                     <span className=' border-l pl-2 py-2'>מחלקה</span>
                                     <span className='py-2'>{item?.nameClass}</span>
                                     <span className={`${"w-10"}  h-6 rounded-full absolute top-0 right-0 -mt-3 -mr-3 text-light_primary dark:text-dark_primary flex items-center justify-center dark:bg-dark_accent_content bg-light_accent_content gap-1`}>{index + 1}<SiGoogleclassroom className='' /></span>
@@ -209,7 +209,7 @@ const ManageUsers = () => {
                     </div>
                 </React.Fragment>}
                 <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-40 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!validRequest()} title={"שמירה וסיום"} route={'/startReport'} doAPI={() => handleManageUsers(newUser)} />
+                    <ButtonAction disabledBtn={!validRequest()} title={"שמירה וסיום"} route={currentUser?.role == "user" ? '/startReport' : '/lastReports'} doAPI={() => handleManageUsers(newUser)} />
                 </div>
             </div>
         </TransitionPage>

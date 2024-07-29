@@ -158,7 +158,7 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
     const endManagerProcessReport = (reportId, accessType, userId) => {
-        console.log(accessType, userId);
+        console.log(accessType, userId,reportId);
         const tempCurrentUser = { ...currentUser };
 
         if (accessType === "grup") {
@@ -175,7 +175,7 @@ const useUser = () => {
             console.log();
             for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
                 if (tempCurrentUser.userTests[index].id == userId) {
-                    const reportList = tempCurrentUser.userTests[index].reportsList;
+                    const reportList = tempCurrentUser.userTests[index].reportsList?.map((repo) => repo?.id == reportId ? { ...repo, endTime: getCurrentTime() } : repo);
                     tempCurrentUser.userTests[index].reportsList[reportList.length - 1].isComplited = true;
                     tempCurrentUser.userTests[index].lastReport.isComplited = true;
                     tempCurrentUser.userTests[index].lastReport.endTime = getCurrentTime();

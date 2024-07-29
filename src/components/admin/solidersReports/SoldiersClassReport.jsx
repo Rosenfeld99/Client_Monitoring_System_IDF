@@ -38,7 +38,6 @@ function SoldiersClassReport({ usersSelected }) {
 
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
-            <div className=' border-b-2  border-transparent ' ></div>
             <div className='  h-[100vh] overflow-y-auto mt-6 px-1 '>
                 {(lastClassReport == null || lastClassReport.isComplited) ? <div className=" flex flex-wrap items-center justify-center gap-y-20 gap-x-7">
                     {SYSTEMSTRACT?.map((item, index) => (
@@ -60,8 +59,8 @@ function SoldiersClassReport({ usersSelected }) {
                                     הגש את הדיווח שלך :)
                                 </div>
                             </div>
-                            <div className="  mt-[5rem] w-[9.5rem] h-[9.5rem] bg-blue-500 rounded-full animate-ping flex flex-col items-center justify-center"></div>
-                            <button onClick={handeleFinishReport} className=" absolute top-32 w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
+                            <div className="  mt-[6.5rem] w-[9.5rem] h-[9.5rem] bg-blue-500 rounded-full animate-ping flex flex-col items-center justify-center"></div>
+                            <button onClick={handeleFinishReport} className=" absolute top-44 w-64 h-64 mt-44 text-2xl font-semibold gap-3 gradient-bg-dark gradient-bg-light flex flex-col items-center justify-center rounded-full shadow-xl shadow-[#0000003d] dark:shadow-[#000000]">
                                 <div className='text-7xl text-white'>
                                     {SYSTEMSTRACT?.find((item) => item?.name == lastClassReport?.location)?.icon}
                                 </div>
