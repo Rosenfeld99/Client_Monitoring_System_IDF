@@ -58,6 +58,7 @@ function CommandLastReports({ setChosenCategory }) {
     }
 
     const handeleFinishReport = (report) => {
+        console.log(report);
         endManagerProcessReport(report?.id, report.type === "User" ? "tests" : "grup", report?.userId)
         navigation(`/lastReports?end=complate`)
     }

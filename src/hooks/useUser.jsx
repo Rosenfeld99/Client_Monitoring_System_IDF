@@ -106,7 +106,7 @@ const useUser = () => {
         const createObj = {
             ...newReport,
             isComplited: false,
-            endTime: getCurrentTime()
+            endTime: "00:00"
         }
         if (accessType == "grup") {
             if (tempCurrentUser.reportsClass[0]) {
@@ -158,34 +158,42 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
     const endManagerProcessReport = (reportId, accessType, userId) => {
-        console.log(accessType, userId,reportId);
+        console.log(reportId, accessType, userId);
         const tempCurrentUser = { ...currentUser };
 
         if (accessType === "grup") {
-            const lastClassReport = tempCurrentUser.reportsClass[0].lastReport || {};
-            lastClassReport.isComplited = true;
-            tempCurrentUser.reportsClass[0].lastReport = null;
+            if (tempCurrentUser.reportsClass && tempCurrentUser.reportsClass[0]) {
+                const lastClassReport = tempCurrentUser.reportsClass[0].lastReport || {};
+                lastClassReport.isComplited = true;
+                lastClassReport.endTime = getCurrentTime();
+                tempCurrentUser.reportsClass[0].lastReport = null;
 
-            if (tempCurrentUser?.reportsClass[0]?.reportsList) {
-                tempCurrentUser?.reportsClass[0]?.reportsList?.push(lastClassReport);
-            }
-            else tempCurrentUser.reportsClass[0].reportsList = [lastClassReport]
-        }
-        else if (accessType == "tests") {
-            console.log();
-            for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
-                if (tempCurrentUser.userTests[index].id == userId) {
-                    const reportList = tempCurrentUser.userTests[index].reportsList?.map((repo) => repo?.id == reportId ? { ...repo, endTime: getCurrentTime() } : repo);
-                    tempCurrentUser.userTests[index].reportsList[reportList.length - 1].isComplited = true;
-                    tempCurrentUser.userTests[index].lastReport.isComplited = true;
-                    tempCurrentUser.userTests[index].lastReport.endTime = getCurrentTime();
+                if (tempCurrentUser.reportsClass[0].reportsList) {
+                    tempCurrentUser.reportsClass[0].reportsList.push(lastClassReport);
+                } else {
+                    tempCurrentUser.reportsClass[0].reportsList = [lastClassReport];
                 }
             }
-            console.log(tempCurrentUser.userTests);
+        } else if (accessType === "tests") {
+            if (tempCurrentUser.userTests) {
+                for (let index = 0; index < tempCurrentUser.userTests.length; index++) {
+                    if (tempCurrentUser.userTests[index].id === userId) {
+                        const reportList = tempCurrentUser.userTests[index].reportsList.map((repo) =>
+                            repo.id === reportId ? { ...repo, endTime: getCurrentTime(), isComplited: true } : repo
+                        );
+
+                        tempCurrentUser.userTests[index].lastReport.isComplited = true;
+                        tempCurrentUser.userTests[index].lastReport.endTime = getCurrentTime();
+                        tempCurrentUser.userTests[index].reportsList = reportList;
+                    }
+                }
+            }
         }
+
         setCurrentUser(tempCurrentUser);
         saveToLocalStorage(tempCurrentUser);
     };
+
 
     const handleManageUsers = (newGrup) => {
         console.log("newGrup :", newGrup);

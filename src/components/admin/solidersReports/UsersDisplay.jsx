@@ -50,7 +50,7 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
             activeIsEdit()  
     }
     const handeleFinishReport = () => {
-        endManagerProcessReport(currentUser?.reportsClass[0].lastReport?.id, "tests", userDisplay?.id)
+        endManagerProcessReport(userDisplay?.lastReport?.id, "tests", userDisplay?.id)
         navigation(`/lastReports?end=complate`)
     }
     const isHaveLastReport=userDisplay?.lastReport
@@ -131,7 +131,8 @@ function UsersDisplay({ setToggleSend, usersSelected, setUsersSelected }) {
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
             <div className='  h-[45vh] overflow-y-auto'>
-                {createReport ? <ChooseLocation type={"tests"} access={"manager"} userId={createReport} /> : currentUser?.userTests?.map((item, i) =>
+                {createReport ? <ChooseLocation type={"tests"} access={"manager"} userId={createReport} /> :
+                 currentUser?.userTests?.map((item, i) =>
                     <DisplayUser key={item?.id} userDisplay={item} setCreateReport={setCreateReport} />
                 )}
             </div>
