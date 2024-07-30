@@ -48,23 +48,27 @@ const Navbar = () => {
             <div className=" fixed flex-row-reverse flex gap-5 items-center px-2.5 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white gradient-bg-dark gradient-bg-light shadow-md shadow-[#0000003d] ">
                 {(pathname?.substring(1) != "endReport" && searchParams.get('last') != "end") ? <FaArrowLeft onClick={() => navigate(-1)} /> : <div className='w-8 h-8' />}
                 <div className="flex-auto self-stretch my-auto">{appName}</div>
-                {pathname?.substring(1) != "endReport" ? <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} /> : <div className='w-8 h-8' />}
+                {pathname?.substring(1) != "endReport" ? <HiOutlineMenu className='text-3xl' onClick={() => setOpen(true)} /> :
+                 <div className='w-8 h-8' />}
             </div>
             {open && (
                 <div className={`flex overflow-hidden min-h-screen fixed max-w-[680px] w-full flex-col gap-8 items-start p-8 z-50 bg-[#00000089] ${isExiting && "animate__fadeOut"}`}>
                     <div className={`bg-gradient-to-t gradient-bg-dark gradient-bg-light shadow-lg ${isExiting ? 'animate__slideOutUp' : 'animate__slideInDown'} shadow-[#02020256] dark:shadow-[#000000] w-[680px] aspect-square rounded-l-full rounded-r-[80px] z-50 rotate-45 absolute top-0 right-0 -mt-32 -mr-52`} />
                     <div className=" flex items-center justify-between w-full">
-                        {currentUser?.role == "user" && <div onClick={() => { navigate('/startReport'),handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
-                            דיווח חדש <IoDocumentTextOutline className='text-3xl text-black' />
-                        </div>}
+                       
 
                         <div onClick={handleClose} className={`z-50 text-3xl pt-8 ${isExiting ? "animate__slideOutUp_after" : "animate__slideInDown_after"}`}>
                             <IoClose />
                         </div>
-                        {(currentUser?.role == "admin" || currentUser?.role == "manager") && <div className={`flex flex-row-reverse text-2xl items-center pt-8 gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                        {(currentUser?.role == "admin" || currentUser?.role == "manager") &&
+                         <div className={`flex flex-row-reverse text-2xl items-center pt-8 gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             <DownloadExcel />
                         </div>}
                     </div>
+                    {currentUser?.role == "user" && 
+                        <div onClick={() => { navigate('/startReport'),handleClose() }} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
+                            דיווח חדש <IoDocumentTextOutline className='text-3xl text-black' />
+                        </div>}
                     {menu.map((item, index) => (
                         <div onClick={() => { navigate(`${item.route}`), handleClose() }} key={index} className={`flex flex-row-reverse text-2xl items-center gap-5 text-white z-50 ${isExiting ? 'animate__slideOutUp_after' : 'animate__slideInDown_after'}`}>
                             {item.title} {item.icon}

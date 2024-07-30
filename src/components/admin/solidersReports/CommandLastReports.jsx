@@ -82,7 +82,7 @@ function CommandLastReports({ setChosenCategory }) {
     // console.log(getComanndHistory() );
 
     return (
-        <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
+        <div dir='rtl' className=' w-full h-full flex flex-col flex-1'>
             <div className=' h-[100vh]  overflow-y-auto mt-6 px-1 '>
                 <div className=" flex flex-col w-full items-center justify-center gap-5">
                     {createReport?.type ? <ChooseLocation type={createReport?.type} access={"manager"} userId={createReport?.userId} />

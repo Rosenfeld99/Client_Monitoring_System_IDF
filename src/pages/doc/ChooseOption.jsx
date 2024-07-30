@@ -7,19 +7,22 @@ import { getSingleSystemStract } from '../../db/systemStract'
 import { useEffect, useState } from 'react'
 import useUser from '../../hooks/useUser'
 import { generateID, getCurrentDateFormaterHebrew, getCurrentTime } from '../../utils/func/generateId'
+import CustomTimePicker from '../../components/admin/reportDate/CustomTimePicker'
+import { useToast } from '../../utils/Toasttify/ToastManager'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { pathname } = useLocation()
+    const showToast = useToast();
+
 
     // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
-    const { inActiveIsEdit,updateCommandSingleReport, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
+    const { inActiveIsEdit, updateCommandSingleReport, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
-
+      const [startTime,setStartTime]=useState("")
+      const [endTime,setEndTime]=useState("")
     const [searchParams] = useSearchParams()
-
-    // console.log(pathname);
 
     useEffect(() => {
         if (searchParams.get('s') &&
@@ -62,7 +65,7 @@ const ReportStart = ({ }) => {
         const current = getSingleSystemStract(pathname?.split('/')[2])
         // console.log(searchParams.get("userId"));
         return (
-            <div dir='rtl' className="flex flex-col items-center w-full justify-center mt-60 pb-20">
+            <div dir='rtl' className={`flex flex-col items-center w-full justify-center ${isEdit?"mt-96":"mt-60"} pb-20`}>
                 {current.listOption?.map((item, index) => (
                     <button
                         key={index}
@@ -84,13 +87,40 @@ const ReportStart = ({ }) => {
             </div>
         )
     }
+    function compareTimes() {
+        // Split the time strings into hours and minutes
+        let [startHour, startMinute] = startTime.split(':').map(Number);
+        let [endHour, endMinute] = endTime.split(':').map(Number);
+        // Compare the hours
+       
+         if (startHour > endHour) {
+            return false;
+        } 
+       if (startHour == endHour&&startMinute > endMinute) {
+            return false;
+       } 
+       return true
+    }
+    console.log(startTime);
+    // Example usage:
+    
+  const handleErrorTime=()=>{
+    if (!compareTimes()) {
+        showToast('error', 'שגיאה שעת התחלה או שעת סיום לא תקינות')
+    }
+    if (!currentSelect) {
+        showToast('error', 'לא נבחרה אופציה תקינה')
+    }
+  }
+    
 
     const innerTypeOfReport = (typeMsg) => {
         const genID = Date.now()
-    //    console.log(typeMsg);
+       
+        //    console.log(typeMsg);
         switch (typeMsg) {
             case "grup":
-              
+
                 return {
                     title: "דיווח מחלקתי",
                     description: isEdit ? " אתם עורכים דיווח מחלקה:)" : "הזנת משימה עבור מחלקה : )",
@@ -98,47 +128,51 @@ const ReportStart = ({ }) => {
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
                     doAPI: () => {
                         isEdit ?
-                        updateCommandSingleReport({
-                            id: searchParams.get('id'),
-                            content: searchParams.get('location'),
-                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                        },"grup",null)
+                            updateCommandSingleReport({
+                                id: searchParams.get('id'),
+                                content: searchParams.get('location'),
+                                location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                                startTime,
+                                endTime
+                            }, "grup", null)
                             :
                             createNewReportForGrupOrSingle({
-                            id: genID,
-                            date: getCurrentDateFormaterHebrew(),
-                            startTime: getCurrentTime(),
-                            endTime: "00:00",
-                            content: searchParams.get('location'),
-                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                            isComplited: false
-                        },   "grup")
+                                id: genID,
+                                date: getCurrentDateFormaterHebrew(),
+                                startTime: getCurrentTime(),
+                                endTime: "00:00",
+                                content: searchParams.get('location'),
+                                location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                                isComplited: false
+                            }, "grup")
                     }
                 }
             case "tests":
-              
+
                 return {
                     title: "דיווח מדגם",
                     description: isEdit ? " אתם עורכים דיווח מדגם:)" : "הזנת משימה עבור מדגם : )",
                     link: isEdit ? `/lastReports?end=complate&report=tests` : `/lastReports?end=process&s=${pathname?.split('/')[2]}&report=tests`,
                     btnText: isEdit ? "עריכה דיווח" : 'שלח דיווח',
-                    doAPI: ()=>
-                        isEdit?
-                          updateCommandSingleReport({
-                            id: searchParams.get('id'),
-                            content: searchParams.get('location'),
-                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                        },"tests",searchParams.get('userId')):
-                        
-                        createNewReportForGrupOrSingle({
-                            id: genID,
-                            date: getCurrentDateFormaterHebrew(),
-                            startTime: getCurrentTime(),
-                            endTime: "00:00",
-                            content: searchParams.get('location'),
-                            location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                            isComplited: false
-                        },"tests",searchParams.get("users"))
+                    doAPI: () =>
+                        isEdit ?
+                            updateCommandSingleReport({
+                                id: searchParams.get('id'),
+                                content: searchParams.get('location'),
+                                location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                                startTime,
+                                endTime
+                            }, "tests", searchParams.get('userId')) :
+
+                            createNewReportForGrupOrSingle({
+                                id: genID,
+                                date: getCurrentDateFormaterHebrew(),
+                                startTime: getCurrentTime(),
+                                endTime: "00:00",
+                                content: searchParams.get('location'),
+                                location: getSingleSystemStract(pathname?.split('/')[2]).name,
+                                isComplited: false
+                            }, "tests", searchParams.get("users"))
                 }
             default:
 
@@ -152,7 +186,10 @@ const ReportStart = ({ }) => {
                             id: searchParams.get('id'),
                             content: searchParams.get('location'),
                             location: getSingleSystemStract(pathname?.split('/')[2]).name,
-                        }) : createNewReportPersonale({
+                            startTime,
+                            endTime
+                        },
+                    ) : createNewReportPersonale({
                             id: genID,
                             date: getCurrentDateFormaterHebrew(),
                             startTime: getCurrentTime(),
@@ -166,6 +203,7 @@ const ReportStart = ({ }) => {
         }
     }
 
+
     return (
         <TransitionPage>
             <div dir='rtl' className=" flex flex-col overflow-hidden pb-10 mx-auto w-full min-h-screen flex-1">
@@ -177,24 +215,34 @@ const ReportStart = ({ }) => {
                         <FaArrowRight className='text-2xl' onClick={() => navigation(-1)} />
                     </button>
                 </div>
-                <div className="flex w-full p-12 h-62 fixed top-0 right-0 pt-20 gradient-bg-dark gradient-bg-light shadow-md shadow-slate-400 flex-col text-center gap-3 dark:shadow-[#000000]">
+                <div className={`flex w-full p-12 ${isEdit?"h-96":"h-60"} fixed top-0 right-0 pt-20 gradient-bg-dark gradient-bg-light shadow-md shadow-slate-400 flex-col text-center gap-3 dark:shadow-[#000000]`}>
                     <div className="mx-auto w-fit text-4xl text-white">
                         {innerIcon()}
                     </div>
+                   
                     <div className="self-center text-lg font-bold text-black">
                         {innerTypeOfReport(searchParams.get('report')).title}
                     </div>
                     <div dir='ltr' className="w-full text-sm text-zinc-800">
                         {innerTypeOfReport(searchParams.get('report')).description}
                     </div>
+                    {console.log(isEdit)}
+                    {isEdit&&(<>
+                    <div dir="ltr" className='flex gap-1 relative'>
+                        <CustomTimePicker setToState={setEndTime} title={"שעת סיום"} btnInnerTime={"זמן נוכחי"} />
+                        <CustomTimePicker setToState={setStartTime} title={"שעת התחלה"} btnInnerTime={"אוטומטי"} />
+
+                    </div>
+                    
+                    </>)}
                 </div>
 
 
                 {/* List option */}
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
-                <div className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
-                    <ButtonAction disabledBtn={!currentSelect} doAPI={innerTypeOfReport(searchParams.get('report') || "regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
+                <div  className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
+                    <ButtonAction  disabledBtn={!currentSelect||!compareTimes()} doAPI={innerTypeOfReport(searchParams.get('report') || "regular").doAPI} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>
         </TransitionPage>

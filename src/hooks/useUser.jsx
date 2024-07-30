@@ -27,7 +27,15 @@ const useUser = () => {
             const allReport = currentUser?.history || [];
 
             const updatedHistory = allReport.map((report) =>
-                report.id == oldReport?.id ? { ...report, location: oldReport?.location, content: oldReport?.content } : report
+                report.id == oldReport?.id ?
+                    {
+                        ...report,
+                         location: oldReport?.location,
+                        content: oldReport?.content,
+                        startTime:oldReport.startTime?oldReport.startTime:report?.startTime,
+                        endTime:oldReport.endTime?oldReport.endTime:report?.endTime,
+                    }
+                    : report
             );
 
             const updatedUser = {
@@ -41,31 +49,51 @@ const useUser = () => {
             saveToLocalStorage(updatedUser);
         }
     }
+    
     const updateCommandSingleReport = (newReport, type, userId) => {
-        console.log("in update ");
+      
+        console.log(newReport, type, userId);
         inActiveIsEdit()
         if (currentUser?.commandCounterEdit > 0) {
             const updatedUser = { ...currentUser, commandCounterEdit: currentUser?.commandCounterEdit - 1 };
 
             if (type === "tests") {
-
+                        console.log(userId);
                 const changeUserIndex = currentUser?.userTests?.findIndex((user) => user.id == userId);
+
                 if (changeUserIndex == -1) {
                     console.log("not found user");
                     return
                 }
+
                 const foundUser = currentUser?.userTests[changeUserIndex]
                 foundUser.reportsList = foundUser?.reportsList?.map((report) =>
-                    report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
+                    report.id == newReport?.id ?
+                 { ...report, location: newReport?.location, content: newReport?.content,
+                     startTime:newReport.startTime?newReport.startTime:report?.startTime,
+                     endTime:newReport.endTime?newReport.endTime:report?.endTime
+                     } : report
                 );
-                foundUser.lastReport = { ...foundUser?.lastReport, location: newReport?.location, content: newReport?.content }
-                updatedUser.userTests[changeUserIndex] = foundUser;
-                console.log(updatedUser);
+                    if (newReport.id==foundUser?.lastReport?.id) {
+                        foundUser.lastReport = { ...foundUser?.lastReport, 
+                            location: newReport?.location,
+                             content: newReport?.content,
+                             startTime:newReport?.startTime?newReport.startTime:foundUser?.lastReport?.startTime,
+                             endTime:newReport?.endTime?newReport.endTime:foundUser?.lastReport?.endTime }
+                    }
+
+                    updatedUser.userTests[changeUserIndex] = foundUser;
             }
             else if (type === "grup") {
                 const allGrupReports = currentUser?.reportsClass[0].reportsList || [];
                 const updatedHistory = allGrupReports?.map((report) =>
-                    report.id == newReport?.id ? { ...report, location: newReport?.location, content: newReport?.content } : report
+                    report.id == newReport?.id ?
+                 { ...report,
+                     location: newReport?.location,
+                      content: newReport?.content,
+                      startTime:newReport.startTime?newReport.startTime:report?.startTime,
+                      endTime:newReport.endTime?newReport.endTime:report?.endTime 
+                    } : report
                 );
                 updatedUser.reportsClass[0].reportsList = updatedHistory;
                 console.log(updatedUser);

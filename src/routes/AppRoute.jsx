@@ -45,7 +45,7 @@ function AppRoute() {
           {currentUser?.isProcess ?
             <Route path='/endReport' element={<ReportEnd />} /> :
             <>
-              <Route path='/startReport' element={<ReportStart />} />
+              <Route path='/startReport' element={(currentUser?.role == "manager" || currentUser?.role == "admin")?<LastReports/>:<ReportStart />} />
               <Route path='/startReport/:value' element={<ChooseOption />} />
               <Route path='/ReportEdit/:reportId' element={<ReportEdit />} />
               <Route path='/todayReportsList' element={<HistoryLastDay />} />

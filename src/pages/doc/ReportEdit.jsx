@@ -9,6 +9,8 @@ import Navbar from '../../components/Menu/Navbar'
 import { useToast } from '../../utils/Toasttify/ToastManager'
 import { formatDateToNumber, getCurrentDateFormaterHebrew, getCurrentTime } from '../../utils/func/generateId'
 import { timeToupdatedCounterEdit } from '../../constant/constant'
+import ReportDate from '../../components/admin/reportDate/ReportDate'
+import CustomTimePicker from '../../components/admin/reportDate/CustomTimePicker'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
@@ -20,8 +22,8 @@ const ReportEdit = ({ }) => {
   // <GiTowerFlag />
 
   const [searchParams] = useSearchParams()
-  const currEdit=searchParams.get("report") 
-  const counterOfEdit =(currEdit==="grup"|| currEdit==="tests")?currentUser?.commandCounterEdit:currentUser?.counterEdit
+  const currEdit = searchParams.get("report")
+  const counterOfEdit = (currEdit === "grup" || currEdit === "tests") ? currentUser?.commandCounterEdit : currentUser?.counterEdit
 
   if (counterOfEdit == 0) showToast('error', "): אין אפשרות לערוך ")
 
@@ -52,8 +54,8 @@ const ReportEdit = ({ }) => {
         startTime: searchParams.get('startTime'),
         endTime: searchParams.get('endTime'),
         id: searchParams.get('id'),
-        report:searchParams.get("report"),
-        userId:searchParams.get("userId")
+        report: searchParams.get("report"),
+        userId: searchParams.get("userId")
       }).toString();
       navigation(`/startReport/${item?.value}?${params}`);
     }
@@ -83,7 +85,7 @@ const ReportEdit = ({ }) => {
         <div className=" z-40 flex flex-col pt-14 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
           <div className="flex flex-col text-center leading-[150%] pb-20">
             <div className="self-center text-lg font-bold text-light_primary_content dark:text-dark_primary_content">
-            עריכת דיווח {searchParams.get("report")==="grup"?"מחלקה":searchParams.get("report")==="tests"&&"מדגם"}
+              עריכת דיווח {searchParams.get("report") === "grup" ? "מחלקה" : searchParams.get("report") === "tests" && "מדגם"}
 
             </div>
             <div className="w-full text-sm text-light_neutral dark:text-dark_accent_content">
@@ -103,6 +105,7 @@ const ReportEdit = ({ }) => {
 
         </div>
       </div>
+     
     </TransitionPage>
   )
 }

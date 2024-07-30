@@ -17,8 +17,7 @@ const HistoryLastDay = ({ }) => {
     const navigation = useNavigate()
     const [selectOption, setSelectOPtion] = useState(currentUser?.reportsClass[0]?.nameClass ? { name: currentUser?.reportsClass[0]?.nameClass, index: -1 } : currentUser?.userTests[0]?.name ? { name: currentUser?.userTests[0]?.name, index: 0 } : null)
 
-
-    const handleNavigation = () => {
+    const handleNavigation = (e,type,userId) => {
         if (chooseOption !== null) {
             const params = new URLSearchParams({
                 s: chooseOption?.content,
@@ -26,7 +25,8 @@ const HistoryLastDay = ({ }) => {
                 startTime: chooseOption?.startTime,
                 endTime: chooseOption?.endTime,
                 id: chooseOption?.id,
-
+                report:type,
+                userId
             }).toString();
             navigation(`/ReportEdit/reportId?${params}`);
             activeIsEdit()
@@ -54,7 +54,7 @@ const HistoryLastDay = ({ }) => {
                 />
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
-                    {console.log(user.lastDayReports)}
+                
                     {currentUser?.role == "user" && currentUser?.history?.map((item, index) => (
                         // adding start and last time
                         <>
@@ -67,14 +67,13 @@ const HistoryLastDay = ({ }) => {
                                     <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
                                         <div >{item?.startTime}</div>{"-"}
                                         <div >{item?.endTime}</div>
-                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={(e)=>handleNavigation(e,null)} className='text-2xl text-[#0996E5]' />}
                                     </div>
                                 </div>
                             </div>}
                         </>
                     ))}
 
-                    {console.log(user.lastDayReports)}
                     {currentUser?.role == "admin" && currentUser?.reportsClass[0] && currentUser?.reportsClass[0]?.reportsList && currentUser?.reportsClass[0]?.reportsList?.map((item, index) => (
                         // adding start and last time
                         <>
@@ -87,7 +86,7 @@ const HistoryLastDay = ({ }) => {
                                     <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
                                         <div >{item?.startTime}</div>{"-"}
                                         <div >{item?.endTime}</div>
-                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={(e)=>handleNavigation(e,"grup")} className='text-2xl text-[#0996E5]' />}
                                     </div>
                                 </div>
                             </div>}
@@ -107,16 +106,21 @@ const HistoryLastDay = ({ }) => {
                                 <React.Fragment>
                                     {currentUser?.userTests[selectOption?.index]?.reportsList?.map((item, index) => (
                                         <>
-                                            {getCurrentDateFormaterHebrew() == item?.date && <div key={index} onClick={() => setChooseOption(item)}
+                                        {console.log(item?.isComplited)}
+                                            {getCurrentDateFormaterHebrew() == item?.date &&
+                                             <div key={index} onClick={() => item?.isComplited&&setChooseOption(item)}
                                                 className={`p-2 rounded-lg text-md w-full 
                                                 ${chooseOption?.id === item?.id ? "font-bold dark:text-light_primary border-2 border-[#0996E5] bg-slate-100 dark:bg-[#121212] text-light_primary_content flex items-center justify-between"
-                                                        : "border-2 border-gray-200 dark:border-dark_accent_content font-normal text-gray-500"}`}>
+                                                        : "border-2 border-gray-200 dark:border-dark_accent_content font-normal text-gray-500"}
+                                                        ${!item.isComplited&&"bg-slate-300" }
+                                                        `}>
                                                 <div className=" flex items-center w-full gap-5 justify-between">
                                                     <div >{item?.content}</div>
+                                                    {!item.isComplited&&<div className='font-black'>בתהליך</div>}
                                                     <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
                                                         <div >{item?.startTime}</div>{"-"}
                                                         <div >{item?.endTime}</div>
-                                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                                        {chooseOption?.id === item?.id && <BiSolidEdit onClick={(e)=>handleNavigation(e,"tests",currentUser?.userTests[selectOption?.index].id)}className='text-2xl text-[#0996E5]' />}
                                                     </div>
                                                 </div>
                                             </div>}
@@ -138,7 +142,7 @@ const HistoryLastDay = ({ }) => {
                                                             <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
                                                                 <div >{item?.startTime}</div>{"-"}
                                                                 <div >{item?.endTime}</div>
-                                                                {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
+                                                                {chooseOption?.id === item?.id && <BiSolidEdit onClick={(e)=>handleNavigation(e,"grup")} className='text-2xl text-[#0996E5]' />}
                                                             </div>
                                                         </div>
                                                     </div>}

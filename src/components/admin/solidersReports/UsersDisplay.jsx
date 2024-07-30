@@ -94,7 +94,7 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
                     {userDisplay?.id == isOpen && <div ref={dropdownRef} className="absolute left-16 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content border shadow-lg rounded-lg w-48 z-50">
                         <div className=" absolute w-4 h-4 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content border bottom-4 rotate-45 -ml-1.5 left-0 z-20" />
                         <ul className=' flex-col flex relative items-start pr-2 w-full rounded-lg overflow-hidden z-40'>
-                            <li onClick={() => handeleEdit()} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>
+                           {userDisplay?.lastReport&& <li onClick={() => handeleEdit()} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">עדכון דיווח <FaEdit className=' text-xl' /></li>}
                             <li onClick={() => setCreateReport(userDisplay?.id)} className="py-1 hover:bg-gray-100 bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content w-full justify-end cursor-pointer flex items-center gap-4 flex-row-reverse">דיווח חדש <GrAddCircle className=' text-2xl' /></li>
                         </ul>
                     </div>}
