@@ -26,7 +26,7 @@ function LastReports() {
   
   return (
     <TransitionPage>
-      <div dir='rtl' className="flex flex-col pb-20 mx-auto w-full min-h-screen flex-1  ">
+      <div dir='rtl' className="flex flex-col  mx-auto w-full min-h-screen flex-1  ">
 
         <Navbar />
         <div className='w-[100vw] px-5 mt-20'>

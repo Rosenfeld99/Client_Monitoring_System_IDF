@@ -44,7 +44,7 @@ const useUser = () => {
                 isProcess: false,
                 counterEdit: currentUser?.counterEdit - 1
             };
-
+            inActiveIsEdit()
             setCurrentUser(updatedUser);
             saveToLocalStorage(updatedUser);
         }
@@ -52,7 +52,6 @@ const useUser = () => {
     
     const updateCommandSingleReport = (newReport, type, userId) => {
       
-        console.log(newReport, type, userId);
         inActiveIsEdit()
         if (currentUser?.commandCounterEdit > 0) {
             const updatedUser = { ...currentUser, commandCounterEdit: currentUser?.commandCounterEdit - 1 };
@@ -60,12 +59,9 @@ const useUser = () => {
             if (type === "tests") {
                         console.log(userId);
                 const changeUserIndex = currentUser?.userTests?.findIndex((user) => user.id == userId);
-
                 if (changeUserIndex == -1) {
-                    console.log("not found user");
                     return
                 }
-
                 const foundUser = currentUser?.userTests[changeUserIndex]
                 foundUser.reportsList = foundUser?.reportsList?.map((report) =>
                     report.id == newReport?.id ?
@@ -96,18 +92,14 @@ const useUser = () => {
                     } : report
                 );
                 updatedUser.reportsClass[0].reportsList = updatedHistory;
-                console.log(updatedUser);
             }
-
             setCurrentUser(updatedUser);
             saveToLocalStorage(updatedUser);
         }
     }
 
     const createNewReportPersonale = (newReport, place) => {
-        console.log(newReport);
         const allReport = currentUser?.history || [];
-
         const updatedUser = {
             ...currentUser,
             history: [...allReport, newReport],
@@ -122,15 +114,12 @@ const useUser = () => {
                 place
             }
         };
-
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
     };
 
     const createNewReportForGrupOrSingle = (newReport, accessType, userId) => {
-        console.log("in create ");
         const tempCurrentUser = { ...currentUser }
-
         const createObj = {
             ...newReport,
             isComplited: false,
@@ -139,7 +128,6 @@ const useUser = () => {
         if (accessType == "grup") {
             if (tempCurrentUser.reportsClass[0]) {
                 tempCurrentUser.reportsClass[0].lastReport = { ...createObj };
-
             }
             else {
                 alert("אין מחלקה קיימת")
@@ -156,7 +144,6 @@ const useUser = () => {
         }
 
         console.log(createObj);
-
         setCurrentUser(tempCurrentUser);
         saveToLocalStorage(tempCurrentUser);
     };
@@ -224,11 +211,10 @@ const useUser = () => {
 
 
     const handleManageUsers = (newGrup) => {
-        console.log("newGrup :", newGrup);
-        const allUsers = newGrup || [];
-
         const updatedUser = {
             ...currentUser,
+            userTests:newGrup?.userTests,
+            reportsClass:newGrup?.reportsClass,
             username: newGrup?.systemUsername || "",
         };
         console.log(updatedUser);

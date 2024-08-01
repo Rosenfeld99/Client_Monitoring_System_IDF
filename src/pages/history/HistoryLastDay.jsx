@@ -53,7 +53,7 @@ const HistoryLastDay = ({ }) => {
                     className=" mt-20 w-full opacity-15 max-w-[700px] max-h-[700px] z-10 absolute top-20 aspect-[0.72] stroke-[5px] stroke-neutral-200 stroke-opacity-40"
                 />
                 {/* list last day */}
-                <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
+                <div className="mx-8 flex-col flex items-center  gap-3 z-30">
                 
                     {currentUser?.role == "user" && currentUser?.history?.map((item, index) => (
                         // adding start and last time

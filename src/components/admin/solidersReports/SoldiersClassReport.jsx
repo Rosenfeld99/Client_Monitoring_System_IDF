@@ -38,7 +38,7 @@ function SoldiersClassReport({ usersSelected }) {
 
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
-            <div className='  h-[100vh] overflow-y-auto mt-6 px-1 '>
+            <div className='  h-[70vh] overflow-y-auto mt-6 px-1 '>
                 {(lastClassReport == null || lastClassReport.isComplited) ? <div className=" flex flex-wrap items-center justify-center gap-y-20 gap-x-7">
                     {SYSTEMSTRACT?.map((item, index) => (
                         <button

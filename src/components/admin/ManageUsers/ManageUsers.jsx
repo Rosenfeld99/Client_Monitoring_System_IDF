@@ -13,17 +13,6 @@ import { SiGoogleclassroom } from 'react-icons/si'
 
 const ManageUsers = () => {
     const { currentUser, handleManageUsers } = useUser()
-    console.log(currentUser);
-    const accessOption = [
-        { name: "מדגם", value: "מדגם" },
-        { name: "מחלקה", value: "מחלקה" },
-    ]
-
-    const curseOption = [
-        { name: "קמב", value: "קורס מכים ביסלח" },
-        { name: "קשב", value: "קורס שיריון בכיר" },
-    ]
-
     const [newUser, setNewUser] = useState({
         systemUsername: currentUser?.username || "",
         password: null,
@@ -31,11 +20,12 @@ const ManageUsers = () => {
         nameClass: '',
         curseOption: null,
         accessOption: null,
-        userTests: currentUser?.userTests || [],
-        reportsClass: currentUser?.reportsClass || []
+        userTests: [...currentUser?.userTests] || [],
+        reportsClass:[ ...currentUser?.reportsClass] || []
     })
-
+  
     const updateSate = (newValue, keyToUpdate) => {
+     
         switch (keyToUpdate) {
             case "systemUsername":
                 setNewUser({ ...newUser, systemUsername: newValue })
@@ -54,31 +44,31 @@ const ManageUsers = () => {
                 break;
             case "userTests":
                 // await to response from server to get correct password to create reletion wetween grup
-                console.log(" in case");
                 if (newUser?.password?.toString()?.length == 9) {
                     const updateGrupUusers = newUser?.userTests || []
                     updateGrupUusers?.push({ password: newUser.password, curseOption: newUser.curseOption, id: Date.now(), name: newUser?.name, reportsList: [] })
                     setNewUser({ ...newUser, userTests: updateGrupUusers, password: "", name: "" })
                 } else {
-                    // alert(`ת"ז לא חוקית ...`)
                     showToast('error', 'שגיאה! ת"ז לא חוקית')
                 }
                 break;
             case "reportsClass":
+                console.log(currentUser?.reportsClass);
+                console.log(currentUser);
                 // await to response from server to get correct password to create reletion wetween grup
-                console.log(" in case", newUser?.nameClass?.toString());
                 if (newUser?.nameClass?.toString()?.length > 1) {
-                    const updateGrupUusers = newUser?.reportsClass || []
+                    const updateGrupUusers = newUser?.reportsClass || [] 
                     updateGrupUusers?.push({ id: Date.now(), nameClass: newValue?.nameClass })
+                   console.log(newUser);
                     setNewUser({
                         ...newUser, reportsClass: updateGrupUusers, nameClass: "", reportsList: [], lastReport: null
                     })
+                 
                 } else {
                     // alert(`ת"ז לא חוקית ...`)
                     showToast('error', '(נידרש 2 תווים)שגיאה! שם מחלקה לא תקין')
                 }
                 break;
-
             default:
                 break;
         }
@@ -90,7 +80,6 @@ const ManageUsers = () => {
     }
 
     const handleDeletePassFromGClass = (pass) => {
-        console.log(pass);
         const filteredGrup = newUser?.reportsClass?.filter((item) => item?.id != pass)
         setNewUser({ ...newUser, reportsClass: filteredGrup })
     }
@@ -100,8 +89,8 @@ const ManageUsers = () => {
     }
 
     const showToast = useToast();
-
-    console.log(newUser);
+   
+  const exsistClass=newUser?.reportsClass?.length>0
     return (
         <TransitionPage>
             <div dir='rtl' className="flex flex-col pb-72 mx-auto w-full  min-h-screen flex-1  ">
@@ -166,14 +155,19 @@ const ManageUsers = () => {
 
                     {/* Classes */}
                     <div className="w-64 mx-auto flex flex-col gap-3 items-center justify-center">
-                        <FloatingLabelInput label={'שם מחלקה'} placeholder={'שם...'} state={newUser?.nameClass}
+                        <FloatingLabelInput label={currentUser?.role == "manager"?"שם כיתה":'שם מחלקה'} placeholder={'שם...'} state={newUser?.nameClass}
                             setState={updateSate}
                             keyToUpdate={"nameClass"}
                             inputType="text"
                             minLen={1}
                             maxLen={20}
+                            
                         />
-                        <button onClick={() => updateSate(newUser, "reportsClass")} className=' flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content'>{(currentUser?.role == "manager") ? "יצירת כיתה" : "יצירת מחלקה"}</button>
+                        <button
+                         disabled={exsistClass}
+                          onClick={() => updateSate(newUser, "reportsClass")}
+                           className={` ${exsistClass&&"dark:bg-slate-700 bg-slate-300"} flex w-full rounded-md text-light_primary dark:text-dark_primary font-semibold justify-center px-4 py-2 bg-light_accent_content dark:bg-dark_accent_content`} 
+                           >{(currentUser?.role == "manager") ? "יצירת כיתה" : "יצירת מחלקה"}</button>
                     </div>
 
                     {/* Results */}

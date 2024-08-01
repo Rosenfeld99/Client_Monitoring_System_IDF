@@ -17,6 +17,31 @@ const ReportStart = ({ }) => {
         inActiveIsEdit()
     }, [])
 
+    function isNotYesterday(dateString) {
+        // Parse the input date
+        const parts = dateString.split('/');
+        const givenDate = new Date(parts[2], parts[1] - 1, parts[0]);
+      
+        // Get the current date
+        const currentDate = new Date();
+      
+        // Calculate yesterday's date
+        const yesterday = new Date(currentDate);
+        yesterday.setDate(currentDate.getDate() - 1);
+      
+        // Zero out the time part of the dates for accurate comparison
+        givenDate.setHours(0, 0, 0, 0);
+        yesterday.setHours(0, 0, 0, 0);
+      
+        // Compare the dates
+        if (givenDate.getTime() === yesterday.getTime()) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+      
+
 
     return (
         <TransitionPage>
@@ -27,7 +52,8 @@ const ReportStart = ({ }) => {
                     <div className="flex self-center px-5 mt-20 leading-5 text-center ">
                         <IoCheckmarkCircleOutline className='text-xl w-8 h-8' />
                         <div className="grow my-auto text-md text-light_neutral dark:text-dark_accent_content">
-                            דיווח אחרון היום הייתם ב {" "}
+                            דיווח אחרון
+                             <span>{isNotYesterday(currentUser?.lastReport.date)?"  היום הייתם ב ":       ` הייתם ב ${currentUser?.lastReport.date} ב`}</span> 
                             <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.content}</span> בשעה{" "}
                             <span className="font-bold text-light_primary_content dark:text-dark_primary_content">{currentUser?.lastReport?.endTime}</span>{" "}
                         </div>

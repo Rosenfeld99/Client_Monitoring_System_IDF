@@ -15,8 +15,6 @@ const ReportStart = ({ }) => {
     const { pathname } = useLocation()
     const showToast = useToast();
 
-
-    // console.log(pathname?.split('/')[2]);
     const [currentSelect, setCurrentSelect] = useState(null)
     const { inActiveIsEdit, updateCommandSingleReport, activeIsEdit, isEdit, createNewReportForGrupOrSingle, getSingleReport, currentUser, updateSingleReport, createNewReportPersonale } = useUser()
 
@@ -29,12 +27,13 @@ const ReportStart = ({ }) => {
             searchParams.get('location') &&
             searchParams.get('startTime') &&
             searchParams.get('endTime')) {
-            // console.log("in case");
-            activeIsEdit()
+        activeIsEdit()
         }
-        else if (searchParams.get('report')) {
-            // console.log(searchParams.get('report'));
+        // check if the url is for new report and not for update
+         else if (!(searchParams.get('startTime') && searchParams.get('endTime'))) {
+           inActiveIsEdit()
         }
+     
     }, [searchParams, isEdit])
 
     const innerIcon = () => {
@@ -72,8 +71,8 @@ const ReportStart = ({ }) => {
                         onClick={() => {
                             setCurrentSelect(item);
                             isEdit
-                                ?
-                                navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&id=${searchParams.get('id')}&userId=${searchParams.get('userId')}`)
+                                ? 
+                                navigation(`${pathname}?location=${item.name}&endTime=${searchParams.get('endTime')}&startTime=${searchParams.get('startTime')}&report=${searchParams.get('report')}&id=${searchParams.get('id')}&userId=${searchParams.get('userId')}`)
                                 :
                                 navigation(`${pathname}?location=${item.name}&report=${searchParams.get('report')}&users=${searchParams.get('users')}`);
                         }}
@@ -113,7 +112,7 @@ const ReportStart = ({ }) => {
     }
   }
     
-
+console.log(isEdit);
     const innerTypeOfReport = (typeMsg) => {
         const genID = Date.now()
        
@@ -226,7 +225,7 @@ const ReportStart = ({ }) => {
                     <div dir='ltr' className="w-full text-sm text-zinc-800">
                         {innerTypeOfReport(searchParams.get('report')).description}
                     </div>
-                    {console.log(isEdit)}
+                  
                     {isEdit&&(<>
                     <div dir="ltr" className='flex gap-1 relative'>
                         <CustomTimePicker setToState={setEndTime} title={"שעת סיום"} btnInnerTime={"זמן נוכחי"} />
