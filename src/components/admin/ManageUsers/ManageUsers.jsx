@@ -53,13 +53,12 @@ const ManageUsers = () => {
                 }
                 break;
             case "reportsClass":
-                console.log(currentUser?.reportsClass);
-                console.log(currentUser);
+          
                 // await to response from server to get correct password to create reletion wetween grup
                 if (newUser?.nameClass?.toString()?.length > 1) {
                     const updateGrupUusers = newUser?.reportsClass || [] 
                     updateGrupUusers?.push({ id: Date.now(), nameClass: newValue?.nameClass })
-                   console.log(newUser);
+                  
                     setNewUser({
                         ...newUser, reportsClass: updateGrupUusers, nameClass: "", reportsList: [], lastReport: null
                     })

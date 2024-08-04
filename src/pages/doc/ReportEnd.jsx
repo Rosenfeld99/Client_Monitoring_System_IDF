@@ -15,7 +15,6 @@ const ReportEnd = () => {
     const { currentUser, endProcessReport } = useUser()
 
 
-    console.log(searchParams.get('id'));
 
     const handleEndReport = () => {
         endProcessReport(searchParams.get('id'), getCurrentTime())
@@ -27,12 +26,10 @@ const ReportEnd = () => {
     }
 
     useEffect(() => {
-        console.log(searchParams.get('id'), searchParams.get('s'), searchParams.get('location'))
         if (!searchParams.get('s') && !searchParams.get('location') && !searchParams.get('id')) {
             navigation(`/endReport?s=${currentUser?.process?.place}&location=${currentUser?.process?.location}&id=${currentUser?.process?.id}`)
         }
         if ((formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(currentUser?.process?.date)) && currentUser?.process?.id == searchParams.get('id')) {
-            console.log("in case");
             endProcessReport(searchParams.get('id'), "00:00")
             navigation(`/startReport?last=end`)
         }

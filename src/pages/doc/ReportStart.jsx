@@ -11,7 +11,6 @@ const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { inActiveIsEdit } = useUser()
     const { currentUser } = useUser()
-    console.log(currentUser);
 
     useEffect(() => {
         inActiveIsEdit()

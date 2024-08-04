@@ -73,7 +73,7 @@ const CustomTimePicker = ({ title, btnInnerTime,setToState }) => {
                                 value={minutes}
                                 onChange={handleMinuteChange}
                                 placeholder="דקות"
-                                className="ml-1 p-1 text-center outline-none bg-transparent w-full border border-gray-300 rounded-r-lg"
+                                className="ml-1 p-1 text-center outline-none bg-transparent w-full border border-[#d1d5db63] rounded-r-lg"
                                 min="0"
                                 max="59"
                                 maxLength="2"
@@ -85,7 +85,7 @@ const CustomTimePicker = ({ title, btnInnerTime,setToState }) => {
                                 value={hours}
                                 onChange={handleHourChange}
                                 placeholder="שעות"
-                                className="mr-1 text-center p-1 outline-none bg-transparent w-full border border-gray-300 rounded-l-lg"
+                                className="mr-1 text-center p-1 outline-none bg-transparent w-full border border-[#d1d5db63] rounded-l-lg"
                                 min="0"
                                 max="23"
                                 maxLength="2"

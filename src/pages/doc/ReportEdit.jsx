@@ -33,15 +33,12 @@ const ReportEdit = ({ }) => {
     searchParams.get('startTime')
     searchParams.get('endTime')
     activeIsEdit()
-    console.log("render");
     if (formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(currentUser?.lastReport?.date)) {
-      console.log("last edit report date", formatDateToNumber(currentUser?.lastReport?.date), "Current date", formatDateToNumber(getCurrentDateFormaterHebrew()));
       patchCounterEditReport()
     }
   }, [searchParams, isEdit])
 
   // console.log(searchParams.get('s'));
-  console.log(isEdit);
 
 
 

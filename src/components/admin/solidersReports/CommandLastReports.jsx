@@ -7,7 +7,7 @@ import { FaEdit } from 'react-icons/fa'
 import useUser from '../../../hooks/useUser'
 import ChooseLocation from './ChooseLocation'
 import { ImPause } from 'react-icons/im'
-import { getCurrentDateFormaterHebrew } from '../../../utils/func/generateId'
+import { formatDateToNumber, getCurrentDateFormaterHebrew } from '../../../utils/func/generateId'
 import { SiGoogleclassroom } from 'react-icons/si'
 
 function CommandLastReports({ setChosenCategory }) {
@@ -39,11 +39,31 @@ function CommandLastReports({ setChosenCategory }) {
         };
     }, []);
 
+    useEffect(() => {
+       if (currentUser?.reportsClass?.length>0) {
+        if (currentUser.reportsClass[0].lastReport&& formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(currentUser.reportsClass[0].lastReport?.date) )
+        {
+            endManagerProcessReport(currentUser.reportsClass[0].lastReport?.id,"grup", )
+        }
+       }
+       if (currentUser?.userTests?.length>0) {
+        for (let index = 0; index < currentUser?.userTests?.length; index++) {
+           if (currentUser?.userTests[index].lastReport) {
+            if ( formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(currentUser.userTests[index]?.lastReport?.date) )
+                {
+                    endManagerProcessReport(currentUser.userTests[0].lastReport?.id,"tests",currentUser?.userTests[index]?.id )
+                }
+           }
+        }
+       }
+
+    }, [])
+    
+
 
 
 
     const handeleEdit = (report) => {
-        console.log(report);
         const params = new URLSearchParams({
             s: report?.content,
             location: report?.location,
@@ -57,8 +77,8 @@ function CommandLastReports({ setChosenCategory }) {
         activeIsEdit()
     }
 
+
     const handeleFinishReport = (report) => {
-        console.log(report);
         endManagerProcessReport(report?.id, report.type === "User" ? "tests" : "grup", report?.userId)
         navigation(`/lastReports?end=complate`)
     }
@@ -66,7 +86,6 @@ function CommandLastReports({ setChosenCategory }) {
     const getComanndHistory = () => {
         const currentDate = getCurrentDateFormaterHebrew()
         const currentDayReports = currentUser?.reportsClass[0]?.reportsList?.filter((report) => report?.date === currentDate)
-        console.log(currentDate);
         let history = [...currentDayReports ?? []];
         const tempUser = currentUser?.userTests;
         for (let index = 0; index < tempUser?.length; index++) {

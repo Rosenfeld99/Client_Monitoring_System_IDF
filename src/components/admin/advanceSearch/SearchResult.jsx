@@ -12,7 +12,6 @@ import Navbar from '../../Menu/Navbar'
 function SearchResult() {
     const { advanceSearchResults } = useUser()
     const { searchInputs } = useContext(ContextStore);
-    console.log(searchInputs);
 
     return (
         <TransitionPage  >

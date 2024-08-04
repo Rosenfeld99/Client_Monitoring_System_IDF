@@ -100,7 +100,6 @@ const ReportStart = ({ }) => {
        } 
        return true
     }
-    console.log(startTime);
     // Example usage:
     
   const handleErrorTime=()=>{
@@ -112,7 +111,6 @@ const ReportStart = ({ }) => {
     }
   }
     
-console.log(isEdit);
     const innerTypeOfReport = (typeMsg) => {
         const genID = Date.now()
        
@@ -227,7 +225,7 @@ console.log(isEdit);
                     </div>
                   
                     {isEdit&&(<>
-                    <div dir="ltr" className='flex gap-1 relative'>
+                    <div dir="ltr" className='flex justify-center gap-1 relative'>
                         <CustomTimePicker setToState={setEndTime} title={"שעת סיום"} btnInnerTime={"זמן נוכחי"} />
                         <CustomTimePicker setToState={setStartTime} title={"שעת התחלה"} btnInnerTime={"אוטומטי"} />
 

@@ -32,7 +32,6 @@ const HistoryLastDay = ({ }) => {
             activeIsEdit()
         }
     }
-    console.log(currentUser?.userTests[0]?.reportsList[0]);
 
     return (
         <TransitionPage>
@@ -106,7 +105,6 @@ const HistoryLastDay = ({ }) => {
                                 <React.Fragment>
                                     {currentUser?.userTests[selectOption?.index]?.reportsList?.map((item, index) => (
                                         <>
-                                        {console.log(item?.isComplited)}
                                             {getCurrentDateFormaterHebrew() == item?.date &&
                                              <div key={index} onClick={() => item?.isComplited&&setChooseOption(item)}
                                                 className={`p-2 rounded-lg text-md w-full 

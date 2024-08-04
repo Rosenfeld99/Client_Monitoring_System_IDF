@@ -33,6 +33,7 @@ const DisplayUser = ({ userDisplay, setCreateReport }) => {
     }, []);
 
 
+
     const handeleEdit = () => {
         const params = new URLSearchParams({
             s: userDisplay?.lastReport?.content,
@@ -130,7 +131,7 @@ function UsersDisplay({ setToggleSend, usersSelected, setUsersSelected }) {
 
     return (
         <div dir='rtl' className='mt-7 w-full h-full flex flex-col flex-1'>
-            <div className='  h-[45vh] overflow-y-auto'>
+            <div className='  h-[60vh] overflow-y-auto'>
                 {createReport ? <ChooseLocation type={"tests"} access={"manager"} userId={createReport} /> :
                  currentUser?.userTests?.map((item, i) =>
                     <DisplayUser key={item?.id} userDisplay={item} setCreateReport={setCreateReport} />

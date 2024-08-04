@@ -100,7 +100,6 @@ function AdvanceSearch() {
         }
         return true
     }
-    console.log(theme);
     return (
         <TransitionPage>
             <div dir='rtl' className="  flex flex-col pb-20 mx-auto w-full min-h-screen flex-1  ">

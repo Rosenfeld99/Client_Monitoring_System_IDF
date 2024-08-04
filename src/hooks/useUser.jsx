@@ -1,13 +1,12 @@
 import React, { useContext } from 'react'
 import { ContextStore } from '../context/ContextStore'
 import { KEY_WAVES_SYSTEM, timeToupdatedCounterEdit } from '../constant/constant'
-import { getCurrentTime } from '../utils/func/generateId'
+import { formatDateToNumber, getCurrentDateFormaterHebrew, getCurrentTime } from '../utils/func/generateId'
 
 const useUser = () => {
     const { currentUser, setCurrentUser, isEdit, setIsEdit, advanceSearchResults, setAdvanceSearchResults } = useContext(ContextStore)
 
     const saveToLocalStorage = (value) => {
-        console.log(value);
         localStorage.setItem(KEY_WAVES_SYSTEM, JSON.stringify(value))
     }
 
@@ -22,7 +21,6 @@ const useUser = () => {
     }
 
     const updateSingleReport = (oldReport) => {
-        console.log(oldReport);
         if (currentUser?.counterEdit > 0) {
             const allReport = currentUser?.history || [];
 
@@ -57,7 +55,6 @@ const useUser = () => {
             const updatedUser = { ...currentUser, commandCounterEdit: currentUser?.commandCounterEdit - 1 };
 
             if (type === "tests") {
-                        console.log(userId);
                 const changeUserIndex = currentUser?.userTests?.findIndex((user) => user.id == userId);
                 if (changeUserIndex == -1) {
                     return
@@ -136,21 +133,18 @@ const useUser = () => {
         else if (accessType == "tests") {
             for (let index = 0; index < tempCurrentUser?.userTests?.length; index++) {
                 if (tempCurrentUser.userTests[index].id == userId) {
-                    console.log(tempCurrentUser.userTests[index]);
                     tempCurrentUser.userTests[index].reportsList.push({ ...createObj });
                     tempCurrentUser.userTests[index].lastReport = createObj;
                 }
             }
         }
 
-        console.log(createObj);
         setCurrentUser(tempCurrentUser);
         saveToLocalStorage(tempCurrentUser);
     };
 
     const endProcessReport = (reportId, endTimePress) => {
-        console.log(endTimePress);
-
+         
         const allReport = currentUser?.history || [];
 
         const updatedHistory = allReport.map((report) =>
@@ -173,14 +167,16 @@ const useUser = () => {
         saveToLocalStorage(updatedUser);
     };
     const endManagerProcessReport = (reportId, accessType, userId) => {
-        console.log(reportId, accessType, userId);
+
         const tempCurrentUser = { ...currentUser };
 
         if (accessType === "grup") {
             if (tempCurrentUser.reportsClass && tempCurrentUser.reportsClass[0]) {
-                const lastClassReport = tempCurrentUser.reportsClass[0].lastReport || {};
+                const lastClassReport = tempCurrentUser.reportsClass[0].lastReport || [];
                 lastClassReport.isComplited = true;
-                lastClassReport.endTime = getCurrentTime();
+                const changeDate=formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(lastClassReport?.date);
+                
+                lastClassReport.endTime =changeDate? "00:00":getCurrentTime();
                 tempCurrentUser.reportsClass[0].lastReport = null;
 
                 if (tempCurrentUser.reportsClass[0].reportsList) {
@@ -194,9 +190,10 @@ const useUser = () => {
                 for (let index = 0; index < tempCurrentUser.userTests.length; index++) {
                     if (tempCurrentUser.userTests[index].id === userId) {
                         const reportList = tempCurrentUser.userTests[index].reportsList.map((repo) =>
-                            repo.id === reportId ? { ...repo, endTime: getCurrentTime(), isComplited: true } : repo
+                            repo.id === reportId ? { ...repo, 
+                                endTime:formatDateToNumber(getCurrentDateFormaterHebrew()) > formatDateToNumber(repo?.date)?"00:00":getCurrentTime(), 
+                                isComplited: true } : repo
                         );
-
                         tempCurrentUser.userTests[index].lastReport.isComplited = true;
                         tempCurrentUser.userTests[index].lastReport.endTime = getCurrentTime();
                         tempCurrentUser.userTests[index].reportsList = reportList;
@@ -204,7 +201,6 @@ const useUser = () => {
                 }
             }
         }
-
         setCurrentUser(tempCurrentUser);
         saveToLocalStorage(tempCurrentUser);
     };
@@ -217,7 +213,6 @@ const useUser = () => {
             reportsClass:newGrup?.reportsClass,
             username: newGrup?.systemUsername || "",
         };
-        console.log(updatedUser);
 
         setCurrentUser(updatedUser);
         saveToLocalStorage(updatedUser);
