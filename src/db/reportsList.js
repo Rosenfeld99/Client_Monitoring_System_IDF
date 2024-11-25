@@ -1,7 +1,7 @@
 export const reportListUsers = {
   users: [
     {
-      username: "אליהו מאיר",
+      username: "test new user 10",
       password: "password123",
       pic: "/assets/anonymous-avatar-icon-25.jpg",
       role: "admin",
@@ -112,7 +112,7 @@ export const reportListUsers = {
 };
 
 export const user = {
-  username: "אליהו מאיר",
+  username: "test new user 10",
   password: "password123",
   pic: "/assets/anonymous-avatar-icon-25.jpg",
   role: "admin",

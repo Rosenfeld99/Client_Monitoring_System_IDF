@@ -26,13 +26,14 @@ function AppRoute() {
   const { getUser, currentUser } = useUser()
 
   useEffect(() => {
-    getUser("4", null)
+    getUser("66ebdddb0851b4ccb0a263ab", null)
     // Simulate an async operation (e.g., fetching data, initializing app)
     setTimeout(() => {
       setIsLoading(false);
     }, 2000); // Adjust the duration as needed
   }, []);
   console.log(currentUser);
+
   const location = useLocation();
   return (
     <div className='max-w-[680px] mx-auto bg-light_primary dark:bg-dark_primary text-light_primary_content dark:text-dark_primary_content'>

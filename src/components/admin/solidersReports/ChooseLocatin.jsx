@@ -20,7 +20,7 @@ function ChooseLocatin({ usersSelected }) {
 
     const usersTests = [
         {
-            username: "אליהו מאיר", id: "njckdnckjcn", report: "מטווחים", name: "בסיס", value: "base",
+            username: "test new user 10", id: "njckdnckjcn", report: "מטווחים", name: "בסיס", value: "base",
         },
         { username: "נהוראי", id: "njckdnckjcn", report: "תפילה", name: "שטח", value: "area" },
     ]

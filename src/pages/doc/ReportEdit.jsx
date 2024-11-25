@@ -11,7 +11,7 @@ import { DateToHours } from '../../utils/func/dateTransform'
 
 const ReportEdit = ({ }) => {
   const navigation = useNavigate()
-  const { isEdit, activeIsEdit,currentUser } = useUser()
+  const { isEdit, activeIsEdit, currentUser } = useUser()
 
 
   // <GiTowerFlag />
@@ -27,12 +27,12 @@ const ReportEdit = ({ }) => {
     activeIsEdit()
   }, [searchParams, isEdit])
 
-  // console.log(searchParams.get('s'));
   console.log(isEdit);
 
-
-  const counterOfEdit = currentUser?.dailyEdit?.split("#")[0];
-  console.log(counterOfEdit);
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString('en-GB')
+  const [editCount = 3, editDate] = currentUser?.dailyEdit?.split("#") || [];
+  const counterOfEdit = (editDate === formattedDate) ? Number(editCount) : 3;
 
 
   const handleNavigation = (item) => {
@@ -58,9 +58,9 @@ const ReportEdit = ({ }) => {
           <BiSolidEdit className={`text-2xl mt-2 ${counterOfEdit <= 1 ? "text-red-500" : counterOfEdit == 2 ? "text-amber-400" : "text-green-500"}`} />
           <div className="grow my-auto text-md">
             עריכת דיווח {" "}
-            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{TranslateStruct[searchParams.get('location')] }</span>{" "}
+            <span className="font-semibold text-light_neutral dark:text-dark_accent_content">{searchParams.get('s')}/{TranslateStruct[searchParams.get('location')]}</span>{" "}
             <div className=" flex items-center justify-center gap-2">
-              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('startTime'))) }</span>
+              {"משעה "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('startTime')))}</span>
               {"עד "}<span className="font-semibold text-light_primary_content dark:text-dark_primary_content">{DateToHours(new Date(searchParams.get('endTime')))}</span>
             </div>
           </div>

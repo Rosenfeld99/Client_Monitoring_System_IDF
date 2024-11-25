@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BACKPAPER from "/backPaper.png"
 import { IoCheckmarkCircleOutline } from 'react-icons/io5'
 import TransitionPage from '../../animation/TransitionPage'
@@ -7,10 +7,14 @@ import { SYSTEMSTRACT } from '../../db/systemStract'
 import useUser from '../../hooks/useUser'
 import Navbar from '../../components/Menu/Navbar'
 import { userName } from '../../constant/constant'
+import { ContextStore } from '../../context/ContextStore'
 
 const ReportStart = ({ }) => {
     const navigation = useNavigate()
     const { inActiveIsEdit } = useUser()
+    const { currentUser } = useContext(ContextStore)
+
+    console.log(currentUser);
 
 
     useEffect(() => {
@@ -45,7 +49,7 @@ const ReportStart = ({ }) => {
                 <div className=" z-40 flex flex-col pt-24 text-sm items-center leading-5 h-full flex-1 text-right mx-auto w-full ">
                     <div className="flex flex-col text-center leading-[150%] pb-20">
                         <div className="self-center text-lg font-bold ">
-                            שלום {userName}, איפה את/ה ?
+                            שלום {currentUser?.username}, איפה את/ה ?
                         </div>
                         <div className="w-full text-sm ">
                             הזן את המשימה הקרובה שלך :)

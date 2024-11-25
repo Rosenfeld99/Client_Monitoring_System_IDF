@@ -12,6 +12,8 @@ const useUser = () => {
         setIsEdit(false)
     }
     const getUser = async (userId, username) => {
+        console.log(userId, username);
+
         try {
             axios.get(`http://localhost:5000/user/getUser`, { params: { userId, username } })
                 .then(res => {

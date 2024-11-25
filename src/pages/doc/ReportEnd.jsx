@@ -13,27 +13,29 @@ const ReportEnd = () => {
     const navigation = useNavigate()
     const [searchParams] = useSearchParams()
     const { currentUser } = useUser()
-    const { reportDeatile,setReportDeatile } = useContext(ContextStore);
+    const { reportDeatile, setReportDeatile } = useContext(ContextStore);
     const { endReport } = useReports();
+
     useEffect(() => {
-    if (reportDeatile) {
-        localStorage.setItem("report",JSON.stringify(reportDeatile))
-    }
-    else{
-       const data=localStorage.getItem("report");
-       console.log(data);
-       console.log(JSON.parse(data));
-       setReportDeatile(JSON.parse(data))
-    }
-     }, [])
+        if (reportDeatile) {
+            localStorage.setItem("report", JSON.stringify(reportDeatile))
+        }
+        else {
+            const data = localStorage.getItem("report");
+            console.log(data);
+            console.log(JSON.parse(data));
+            setReportDeatile(JSON.parse(data))
+        }
+    }, [])
 
 
 
+    console.log(currentUser);
 
     const handleEndReport = () => {
-        console.log(reportDeatile);
-       
-        endReport({ userId: currentUser?.userId, reportId: reportDeatile?._id, endTime: new Date() })
+        // console.log(reportDeatile);
+        // console.log(currentUser);
+        endReport({ userId: currentUser?._id, reportId: reportDeatile?._id, endTime: new Date() })
     }
 
     const innerIcon = () => {

@@ -28,7 +28,7 @@ const ReportStart = ({ }) => {
         endTime: searchParams.get('endTime'),
         reportId: searchParams.get('reportId')
     })
-    console.log(urlData);
+    // console.log(urlData);
 
     const { inActiveIsEdit, currentUser, activeIsEdit, isEdit } = useUser()
     const { newReport, editReport } = useReports()
@@ -66,7 +66,7 @@ const ReportStart = ({ }) => {
                 location: currentSelect?.value,
                 completed: false,
                 userId: currentUser?.userId,
-                navigate:innerTypeOfReport(searchParams.get("report")).link
+                navigate: innerTypeOfReport(searchParams.get("report")).link
             }
 
             newReport(newReportObj)
@@ -75,7 +75,7 @@ const ReportStart = ({ }) => {
     }
 
     useEffect(() => {
-        console.log(searchParams);
+        // console.log(searchParams);
         if (searchParams.get('s') &&
             searchParams.get('location') &&
             searchParams.get('startTime') &&
@@ -169,7 +169,7 @@ const ReportStart = ({ }) => {
     return (
         <TransitionPage>
 
-            <div dir='rtl' className=" flex flex-col overflow-hidden pb-10 mx-auto w-full min-h-screen flex-1">
+            <div dir='rtl' className="flex flex-col overflow-hidden pb-10 mx-auto w-full min-h-screen flex-1">
                 <div className=" fixed top-0 right-0 min-h-8 flex-row-reverse flex gap-5 items-center justify-between px-4 py-2 w-full text-2xl font-semibold tracking-tight leading-9 text-center z-50 text-white shadow-md shadow-[#0000003d]">
                     <button>
                         <IoClose className='text-4xl' onClick={() => navigation('/startReport')} />
@@ -194,7 +194,7 @@ const ReportStart = ({ }) => {
                 {/* List option */}
                 <InnerListOPtionByStarct />
                 {/* if is edit do inactive for global state */}
-                <div  onClick={handleStartReport} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
+                <div onClick={handleStartReport} className="px-10 pt-0 pb-10 backdrop-blur-sm z-50 fixed bottom-0 w-full">
                     <ButtonAction disabledBtn={!currentSelect} title={innerTypeOfReport(searchParams.get('report')).btnText} route={innerTypeOfReport(searchParams.get("report")).link} />
                 </div>
             </div>

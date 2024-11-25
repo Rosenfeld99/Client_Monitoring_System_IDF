@@ -1,3 +1,3 @@
 export const appName = "גלים"
 
-export const userName = "אליהו מאיר"
+export const userName = "test new user 10"

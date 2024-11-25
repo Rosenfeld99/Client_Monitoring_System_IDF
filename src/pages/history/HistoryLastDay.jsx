@@ -12,6 +12,7 @@ import useReports from '../../hooks/useReports'
 import { getCurrentDateFormaterHebrew } from '../../utils/func/generateId'
 import { TranslateStruct } from '../../db/systemStract'
 import { DateToHours } from '../../utils/func/dateTransform'
+import { MdOutlineDownloading } from 'react-icons/md'
 
 const HistoryLastDay = ({ }) => {
     const [chooseOption, setChooseOption] = useState(null)
@@ -36,7 +37,7 @@ const HistoryLastDay = ({ }) => {
             activeIsEdit()
         }
     }
-   
+
     return (
         <TransitionPage>
             <div dir='rtl' className=" flex flex-col pb-20 mx-auto w-full relative min-h-screen flex-1 ">
@@ -58,7 +59,8 @@ const HistoryLastDay = ({ }) => {
                 {/* list last day */}
                 <div className="mx-8 flex-col flex items-center justify-center gap-3 z-30">
                     {console.log(historyReports)}
-                    {historyReports?.data?.map((item, index) => (
+                    {historyReports.length > 0 ? historyReports?.map((item, index) =>
+                    (
                         // adding start and last time
                         <div key={index} onClick={() => setChooseOption(item)}
                             className={`p-2 rounded-lg text-md w-full 
@@ -67,13 +69,18 @@ const HistoryLastDay = ({ }) => {
                             <div className=" flex items-center w-full gap-5 justify-between">
                                 <div >{TranslateStruct[item?.location]}</div>
                                 <div className={`${chooseOption?.id === item?.id && "dark:text-dark_accent_content text-light_accent_content"} flex items-center text-sm text-gray-500 gap-2`}>
-                                    <div >{DateToHours(new Date(  item?.endTime))}</div>{"-"}
-                                    <div >{DateToHours(new Date( item?.startTime))}</div>
+                                    <div >{DateToHours(new Date(item?.endTime))}</div>{"-"}
+                                    <div >{DateToHours(new Date(item?.startTime))}</div>
                                     {chooseOption?.id === item?.id && <BiSolidEdit onClick={handleNavigation} className='text-2xl text-[#0996E5]' />}
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    ))
+                        :
+                        <div className="animate-bounce w-6 h-6 ">
+                            <MdOutlineDownloading size={20} />
+                        </div>
+                    }
                 </div>
             </div>
         </TransitionPage>
